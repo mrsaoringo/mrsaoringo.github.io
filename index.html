@@ -5,38 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>個人小説サイト</title>
 <style>
+
+@charset "UTF-8";
+
+/* Template & Designed by Towako. */
+/* https://ninawas.me */
+
+/* ウェブフォントの読み込み */
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
+
+/* 全体に適用する */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+
+/* 基本設定 */
 body {
-  background-color: #fffaf5;
-  color: #5c4b45;
-  font-family: serif;
-  text-align: center;
-  padding: 30px 15px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    color: #888;
 }
-h1 {
-  font-size: 28px;
-  letter-spacing: 4px;
+
+/* リンク */
+a {
+    color: #888;
 }
-p {
-  font-size: 14px;
+
+/* ヘッダー */
+header {
+    position: relative;
+    min-height: 100vh;
+    background: url('画像URL') center/cover;
 }
-nav {
-  margin: 30px 0;
+
+/* 見出し */
+header h1 {
+    text-indent: 0.5em;
+    text-align: left;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    font-family: 'Unica One', cursive;
+    font-size: 3.5em;
+    color: #fff;
 }
-nav a {
-  color: #9b7770;
-  margin: 10px;
-  text-decoration: none;
+
+/* ナビゲーション */
+header nav {
+    text-align: right;
 }
-.box {
-  border: 1px solid #d8c4bc;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 500px;
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 1em;
 }
-footer {
-  margin-top: 50px;
-  font-size: 12px;
+
+header nav ul li a {
+    display: inline-block;
+    padding: 0 0.5em;
+    background-color: #fff;
+    text-decoration: none;
 }
+
+
+header #footer {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 1em;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* セクション */
+section {
+    padding: 3em;
+    text-align: justify;
+    word-break: break-all;
+}
+
+/* セクション見出し */
+section h3 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-family: 'Unica One', cursive;
+}
+
+/* 線 */
+section h3::before {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: -0.5em;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: #888;
+}
+
+/* 段落 */
+section p,
+article p {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+
+/* プロフィール画像 */
+section img.aboutme {
+    display: block;
+    width: 150px;
+    height: auto;
+    border-bottom-right-radius: 20px;
+}
+
+/* アイコン */
+section img.icon {
+    vertical-align: middle;
+    width: 1.5em;
+    height: auto;
+}
+
+/* 画像 */
+section div.image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+/* アーティクル */
+article {
+    margin: 3em auto;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* アーティクル画像 */
+article img {
+    width: 100%;
+    height: auto;
+}
+
+/* 段落 */
+article p {
+    text-align: justify;
+    word-break: break-all;
+}
+
+/* フォーム系 */
+textarea,
+input[type] {
+    -webkit-appearance: none;
+    padding: 0.3em 0.5em;
+    background-color: #888;
+    border: none;
+    border-radius: 0;
+    border-bottom-right-radius: 10px;
+    color: #fff;
+}
+
+textarea {
+    width: 200px;
+    height: 70px;
+}
+
+input[type=text] {
+    width: 100px;
+}
+
+input[type=submit] {
+    width: auto;
+}
+
+/* 横幅768px以上で読み込む */
+@media screen and (min-width:768px) {
+
+    /* フォントサイズ */
+    body {
+        font-size: 14px;
+    }
+}
+
+/* 横幅1024px以上で読み込む */
+@media screen and (min-width:1024px) {
+
+    /* フォントサイズ */
+    body {
+        font-size: 15px;
+    }
+
+    /* ヘッダーを左に固定 */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        float: left;
+    }
+
+    /* メインを右へ */
+    main {
+        width: 50%;
+        float: right;
+    }
+
+}
+
 </style>
 </head>
 
