@@ -14,18 +14,10 @@ p {
   font-size: 16px;
 }
 
-.information summary {
-  cursor: pointer;
-}
-
-.information .close-text {
-  display: none;
-}
-
 .information[open] .open-text {
-  display: none;
+  display: none !important;
 }
 
 .information[open] .close-text {
-  display: inline;
+  display: inline !important;
 }
