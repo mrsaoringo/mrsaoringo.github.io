@@ -18,10 +18,14 @@ p {
   cursor: pointer;
 }
 
-.information summary::after {
-  content: "詳しく見る";
+.information .close-text {
+  display: none;
 }
 
-.information[open] summary::after {
-  content: "閉じる";
+.information[open] .open-text {
+  display: none;
+}
+
+.information[open] .close-text {
+  display: inline;
 }
