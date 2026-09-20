@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>green or blue?</title>
+
 <style>
 
 @charset "UTF-8";
@@ -72,7 +74,6 @@ header nav ul li a {
     background-color: #fff;
     text-decoration: none;
 }
-
 
 header #footer {
     position: absolute;
@@ -183,24 +184,44 @@ input[type=submit] {
     width: auto;
 }
 
+/* 詳しく見る・閉じるボタン */
+.information summary {
+    cursor: pointer;
+    list-style: none;
+    text-align: center;
+    padding: 8px;
+}
+
+/* ▼マークを消す */
+.information summary::-webkit-details-marker {
+    display: none;
+}
+
+/* リンクのアンダーラインを消す */
+.no-underline,
+.no-underline:link,
+.no-underline:visited,
+.no-underline:hover,
+.no-underline:active {
+    text-decoration: none !important;
+}
+
 /* 横幅768px以上で読み込む */
 @media screen and (min-width:768px) {
 
-    /* フォントサイズ */
     body {
         font-size: 14px;
     }
+
 }
 
 /* 横幅1024px以上で読み込む */
 @media screen and (min-width:1024px) {
 
-    /* フォントサイズ */
     body {
         font-size: 15px;
     }
 
-    /* ヘッダーを左に固定 */
     header {
         position: fixed;
         top: 0;
@@ -209,16 +230,11 @@ input[type=submit] {
         float: left;
     }
 
-    /* メインを右へ */
     main {
         width: 50%;
         float: right;
     }
 
-}
-
-    .no-underline {
-    text-decoration: none;
 }
 
 </style>
@@ -228,6 +244,7 @@ input[type=submit] {
 
 <header>
     <h1>green or blue?</h1>
+
     <nav>
         <ul>
             <li><a href="#about">ABOUT ME</a></li>
@@ -235,91 +252,164 @@ input[type=submit] {
             <li><a href="#code">MURMUR</a></li>
         </ul>
     </nav>
-    <div id="footer">Template by <a href="https://ninawas.me" target="_blank">NINA</a></div>
+
+    <div id="footer">
+        Template by
+        <a href="https://ninawas.me" target="_blank">NINA</a>
+    </div>
 </header>
+
 <main>
+
+    <!-- ABOUT ME -->
     <section id="about">
+
         <h2>ABOUT ME</h2>
-        <img src="4A84A6F2-42AB-40A6-B913-8292C2B69C42.png" alt="aboutme" class="aboutme">
-        <h3>YAMADA <a href="#"><img src="無題43_20260921021332.png" alt="twitter" class="icon"></a></h3>
+
+        <img src="4A84A6F2-42AB-40A6-B913-8292C2B69C42.png"
+             alt="aboutme"
+             class="aboutme">
+
+        <h3>
+            YAMADA
+            <a href="#">
+                <img src="無題43_20260921021332.png"
+                     alt="twitter"
+                     class="icon">
+            </a>
+        </h3>
+
         <p>
             ずっとゲームしてる人<br>
         </p>
+
         <br>
+
         <h3>Contact</h3>
+
         <p>ご連絡はこちらからお願いします。</p>
+
         ＜メールフォームタグ＞
+
     </section>
+
+
+    <!-- INFORMATION -->
     <section id="info">
+
         <h2>INFORMATION</h2>
+
         当サイトは、個人が趣味で運営している非公式の🍏バンド二次創作サイトです。<br>
         実在する人物・団体・作品等を題材とした夢小説を取り扱っておりますが、各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
         ご理解いただける方のみ、以下の注意事項をご確認のうえ閲覧をお願いいたします。<br>
+
         <h3>Attention</h3>
-        <details class="information" id="attention-toggle">
-            <summary id="info-button">詳しく見る</summary>
-        ■取扱ジャンル<br>
-        　M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
-        <br>
-        ・当サイトは非公式の二次創作サイトです。各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
-        ・実在する人物を題材とした作品を取り扱っております。苦手な方や意味をご理解いただけない方は閲覧をご遠慮ください。<br>
-        ・作品はすべてフィクションです。実在する人物・団体等への誹謗中傷や、現実の出来事を意図したものではありません。<br>
-        ・作品の内容には、恋愛描写、捏造設定、実際とは異なる人物像・関係性等が含まれる場合がございます。<br>
-        ・作品の閲覧・解釈は自己責任でお願いいたします。閲覧後の苦情やトラブルには対応いたしかねます。<br>
-        ・当サイト内における画像や内容、作品に一部生成AIを使用しております。あらかじめご了承ください。<br>
-        ・当サイト内の文章・画像・その他コンテンツの無断転載、複製、改変、二次配布、スクリーンショットの公開、転載は固く禁止いたします。パスの最後にメンバー人数(現在/1桁)付けるのをお忘れなく。<br>
-        ・当サイトのURLや作品内容を、SNS等の不特定多数の目に触れる場所で拡散する行為はお控えください。<br>
-        ・検索避け等の対策を行っております。サイト内のコンテンツを外部検索サイトやSNS等へ持ち出す行為はご遠慮ください。<br>
-        ・荒らし、晒し、誹謗中傷、作品や管理人への迷惑行為はおやめください。<br>
-        ・閲覧環境や端末によっては、表示が崩れる場合がございます。あらかじめご了承ください。<br>
-        <br>
-        ナマモノを扱うサイトであることをご理解のうえ、節度ある閲覧をお願いいたします。<br>
+
+        <details class="information">
+
+            <summary>詳しく見る</summary>
+
+            ■取扱ジャンル<br>
+            　M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
+
+            <br>
+
+            ・当サイトは非公式の二次創作サイトです。各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
+            ・実在する人物を題材とした作品を取り扱っております。苦手な方や意味をご理解いただけない方は閲覧をご遠慮ください。<br>
+            ・作品はすべてフィクションです。実在する人物・団体等への誹謗中傷や、現実の出来事を意図したものではありません。<br>
+            ・作品の内容には、恋愛描写、捏造設定、実際とは異なる人物像・関係性等が含まれる場合がございます。<br>
+            ・作品の閲覧・解釈は自己責任でお願いいたします。閲覧後の苦情やトラブルには対応いたしかねます。<br>
+            ・当サイト内における画像や内容、作品に一部生成AIを使用しております。あらかじめご了承ください。<br>
+            ・当サイト内の文章・画像・その他コンテンツの無断転載、複製、改変、二次配布、スクリーンショットの公開、転載は固く禁止いたします。パスの最後にメンバー人数(現在/1桁)付けるのをお忘れなく。<br>
+            ・当サイトのURLや作品内容を、SNS等の不特定多数の目に触れる場所で拡散する行為はお控えください。<br>
+            ・検索避け等の対策を行っております。サイト内のコンテンツを外部検索サイトやSNS等へ持ち出す行為はご遠慮ください。<br>
+            ・荒らし、晒し、誹謗中傷、作品や管理人への迷惑行為はおやめください。<br>
+            ・閲覧環境や端末によっては、表示が崩れる場合がございます。あらかじめご了承ください。<br>
+
+            <br>
+
+            ナマモノを扱うサイトであることをご理解のうえ、節度ある閲覧をお願いいたします。<br>
+
         </details>
+
         <br>
+
         <h3>Link</h3>
+
         当サイトはリンクフリーではございません。<br>
+
         <br>
-        <br>
+
         <h3>Special thanks</h3>
-        <a href="https://ninawas.me" class="no-underline">NINA - ニーナ</a>様<br>
+
+        <a href="https://ninawas.me" class="no-underline">
+            NINA - ニーナ
+        </a>様<br>
+
         <br>
+
         <h3>other</h3>
-        <details class="information" id="other-toggle">
-            <summary id="info-button">詳しく見る</summary>
-        当サイトの内容・構成・注意書き等は、予告なく変更する場合がございます。<br>
-        また、誤字脱字やリンク切れ等を発見された場合は、メールフォームから管理人までご連絡いただけますと幸いです。<br>
-        すべての方に快適に閲覧していただけるよう、最低限のマナーを守ってご利用ください。<br>
-        <br>
-        <br>
-        最後までお読みいただき、ありがとうございます。パスワードはメジャーデビュー年月日数字8桁。<br>
+
+        <details class="information">
+
+            <summary>詳しく見る</summary>
+
+            当サイトの内容・構成・注意書き等は、予告なく変更する場合がございます。<br>
+            また、誤字脱字やリンク切れ等を発見された場合は、メールフォームから管理人までご連絡いただけますと幸いです。<br>
+            すべての方に快適に閲覧していただけるよう、最低限のマナーを守ってご利用ください。<br>
+
+            <br>
+            <br>
+
+            最後までお読みいただき、ありがとうございます。パスワードはメジャーデビュー年月日数字8桁。<br>
+
         </details>
+
     </section>
+
 </main>
-<!-- ここから下スムーススクロール -->
+
+<!-- スムーススクロール -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
     $(function() {
+
         $('a[href^="#"]').click(function() {
+
             var speed = 800;
             var href = $(this).attr("href");
             var target = $(href == "#" || href == "" ? 'html' : href);
             var position = target.offset().top;
+
             $('body,html').animate({
                 scrollTop: position
             }, speed, 'swing');
+
             return false;
+
         });
+
     });
-    
 </script>
 
+<!-- 詳しく見る・閉じるの切り替え -->
 <script>
-    const info = document.getElementById('attention-toggle');
-    const button = document.getElementById('info-button');
 
-    info.addEventListener('toggle', function() {
-        button.textContent = info.open ? '閉じる' : '詳しく見る';
+    const detailsList = document.querySelectorAll('.information');
+
+    detailsList.forEach(function(info) {
+
+        const button = info.querySelector('summary');
+
+        info.addEventListener('toggle', function() {
+
+            button.textContent = info.open ? '閉じる' : '詳しく見る';
+
+        });
+
     });
+
 </script>
 
 </body>
