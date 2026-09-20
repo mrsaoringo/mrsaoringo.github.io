@@ -13,3 +13,15 @@ h1 {
 p {
   font-size: 16px;
 }
+
+.information summary {
+  cursor: pointer;
+}
+
+.information summary::after {
+  content: "詳しく見る";
+}
+
+.information[open] summary::after {
+  content: "閉じる";
+}
