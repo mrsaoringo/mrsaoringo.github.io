@@ -252,7 +252,7 @@ input[type=submit] {
         実在する人物・団体・作品等を題材とした夢小説を取り扱っておりますが、各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
         ご理解いただける方のみ、以下の注意事項をご確認のうえ閲覧をお願いいたします。<br>
         <h3>Attention</h3>
-        <details class="information" id="info">
+        <details class="information" id="attention-toggle">
             <summary id="info-button">詳しく見る</summary>
         取扱ジャンル：M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
         <br>
@@ -298,7 +298,16 @@ input[type=submit] {
             return false;
         });
     });
+    
+</script>
 
+<script>
+    const info = document.getElementById('attention-toggle');
+    const button = document.getElementById('info-button');
+
+    info.addEventListener('toggle', function() {
+        button.textContent = info.open ? '閉じる' : '詳しく見る';
+    });
 </script>
 
 </body>
