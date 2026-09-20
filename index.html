@@ -1,9 +1,11 @@
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>green or blue?</title>
 
 <style>
@@ -75,6 +77,7 @@ header nav ul li a {
     text-decoration: none;
 }
 
+/* ヘッダー下部 */
 header #footer {
     position: absolute;
     bottom: 25%;
@@ -99,7 +102,7 @@ section h3 {
     font-family: 'Unica One', cursive;
 }
 
-/* 線 */
+/* 見出しの下線 */
 section h3::before {
     position: absolute;
     display: block;
@@ -153,35 +156,87 @@ article img {
     height: auto;
 }
 
-/* 段落 */
+/* アーティクル内の段落 */
 article p {
     text-align: justify;
     word-break: break-all;
 }
 
-/* フォーム系 */
-textarea,
-input[type] {
+/* ====================================
+   フォーム
+==================================== */
+
+.contact-form {
+    margin-top: 1em;
+    text-align: left;
+}
+
+/* フォームのラベル */
+.contact-form label {
+    display: block;
+    margin-top: 0.8em;
+    margin-bottom: 0.2em;
+    color: #888;
+    font-size: 1em;
+}
+
+/* 入力欄・本文欄 */
+.contact-form input,
+.contact-form textarea {
+    display: block;
     -webkit-appearance: none;
-    padding: 0.3em 0.5em;
-    background-color: #888;
+    padding: 0.5em 0.7em;
+    background-color: #999;
     border: none;
     border-radius: 0;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 20px;
     color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    outline: none;
 }
 
-textarea {
-    width: 200px;
-    height: 70px;
+/* 名前・メールアドレス */
+.contact-form input[type="text"],
+.contact-form input[type="email"] {
+    width: 210px;
+    height: 40px;
+    margin-bottom: 0.5em;
 }
 
-input[type=text] {
-    width: 100px;
+/* 本文 */
+.contact-form textarea {
+    width: 100%;
+    max-width: 425px;
+    height: 150px;
+    resize: vertical;
 }
 
-input[type=submit] {
-    width: auto;
+/* プレースホルダー */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+/* 送信ボタン */
+.contact-form button {
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+    background-color: #999;
+    border: none;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+/* 送信ボタンにカーソルを合わせたとき */
+.contact-form button:hover {
+    opacity: 0.8;
 }
 
 /* 詳しく見る・閉じるボタン */
@@ -200,8 +255,11 @@ input[type=submit] {
     text-decoration: none !important;
 }
 
-/* 横幅768px以上で読み込む */
-@media screen and (min-width:768px) {
+/* ====================================
+   横幅768px以上
+==================================== */
+
+@media screen and (min-width: 768px) {
 
     body {
         font-size: 14px;
@@ -209,8 +267,11 @@ input[type=submit] {
 
 }
 
-/* 横幅1024px以上で読み込む */
-@media screen and (min-width:1024px) {
+/* ====================================
+   横幅1024px以上
+==================================== */
+
+@media screen and (min-width: 1024px) {
 
     body {
         font-size: 15px;
@@ -231,27 +292,59 @@ input[type=submit] {
 
 }
 
+/* ====================================
+   スマートフォン用
+==================================== */
+
+@media screen and (max-width: 767px) {
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"] {
+        width: 210px;
+        max-width: 100%;
+    }
+
+    .contact-form textarea {
+        width: 100%;
+    }
+
+}
+
 </style>
 </head>
+
 
 <body>
 
 <header>
+
     <h1>green or blue?</h1>
 
     <nav>
         <ul>
-            <li><a href="#about">ABOUT ME</a></li>
-            <li><a href="#info">INFO</a></li>
-            <li><a href="#code">MURMUR</a></li>
+            <li>
+                <a href="#about">ABOUT ME</a>
+            </li>
+
+            <li>
+                <a href="#info">INFO</a>
+            </li>
+
+            <li>
+                <a href="#code">MURMUR</a>
+            </li>
         </ul>
     </nav>
 
     <div id="footer">
         Template by
-        <a href="https://ninawas.me" target="_blank">NINA</a>
+        <a href="https://ninawas.me" target="_blank">
+            NINA
+        </a>
     </div>
+
 </header>
+
 
 <main>
 
@@ -266,6 +359,7 @@ input[type=submit] {
 
         <h3>
             YAMADA
+
             <a href="#">
                 <img src="無題43_20260921021332.png"
                      alt="twitter"
@@ -279,27 +373,58 @@ input[type=submit] {
 
         <br>
 
-        
-<h3>Contact</h3>
 
-<p>ご連絡はこちらからお願いします。</p>
+        <!-- CONTACT -->
+        <h3>Contact</h3>
 
-<form action="https://formspree.io/f/xppwpdjb" method="POST" class="contact-form">
+        <p>
+            ご連絡はこちらからお願いします。
+        </p>
 
-    <label for="name"></label>
-    <input type="text" id="name" name="name" placeholder="お名前">
+        <form action="https://formspree.io/f/xppwpdjb"
+              method="POST"
+              class="contact-form">
 
-    <label for="email"></label>
-    <input type="email" id="email" name="email" placeholder="メールアドレス">*
+            <label for="name">
+                名前
+            </label>
 
-    <label for="message"></label>
-    <textarea id="message" name="message" placeholder="メッセージを入力してください" required></textarea>
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="お名前">
 
-    <input type="hidden" name="_subject" value="green or blue? メッセージ">
 
-    <button type="submit">送信する</button>
+            <label for="email">
+                連絡先
+            </label>
 
-</form>
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="メールアドレス">
+
+
+            <label for="message">
+                本文
+            </label>
+
+            <textarea id="message"
+                      name="message"
+                      placeholder="メッセージを入力してください"
+                      required></textarea>
+
+
+            <input type="hidden"
+                   name="_subject"
+                   value="green or blue? メッセージ">
+
+
+            <button type="submit">
+                送信する
+            </button>
+
+        </form>
 
     </section>
 
@@ -310,8 +435,11 @@ input[type=submit] {
         <h2>INFORMATION</h2>
 
         当サイトは、個人が趣味で運営している非公式の🍏バンド二次創作サイトです。<br>
+
         実在する人物・団体・作品等を題材とした夢小説を取り扱っておりますが、各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
+
         ご理解いただける方のみ、以下の注意事項をご確認のうえ閲覧をお願いいたします。<br>
+
 
         <h3>Attention</h3>
 
@@ -320,20 +448,31 @@ input[type=submit] {
             <summary>詳しく見る</summary>
 
             取扱ジャンル<br>
+
             　M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
 
             <br>
 
             ・当サイトは非公式の二次創作サイトです。各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
+
             ・実在する人物を題材とした作品を取り扱っております。苦手な方や意味をご理解いただけない方は閲覧をご遠慮ください。<br>
+
             ・作品はすべてフィクションです。実在する人物・団体等への誹謗中傷や、現実の出来事を意図したものではありません。<br>
+
             ・作品の内容には、恋愛描写、捏造設定、実際とは異なる人物像・関係性等が含まれる場合がございます。<br>
+
             ・作品の閲覧・解釈は自己責任でお願いいたします。閲覧後の苦情やトラブルには対応いたしかねます。<br>
+
             ・当サイト内における画像や内容、作品に一部生成AIを使用しております。あらかじめご了承ください。<br>
+
             ・当サイト内の文章・画像・その他コンテンツの無断転載、複製、改変、二次配布、スクリーンショットの公開、転載は固く禁止いたします。パスの最後にメンバー人数(現在/1桁)付けるのをお忘れなく。<br>
+
             ・当サイトのURLや作品内容を、SNS等の不特定多数の目に触れる場所で拡散する行為はお控えください。<br>
+
             ・検索避け等の対策を行っております。サイト内のコンテンツを外部検索サイトやSNS等へ持ち出す行為はご遠慮ください。<br>
+
             ・荒らし、晒し、誹謗中傷、作品や管理人への迷惑行為はおやめください。<br>
+
             ・閲覧環境や端末によっては、表示が崩れる場合がございます。あらかじめご了承ください。<br>
 
             <br>
@@ -342,19 +481,28 @@ input[type=submit] {
 
         </details>
 
+
         <br>
+
 
         <h3>Link</h3>
 
         当サイトはリンクフリーではございません。<br>
 
+
         <br>
+
 
         <h3>Special thanks</h3>
 
-        <a href="https://ninawas.me" class="no-underline">NINA - ニーナ</a>様<br>
+        <a href="https://ninawas.me"
+           class="no-underline">
+            NINA - ニーナ
+        </a>様<br>
+
 
         <br>
+
 
         <h3>other</h3>
 
@@ -363,7 +511,9 @@ input[type=submit] {
             <summary>詳しく見る</summary>
 
             当サイトの内容・構成・注意書き等は、予告なく変更する場合がございます。<br>
+
             また、誤字脱字やリンク切れ等を発見された場合は、メールフォームから管理人までご連絡いただけますと幸いです。<br>
+
             すべての方に快適に閲覧していただけるよう、最低限のマナーを守ってご利用ください。<br>
 
             <br>
@@ -373,13 +523,11 @@ input[type=submit] {
 
             <br>
             <br>
-            
-            since 2026.09.20<br>
+
+            <center>since 2026.09.20</center><br>
 
             <br>
             <br>
-
-
 
         </details>
 
@@ -387,17 +535,25 @@ input[type=submit] {
 
 </main>
 
+
 <!-- スムーススクロール -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
+
     $(function() {
 
         $('a[href^="#"]').click(function() {
 
             var speed = 800;
             var href = $(this).attr("href");
-            var target = $(href == "#" || href == "" ? 'html' : href);
+
+            var target = $(
+                href == "#" || href == ""
+                ? 'html'
+                : href
+            );
+
             var position = target.offset().top;
 
             $('body,html').animate({
@@ -409,7 +565,9 @@ input[type=submit] {
         });
 
     });
+
 </script>
+
 
 <!-- 詳しく見る・閉じるの切り替え -->
 <script>
@@ -422,7 +580,9 @@ input[type=submit] {
 
         info.addEventListener('toggle', function() {
 
-            button.textContent = info.open ? '閉じる' : '詳しく見る';
+            button.textContent = info.open
+                ? '閉じる'
+                : '詳しく見る';
 
         });
 
