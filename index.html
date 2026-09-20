@@ -279,11 +279,27 @@ input[type=submit] {
 
         <br>
 
-        <h3>Contact</h3>
+        
+<h3>Contact</h3>
 
-        <p>ご連絡はこちらからお願いします。</p>
+<p>ご連絡はこちらからお願いします。</p>
 
-        ＜メールフォームタグ＞
+<form action="ここにFormspreeのURLを貼る" method="POST" class="contact-form">
+
+    <label for="name">お名前（任意）</label>
+    <input type="text" id="name" name="name" placeholder="お名前">
+
+    <label for="email">メールアドレス（任意）</label>
+    <input type="email" id="email" name="email" placeholder="メールアドレス">
+
+    <label for="message">メッセージ</label>
+    <textarea id="message" name="message" placeholder="メッセージを入力してください" required></textarea>
+
+    <input type="hidden" name="_subject" value="green or blue? メッセージ">
+
+    <button type="submit">送信する</button>
+
+</form>
 
     </section>
 
