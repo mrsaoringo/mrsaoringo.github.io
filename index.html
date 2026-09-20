@@ -222,25 +222,54 @@ input[type=submit] {
 
 <body>
 
-<h1>個人小説サイト</h1>
+<header>
+    <h1>Portfolio</h1>
+    <nav>
+        <ul>
+            <li><a href="#about">ABOUT ME</a></li>
+            <li><a href="#main">GALLERY</a></li>
+            <li><a href="#code">SOURCE CODE</a></li>
+        </ul>
+    </nav>
+    <div id="footer">Template by <a href="https://ninawas.me" target="_blank">NINA</a></div>
+</header>
+<main>
+    <section id="about">
+        <h2>ABOUT ME</h2>
+        <img src="プロフィール画像URL" alt="aboutme" class="aboutme">
+        <h3>Myouji Namae <a href="#"><img src="アイコン画像URL" alt="twitter" class="icon"></a></h3>
+        <p>
+            ここにプロフィール<br>
+        </p>
+        <h3>Contact</h3>
+        <p>ご連絡はこちらからお願いします。</p>
+        ＜メールフォームタグ＞
+    </section>
+    <section id="main">
+        <h2>GALLERY</h2>
+        <h3>2020</h3>
+        <div class="image">
+            <a href="ページURL"><img src="画像URL"></a>
+        </div>
+    </section>
+</main>
+<!-- ここから下スムーススクロール -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('a[href^="#"]').click(function() {
+            var speed = 800;
+            var href = $(this).attr("href");
+            var target = $(href == "#" || href == "" ? 'html' : href);
+            var position = target.offset().top;
+            $('body,html').animate({
+                scrollTop: position
+            }, speed, 'swing');
+            return false;
+        });
+    });
 
-<p>Welcome to my website.</p>
-
-<nav>
-<a href="#">HOME</a>
-<a href="#">NOVEL</a>
-<a href="#">ABOUT</a>
-</nav>
-
-<div class="box">
-<h2>Information</h2>
-<p>当サイトは個人が運営する小説サイトです。</p>
-<p>ごゆっくりお楽しみください。</p>
-</div>
-
-<footer>
-© 個人小説サイト
-</footer>
+</script>
 
 </body>
 </html>
