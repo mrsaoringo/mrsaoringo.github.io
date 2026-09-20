@@ -14,6 +14,10 @@ p {
   font-size: 16px;
 }
 
+.information .close-text {
+  display: none !important;
+}
+
 .information[open] .open-text {
   display: none !important;
 }
