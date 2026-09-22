@@ -1,23 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>green or blue?</title>
-
 <style>
-
 @charset "UTF-8";
-
 /* Template & Designed by Towako. */
 /* https://ninawas.me */
-
 /* ウェブフォントの読み込み */
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
-
 /* 全体に適用する */
 * {
     margin: 0;
@@ -26,7 +18,6 @@
     font-weight: normal;
     font-family: 'Kosugi Maru', sans-serif;
 }
-
 /* 基本設定 */
 body {
     background-color: #fff;
@@ -36,19 +27,16 @@ body {
     font-size: 13px;
     color: #888;
 }
-
 /* リンク */
 a {
     color: #888;
 }
-
 /* ヘッダー */
 header {
     position: relative;
     min-height: 100vh;
     background: url('C8C0B6C8-5D7D-4847-8D6E-461FD510E1C1.png') center/cover;
 }
-
 /* 見出し */
 header h1 {
     text-indent: 0.5em;
@@ -59,24 +47,20 @@ header h1 {
     font-size: 2.8em;
     color: #fff;
 }
-
 /* ナビゲーション */
 header nav {
     text-align: right;
 }
-
 header nav ul li {
     display: inline-block;
     margin-right: 1em;
 }
-
 header nav ul li a {
     display: inline-block;
     padding: 0 0.5em;
     background-color: #fff;
     text-decoration: none;
 }
-
 /* ヘッダー下部 */
 header #footer {
     position: absolute;
@@ -86,14 +70,12 @@ header #footer {
     padding: 0 1em;
     background-color: rgba(255, 255, 255, 0.5);
 }
-
 /* セクション */
 section {
     padding: 3em;
     text-align: justify;
     word-break: break-all;
 }
-
 /* セクション見出し */
 section h3 {
     position: relative;
@@ -101,7 +83,6 @@ section h3 {
     margin-bottom: 1em;
     font-family: 'Unica One', cursive;
 }
-
 /* 見出しの下線 */
 section h3::before {
     position: absolute;
@@ -113,14 +94,12 @@ section h3::before {
     height: 3px;
     background-color: #888;
 }
-
 /* 段落 */
 section p,
 article p {
     margin-bottom: 1em;
     font-size: 0.9em;
 }
-
 /* プロフィール画像 */
 section img.aboutme {
     display: block;
@@ -128,49 +107,41 @@ section img.aboutme {
     height: auto;
     border-bottom-right-radius: 20px;
 }
-
 /* アイコン */
 section img.icon {
     vertical-align: middle;
     width: 1.5em;
     height: auto;
 }
-
 /* 画像 */
 section div.image img {
     width: 60px;
     height: 60px;
     object-fit: cover;
 }
-
 /* アーティクル */
 article {
     margin: 3em auto;
     width: 80%;
     max-width: 700px;
 }
-
 /* アーティクル画像 */
 article img {
     width: 100%;
     height: auto;
 }
-
 /* アーティクル内の段落 */
 article p {
     text-align: justify;
     word-break: break-all;
 }
-
 /* ====================================
    フォーム
 ==================================== */
-
 .contact-form {
     margin-top: 1em;
     text-align: left;
 }
-
 /* フォームのラベル */
 .contact-form label {
     display: block;
@@ -179,7 +150,6 @@ article p {
     color: #888;
     font-size: 0.9em;
 }
-
 /* 入力欄・本文欄 */
 .contact-form input,
 .contact-form textarea {
@@ -196,7 +166,6 @@ article p {
     letter-spacing: 0.1em;
     outline: none;
 }
-
 /* 名前・メールアドレス */
 .contact-form input[type="text"],
 .contact-form input[type="email"] {
@@ -204,7 +173,6 @@ article p {
     height: 40px;
     margin-bottom: 0.5em;
 }
-
 /* 本文 */
 .contact-form textarea {
     width: 100%;
@@ -212,14 +180,12 @@ article p {
     height: 150px;
     resize: vertical;
 }
-
 /* プレースホルダー */
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
     color: #fff;
     opacity: 1;
 }
-
 /* 送信ボタン */
 .contact-form button {
     margin-top: 1em;
@@ -233,19 +199,16 @@ article p {
     letter-spacing: 0.1em;
     cursor: pointer;
 }
-
 /* 送信ボタンにカーソルを合わせたとき */
 .contact-form button:hover {
     opacity: 0.8;
 }
-
 /* 詳しく見る・閉じるボタン */
 .information summary {
     cursor: pointer;
     text-align: left;
     padding: 8px;
 }
-
 /* リンクのアンダーラインを消す */
 .no-underline,
 .no-underline:link,
@@ -254,29 +217,21 @@ article p {
 .no-underline:active {
     text-decoration: none !important;
 }
-
 /* ====================================
    横幅768px以上
 ==================================== */
-
 @media screen and (min-width: 768px) {
-
     body {
         font-size: 14px;
     }
-
 }
-
 /* ====================================
    横幅1024px以上
 ==================================== */
-
 @media screen and (min-width: 1024px) {
-
     body {
         font-size: 15px;
     }
-
     header {
         position: fixed;
         top: 0;
@@ -284,311 +239,190 @@ article p {
         width: 50%;
         float: left;
     }
-
     main {
         width: 50%;
         float: right;
     }
-
 }
-
 /* ====================================
    スマートフォン用
 ==================================== */
-
 @media screen and (max-width: 767px) {
-
     .contact-form input[type="text"],
     .contact-form input[type="email"] {
         width: 210px;
         max-width: 100%;
     }
-
     .contact-form textarea {
         width: 100%;
     }
-
 }
-
 </style>
 </head>
-
-
 <body>
-
 <header>
-
-    <h1>green or blue?</h1>
-
-    <nav>
-        <ul>
-            <li>
-                <a href="#about">ABOUT ME</a>
-            </li>
-
-            <li>
-                <a href="#info">INFO</a>
-            </li>
-
-            <li>
-                <a href="#code">MURMUR</a>
-            </li>
-        </ul>
-    </nav>
-
-    <div id="footer">
-        Template by
-        <a href="https://ninawas.me" target="_blank">
-            NINA
-        </a>
-    </div>
-
+<h1>green or blue?</h1>
+<nav>
+    <ul>
+        <li>
+            <a href="#about">ABOUT ME</a>
+        </li>
+        <li>
+            <a href="#info">INFO</a>
+        </li>
+        <li>
+            <a href="#code">MURMUR</a>
+        </li>
+    </ul>
+</nav>
+<div id="footer">
+    Template by
+    <a href="https://ninawas.me" target="_blank">
+        NINA
+    </a>
+</div>
 </header>
-
-
 <main>
-
-    <!-- ABOUT ME -->
-    <section id="about">
-
-        <h2>ABOUT ME</h2>
-
-        <img src="4A84A6F2-42AB-40A6-B913-8292C2B69C42.png"
-             alt="aboutme"
-             class="aboutme">
-
-        <h3>
-            YAMADA
-
-            <a href="#">
-                <img src="無題43_20260921021332.png"
-                     alt="twitter"
-                     class="icon">
-            </a>
-        </h3>
-
-        <p>
-            ずっとゲームしてる人<br>
-        </p>
-
+<!-- ABOUT ME -->
+<section id="about">
+    <h2>ABOUT ME</h2>
+    <img src="4A84A6F2-42AB-40A6-B913-8292C2B69C42.png"
+         alt="aboutme"
+         class="aboutme">
+    <h3>
+        YAMADA
+        <a href="#">
+            <img src="無題43_20260921021332.png"
+                 alt="twitter"
+                 class="icon">
+        </a>
+    </h3>
+    <p>
+        ずっとゲームしてる人<br>
+    </p>
+    <br>
+    <!-- CONTACT -->
+    <h3>Contact</h3>
+    <p>
+        ご連絡はこちらからお願いします。
+    </p>
+    <form action="https://formspree.io/f/xppwpdjb"
+          method="POST"
+          class="contact-form">
+        <label for="name">
+            名前*必須
+        </label>
+        <input type="text"
+               id="name"
+               name="name"
+               placeholder="お名前"
+               required>
+        <label for="email">
+            連絡先
+        </label>
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="メールアドレス">
+        <label for="message">
+            本文*必須
+        </label>
+        <textarea id="message"
+                  name="message"
+                  placeholder="メッセージを入力してください"
+                  required></textarea>
+        <input type="hidden"
+               name="_subject"
+               value="green or blue? メッセージ">
+        <button type="submit">
+            送信する
+        </button>
+    </form>
+</section>
+<!-- INFORMATION -->
+<section id="info">
+    <h2>INFORMATION</h2>
+    当サイトは、個人が趣味で運営している非公式の🍏バンド二次創作サイトです。<br>
+    実在する人物・団体・作品等を題材とした夢小説を取り扱っておりますが、各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
+    ご理解いただける方のみ、以下の注意事項をご確認のうえ閲覧をお願いいたします。<br>
+    <h3>Attention</h3>
+    <details class="information">
+        <summary>詳しく見る</summary>
+        取扱ジャンル<br>
+        　M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
         <br>
-
-
-        <!-- CONTACT -->
-        <h3>Contact</h3>
-
-        <p>
-            ご連絡はこちらからお願いします。
-        </p>
-
-        <form action="https://formspree.io/f/xppwpdjb"
-              method="POST"
-              class="contact-form">
-
-            <label for="name">
-                名前
-            </label>
-
-            <input type="text"
-                   id="name"
-                   name="name"
-                   placeholder="お名前">
-
-
-            <label for="email">
-                連絡先(任意)
-            </label>
-
-            <input type="email"
-                   id="email"
-                   name="email"
-                   placeholder="メールアドレス">
-
-
-            <label for="message">
-                本文
-            </label>
-
-            <textarea id="message"
-                      name="message"
-                      placeholder="メッセージを入力してください"
-                      required></textarea>
-
-
-            <input type="hidden"
-                   name="_subject"
-                   value="green or blue? メッセージ">
-
-
-            <button type="submit">
-                送信する
-            </button>
-
-        </form>
-
-    </section>
-
-
-    <!-- INFORMATION -->
-    <section id="info">
-
-        <h2>INFORMATION</h2>
-
-        当サイトは、個人が趣味で運営している非公式の🍏バンド二次創作サイトです。<br>
-
-        実在する人物・団体・作品等を題材とした夢小説を取り扱っておりますが、各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
-
-        ご理解いただける方のみ、以下の注意事項をご確認のうえ閲覧をお願いいたします。<br>
-
-
-        <h3>Attention</h3>
-
-        <details class="information">
-
-            <summary>詳しく見る</summary>
-
-            取扱ジャンル<br>
-
-            　M/r/s/./ /G/R/E/E/N/ /A/P/P/L/E<br>
-
-            <br>
-
-            ・当サイトは非公式の二次創作サイトです。各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
-
-            ・実在する人物を題材とした作品を取り扱っております。苦手な方や意味をご理解いただけない方は閲覧をご遠慮ください。<br>
-
-            ・作品はすべてフィクションです。実在する人物・団体等への誹謗中傷や、現実の出来事を意図したものではありません。<br>
-
-            ・作品の内容には、恋愛描写、捏造設定、実際とは異なる人物像・関係性等が含まれる場合がございます。<br>
-
-            ・作品の閲覧・解釈は自己責任でお願いいたします。閲覧後の苦情やトラブルには対応いたしかねます。<br>
-
-            ・当サイト内における画像や内容、作品に一部生成AIを使用しております。あらかじめご了承ください。<br>
-
-            ・当サイト内の文章・画像・その他コンテンツの無断転載、複製、改変、二次配布、スクリーンショットの公開、転載は固く禁止いたします。パスの最後にメンバー人数(現在/1桁)付けるのをお忘れなく。<br>
-
-            ・当サイトのURLや作品内容を、SNS等の不特定多数の目に触れる場所で拡散する行為はお控えください。<br>
-
-            ・検索避け等の対策を行っております。サイト内のコンテンツを外部検索サイトやSNS等へ持ち出す行為はご遠慮ください。<br>
-
-            ・荒らし、晒し、誹謗中傷、作品や管理人への迷惑行為はおやめください。<br>
-
-            ・閲覧環境や端末によっては、表示が崩れる場合がございます。あらかじめご了承ください。<br>
-
-            <br>
-
-            nmmnを扱うサイトであることをご理解のうえ、節度ある閲覧をお願いいたします。<br>
-
-        </details>
-
-
+        ・当サイトは非公式の二次創作サイトです。各関係者様・ご本人様・所属事務所・制作会社等とは一切関係ございません。<br>
+        ・実在する人物を題材とした作品を取り扱っております。苦手な方や意味をご理解いただけない方は閲覧をご遠慮ください。<br>
+        ・作品はすべてフィクションです。実在する人物・団体等への誹謗中傷や、現実の出来事を意図したものではありません。<br>
+        ・作品の内容には、恋愛描写、捏造設定、実際とは異なる人物像・関係性等が含まれる場合がございます。<br>
+        ・作品の閲覧・解釈は自己責任でお願いいたします。閲覧後の苦情やトラブルには対応いたしかねます。<br>
+        ・当サイト内における画像や内容、作品に一部生成AIを使用しております。あらかじめご了承ください。<br>
+        ・当サイト内の文章・画像・その他コンテンツの無断転載、複製、改変、二次配布、スクリーンショットの公開、転載は固く禁止いたします。パスの最後にメンバー人数(現在/1桁)付けるのをお忘れなく。<br>
+        ・当サイトのURLや作品内容を、SNS等の不特定多数の目に触れる場所で拡散する行為はお控えください。<br>
+        ・検索避け等の対策を行っております。サイト内のコンテンツを外部検索サイトやSNS等へ持ち出す行為はご遠慮ください。<br>
+        ・荒らし、晒し、誹謗中傷、作品や管理人への迷惑行為はおやめください。<br>
+        ・閲覧環境や端末によっては、表示が崩れる場合がございます。あらかじめご了承ください。<br>
         <br>
-
-
-        <h3>Link</h3>
-
-        当サイトはリンクフリーではございません。<br>
-
-
+        nmmnを扱うサイトであることをご理解のうえ、節度ある閲覧をお願いいたします。<br>
+    </details>
+    <br>
+    <h3>Link</h3>
+    当サイトはリンクフリーではございません。<br>
+    <br>
+    <h3>Special thanks</h3>
+    <a href="https://ninawas.me"
+       class="no-underline">
+        NINA - ニーナ
+    </a>様<br>
+    <br>
+    <h3>other</h3>
+    <details class="information">
+        <summary>詳しく見る</summary>
+        当サイトの内容・構成・注意書き等は、予告なく変更する場合がございます。<br>
+        また、誤字脱字やリンク切れ等を発見された場合は、メールフォームから管理人までご連絡いただけますと幸いです。<br>
+        すべての方に快適に閲覧していただけるよう、最低限のマナーを守ってご利用ください。<br>
         <br>
-
-
-        <h3>Special thanks</h3>
-
-        <a href="https://ninawas.me"
-           class="no-underline">
-            NINA - ニーナ
-        </a>様<br>
-
-
         <br>
-
-
-        <h3>other</h3>
-
-        <details class="information">
-
-            <summary>詳しく見る</summary>
-
-            当サイトの内容・構成・注意書き等は、予告なく変更する場合がございます。<br>
-
-            また、誤字脱字やリンク切れ等を発見された場合は、メールフォームから管理人までご連絡いただけますと幸いです。<br>
-
-            すべての方に快適に閲覧していただけるよう、最低限のマナーを守ってご利用ください。<br>
-
-            <br>
-            <br>
-
-            最後までお読みいただき、ありがとうございます。パスワードはメジャーデビュー年月日数字8桁。<br>
-
-            <br>
-            <br>
-
-            <center>since 2026.09.20</center><br>
-
-            <br>
-            <br>
-
-        </details>
-
-    </section>
-
+        最後までお読みいただき、ありがとうございます。パスワードはメジャーデビュー年月日数字8桁。<br>
+        <br>
+        <br>
+        <center>since 2026.09.20</center><br>
+        <br>
+        <br>
+    </details>
+</section>
 </main>
-
-
 <!-- スムーススクロール -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 <script>
-
     $(function() {
-
         $('a[href^="#"]').click(function() {
-
             var speed = 800;
             var href = $(this).attr("href");
-
             var target = $(
                 href == "#" || href == ""
                 ? 'html'
                 : href
             );
-
             var position = target.offset().top;
-
             $('body,html').animate({
                 scrollTop: position
             }, speed, 'swing');
-
             return false;
-
         });
-
     });
-
 </script>
-
-
 <!-- 詳しく見る・閉じるの切り替え -->
 <script>
-
     const detailsList = document.querySelectorAll('.information');
-
     detailsList.forEach(function(info) {
-
         const button = info.querySelector('summary');
-
         info.addEventListener('toggle', function() {
-
             button.textContent = info.open
                 ? '閉じる'
                 : '詳しく見る';
-
         });
-
     });
-
 </script>
-
 </body>
 </html>
