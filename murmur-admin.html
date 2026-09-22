@@ -2,86 +2,39 @@
 <html lang="ja">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>murmur admin | green or blue?</title>
+<title>murmur admin</title>
 
 <style>
 
-@charset "UTF-8";
-
-/* Template & Designed by Towako. */
-/* https://ninawas.me */
-
-/* ウェブフォント */
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
 
-
-/* ====================================
-   全体
-==================================== */
-
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-weight: normal;
-    font-family: 'Kosugi Maru', sans-serif;
 }
-
-
-/* ====================================
-   基本設定
-==================================== */
 
 body {
+    margin: 0;
     background-color: #fff;
-    text-align: center;
-    line-height: 1.7;
-    letter-spacing: 0.1em;
-    font-size: 13px;
     color: #888;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 13px;
 }
-
-
-/* ====================================
-   メイン
-==================================== */
-
-main {
-    width: 100%;
-}
-
-
-/* ====================================
-   セクション
-==================================== */
 
 section {
     padding: 3em;
-    text-align: left;
 }
 
-
-/* ====================================
-   タイトル
-==================================== */
-
-section h2 {
-    margin-bottom: 2em;
+h2 {
+    margin: 0 0 2em;
     text-align: center;
-    font-family: 'Unica One', cursive;
+    font-family: 'Unica One', sans-serif;
+    font-size: 2em;
     font-weight: bold;
-    letter-spacing: 0.15em;
     color: #888;
 }
-
-
-/* ====================================
-   フォーム
-==================================== */
 
 .admin-form {
     width: 100%;
@@ -89,286 +42,207 @@ section h2 {
     margin: 0 auto;
 }
 
-
-/* ====================================
-   ラベル
-==================================== */
-
 .admin-form label {
     display: block;
-    margin-top: 1.5em;
-    margin-bottom: 0.4em;
-    color: #888;
+    margin: 1.5em 0 0.5em;
 }
-
-
-/* ====================================
-   入力欄
-==================================== */
 
 .admin-form input,
 .admin-form select,
 .admin-form textarea {
-
-    display: block;
-
     width: 100%;
-
-    padding: 0.7em;
-
+    padding: 0.7em 1em;
     background-color: #999;
-
     border: none;
-
-    border-radius: 0;
-
     border-bottom-right-radius: 20px;
-
     color: #fff;
-
     font-family: 'Kosugi Maru', sans-serif;
-
     font-size: 0.9em;
-
-    letter-spacing: 0.1em;
-
-    outline: none;
-
 }
 
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+    color: #eee;
+}
 
-/* ====================================
-   日付
-==================================== */
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+    outline: none;
+}
 
 .admin-form input[type="date"] {
     width: 220px;
 }
 
-
-/* ====================================
-   本文
-==================================== */
-
 .admin-form textarea {
-
     height: 200px;
-
     resize: vertical;
-
 }
-
-
-/* ====================================
-   プレースホルダー
-==================================== */
-
-.admin-form input::placeholder,
-.admin-form textarea::placeholder {
-
-    color: #fff;
-
-    opacity: 1;
-
-}
-
-
-/* ====================================
-   投稿ボタン
-==================================== */
 
 .admin-form button {
-
     display: block;
-
     margin: 2em 0 0;
-
     padding: 0.7em 2em;
-
     background-color: #999;
-
     border: none;
-
     border-bottom-right-radius: 20px;
-
     color: #fff;
-
     font-family: 'Kosugi Maru', sans-serif;
-
     font-size: 0.9em;
-
     letter-spacing: 0.1em;
-
     cursor: pointer;
-
 }
-
 
 .admin-form button:hover {
-
     opacity: 0.8;
-
 }
 
-
-/* ====================================
-   murmurへ戻る
-   トップページのボタンを反転
-==================================== */
+.message {
+    margin-top: 1.5em;
+    text-align: center;
+}
 
 .back {
-
     margin-top: 3em;
-
     text-align: center;
-
 }
-
 
 .back a {
-
     display: inline-block;
-
     padding: 0 0.5em;
-
     background-color: #999;
-
     color: #fff;
-
     text-decoration: none;
-
 }
-
 
 .back a:hover {
-
     opacity: 0.8;
-
 }
 
-
-/* ====================================
-   スマートフォン
-==================================== */
-
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 600px) {
 
     section {
-
         padding: 3em 2em;
-
     }
 
     .admin-form input[type="date"] {
-
         width: 100%;
-
     }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-
-<main>
-
 <section>
-
 
 <h2>murmur admin</h2>
 
+<form class="admin-form" id="murmurForm">
 
-<form class="admin-form">
+    <label for="adminKey">管理キー</label>
+    <input
+        type="password"
+        id="adminKey"
+        placeholder="管理キーを入力"
+        required
+    >
 
+    <label for="date">日付</label>
+    <input
+        type="date"
+        id="date"
+        required
+    >
 
-<!-- ====================================
-     日付
-==================================== -->
+    <label for="type">種類</label>
+    <select id="type" required>
+        <option value="murmur">murmur</option>
+        <option value="UP">UP</option>
+    </select>
 
-<label for="date">
-    日付
-</label>
+    <label for="text">本文</label>
+    <textarea
+        id="text"
+        placeholder="ここに入力"
+        required
+    ></textarea>
 
-<input
-    type="date"
-    id="date"
-    name="date"
->
+    <button type="submit">投稿する</button>
 
-
-<!-- ====================================
-     種類
-==================================== -->
-
-<label for="type">
-    種類
-</label>
-
-<select
-    id="type"
-    name="type"
->
-
-    <option value="murmur">
-        murmur
-    </option>
-
-    <option value="UP">
-        UP
-    </option>
-
-</select>
-
-
-<!-- ====================================
-     本文
-==================================== -->
-
-<label for="text">
-    本文
-</label>
-
-<textarea
-    id="text"
-    name="text"
-    placeholder="ここに本文を入力してください"
-></textarea>
-
-
-<!-- ====================================
-     投稿
-==================================== -->
-
-<button type="submit">
-    投稿する
-</button>
-
+    <div class="message" id="message"></div>
 
 </form>
 
-
-<!-- ====================================
-     murmurへ戻る
-==================================== -->
-
 <div class="back">
-
-    <a href="murmur.html">
-        murmurへ戻る
-    </a>
-
+    <a href="murmur.html">murmurへ戻る</a>
 </div>
-
 
 </section>
 
-</main>
 
+<script>
+
+const WORKER_URL = "https://murmur-post.melodic-ars.workers.dev";
+
+const form = document.getElementById("murmurForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    message.textContent = "投稿中…";
+
+    const adminKey = document.getElementById("adminKey").value;
+    const date = document.getElementById("date").value;
+    const type = document.getElementById("type").value;
+    const text = document.getElementById("text").value;
+
+    try {
+
+        const response = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                adminKey: adminKey,
+                date: date,
+                type: type,
+                text: text
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            message.textContent = "投稿しました！";
+
+            document.getElementById("text").value = "";
+
+        } else {
+
+            message.textContent =
+                result.message || "投稿に失敗しました。";
+
+        }
+
+    } catch (error) {
+
+        message.textContent =
+            "通信エラーが発生しました。";
+
+    }
+
+});
+
+</script>
 
 </body>
 
