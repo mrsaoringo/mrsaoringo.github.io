@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>murmur admin | green or blue?</title>
+
+<style>
+
+@charset "UTF-8";
+
+/* Template & Designed by Towako. */
+/* https://ninawas.me */
+
+/* ウェブフォント */
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
+
+
+/* ====================================
+   全体
+==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+
+
+/* ====================================
+   基本設定
+==================================== */
+
+body {
+    background-color: #fff;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    color: #888;
+}
+
+
+/* ====================================
+   メイン
+==================================== */
+
+main {
+    width: 100%;
+}
+
+
+/* ====================================
+   セクション
+==================================== */
+
+section {
+    padding: 3em;
+    text-align: left;
+}
+
+
+/* ====================================
+   タイトル
+==================================== */
+
+section h2 {
+    margin-bottom: 2em;
+    text-align: center;
+    font-family: 'Unica One', cursive;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    color: #888;
+}
+
+
+/* ====================================
+   フォーム
+==================================== */
+
+.admin-form {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+
+/* ====================================
+   ラベル
+==================================== */
+
+.admin-form label {
+    display: block;
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+    color: #888;
+}
+
+
+/* ====================================
+   入力欄
+==================================== */
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 0.7em;
+
+    background-color: #999;
+
+    border: none;
+
+    border-radius: 0;
+
+    border-bottom-right-radius: 20px;
+
+    color: #fff;
+
+    font-family: 'Kosugi Maru', sans-serif;
+
+    font-size: 0.9em;
+
+    letter-spacing: 0.1em;
+
+    outline: none;
+
+}
+
+
+/* 日付 */
+
+.admin-form input[type="date"] {
+    width: 220px;
+}
+
+
+/* 本文 */
+
+.admin-form textarea {
+
+    height: 200px;
+
+    resize: vertical;
+
+}
+
+
+/* プレースホルダー */
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+
+    color: #fff;
+
+    opacity: 1;
+
+}
+
+
+/* ====================================
+   投稿ボタン
+==================================== */
+
+.admin-form button {
+
+    display: block;
+
+    margin: 2em auto 0;
+
+    padding: 0.7em 2em;
+
+    background-color: #999;
+
+    border: none;
+
+    border-bottom-right-radius: 20px;
+
+    color: #fff;
+
+    font-family: 'Kosugi Maru', sans-serif;
+
+    font-size: 0.9em;
+
+    letter-spacing: 0.1em;
+
+    cursor: pointer;
+
+}
+
+
+.admin-form button:hover {
+
+    opacity: 0.8;
+
+}
+
+
+/* ====================================
+   TOPへ戻る
+==================================== */
+
+.back {
+
+    margin-top: 3em;
+
+    text-align: center;
+
+}
+
+
+.back a {
+
+    display: inline-block;
+
+    padding: 0.5em 1.5em;
+
+    background-color: #999;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    border-bottom-right-radius: 20px;
+
+}
+
+
+.back a:hover {
+
+    opacity: 0.8;
+
+}
+
+
+/* ====================================
+   スマートフォン
+==================================== */
+
+@media screen and (max-width: 767px) {
+
+    section {
+
+        padding: 3em 2em;
+
+    }
+
+    .admin-form input[type="date"] {
+
+        width: 100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<main>
+
+<section>
+
+
+<h2>murmur admin</h2>
+
+
+<form class="admin-form">
+
+
+<!-- 日
