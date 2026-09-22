@@ -9,89 +9,165 @@
 
 <style>
 
+@charset "UTF-8";
+
+/* Template & Designed by Towako. */
+/* https://ninawas.me */
+
+/* ウェブフォントの読み込み */
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
 
+
+/* ====================================
+   全体に適用する
+==================================== */
+
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Kosugi Maru', sans-serif;
 }
 
+
+/* ====================================
+   基本設定
+==================================== */
+
 body {
-    margin: 0;
     background-color: #fff;
-    color: #888;
-    font-family: 'Kosugi Maru', sans-serif;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
     font-size: 13px;
+    color: #888;
 }
+
+
+/* ====================================
+   リンク
+==================================== */
+
+a {
+    color: #888;
+}
+
+
+/* ====================================
+   セクション
+==================================== */
 
 section {
     padding: 3em;
+    text-align: justify;
+    word-break: break-all;
 }
 
-h2 {
-    margin: 0 0 2em;
+
+/* ====================================
+   タイトル
+==================================== */
+
+section h2 {
     text-align: center;
-    font-family: 'Unica One', sans-serif;
-    font-size: 1.5em;
-    font-weight: bold;
+    font-family: 'Unica One', cursive;
+    font-size: 2em;
+    letter-spacing: 0.15em;
     color: #888;
+    margin-bottom: 2em;
 }
+
+
+/* ====================================
+   フォーム
+==================================== */
 
 .admin-form {
     width: 100%;
-    max-width: 650px;
+    max-width: 425px;
     margin: 0 auto;
+    text-align: left;
 }
+
+
+/* ラベル */
 
 .admin-form label {
     display: block;
-    margin: 1.5em 0 0.5em;
+    margin-top: 0.8em;
+    margin-bottom: 0.2em;
+    color: #888;
+    font-size: 0.9em;
 }
+
+
+/* 入力欄・種類・本文 */
 
 .admin-form input,
 .admin-form select,
 .admin-form textarea {
+    display: block;
     width: 100%;
-    padding: 0.7em 1em;
+    -webkit-appearance: none;
+    padding: 0.5em 0.7em;
+    background-color: #999;
+    border: none;
+    border-radius: 0;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    outline: none;
+}
+
+
+/* 入力欄 */
+
+.admin-form input,
+.admin-form select {
+    height: 40px;
+}
+
+
+/* 日付 */
+
+.admin-form input[type="date"] {
+    width: 210px;
+}
+
+
+/* 本文 */
+
+.admin-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+
+/* プレースホルダー */
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+
+/* ====================================
+   投稿ボタン
+==================================== */
+
+.admin-form button {
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
     background-color: #999;
     border: none;
     border-bottom-right-radius: 20px;
     color: #fff;
     font-family: 'Kosugi Maru', sans-serif;
     font-size: 0.9em;
-}
-
-.admin-form input::placeholder,
-.admin-form textarea::placeholder {
-    color: #eee;
-}
-
-.admin-form input:focus,
-.admin-form select:focus,
-.admin-form textarea:focus {
-    outline: none;
-}
-
-.admin-form input[type="date"] {
-    width: 220px;
-}
-
-.admin-form textarea {
-    height: 200px;
-    resize: vertical;
-}
-
-/* 投稿するボタン */
-
-.admin-form button {
-    display: block;
-    margin: 2em 0 0;
-    padding: 0.7em 2em;
-    background-color: #999;
-    border: none;
-    border-bottom-right-radius: 20px;
-    color: #fff;
-    font-family: 'Kosugi Maru', sans-serif;
-    font-size: 1em;
     letter-spacing: 0.1em;
     cursor: pointer;
 }
@@ -100,23 +176,35 @@ h2 {
     opacity: 0.8;
 }
 
+
+/* 投稿結果 */
+
 .message {
     margin-top: 1.5em;
     text-align: center;
 }
 
-/* murmurへ戻る */
+
+/* ====================================
+   murmurへ戻る
+   TOPへ戻ると同じサイズ
+==================================== */
 
 .back {
-    margin-top: 3em;
+    margin-top: 1em;
     text-align: center;
 }
 
 .back a {
     display: inline-block;
-    padding: 0 0.5em;
+    padding: 0.5em 1.5em;
     background-color: #999;
+    border: none;
+    border-bottom-right-radius: 20px;
     color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
     text-decoration: none;
 }
 
@@ -124,14 +212,33 @@ h2 {
     opacity: 0.8;
 }
 
-@media screen and (max-width: 600px) {
+
+/* ====================================
+   横幅768px以上
+==================================== */
+
+@media screen and (min-width: 768px) {
+
+    body {
+        font-size: 14px;
+    }
+
+}
+
+
+/* ====================================
+   スマートフォン用
+==================================== */
+
+@media screen and (max-width: 767px) {
 
     section {
         padding: 3em 2em;
     }
 
     .admin-form input[type="date"] {
-        width: 100%;
+        width: 210px;
+        max-width: 100%;
     }
 
 }
@@ -146,9 +253,15 @@ h2 {
 
 <h2>murmur admin</h2>
 
+
 <form class="admin-form" id="murmurForm">
 
-    <label for="adminKey">管理キー</label>
+
+    <!-- 管理キー -->
+
+    <label for="adminKey">
+        管理キー
+    </label>
 
     <input
         type="password"
@@ -158,7 +271,11 @@ h2 {
     >
 
 
-    <label for="date">日付</label>
+    <!-- 日付 -->
+
+    <label for="date">
+        日付
+    </label>
 
     <input
         type="date"
@@ -167,17 +284,33 @@ h2 {
     >
 
 
-    <label for="type">種類</label>
+    <!-- 種類 -->
 
-    <select id="type" required>
+    <label for="type">
+        種類
+    </label>
 
-        <option value="murmur">murmur</option>
-        <option value="UP">UP</option>
+    <select
+        id="type"
+        required
+    >
+
+        <option value="murmur">
+            murmur
+        </option>
+
+        <option value="UP">
+            UP
+        </option>
 
     </select>
 
 
-    <label for="text">本文</label>
+    <!-- 本文 -->
+
+    <label for="text">
+        本文
+    </label>
 
     <textarea
         id="text"
@@ -186,16 +319,32 @@ h2 {
     ></textarea>
 
 
-    <button type="submit">投稿する</button>
+    <!-- 投稿 -->
 
-    <div class="message" id="message"></div>
+    <button type="submit">
+        投稿する
+    </button>
+
+
+    <div
+        class="message"
+        id="message">
+    </div>
+
 
 </form>
 
 
+<!-- murmurへ戻る -->
+
 <div class="back">
-    <a href="murmur.html">murmurへ戻る</a>
+
+    <a href="murmur.html">
+        murmurへ戻る
+    </a>
+
 </div>
+
 
 </section>
 
@@ -214,79 +363,107 @@ const message =
     document.getElementById("message");
 
 
-form.addEventListener("submit", async function(event) {
+form.addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    message.textContent = "投稿中…";
-
-
-    const adminKey =
-        document.getElementById("adminKey").value;
-
-    const date =
-        document.getElementById("date").value;
-
-    const type =
-        document.getElementById("type").value;
-
-    const text =
-        document.getElementById("text").value;
+        message.textContent =
+            "投稿中…";
 
 
-    try {
-
-        const response = await fetch(WORKER_URL, {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                adminKey: adminKey,
-                date: date,
-                type: type,
-                text: text
-
-            })
-
-        });
+        const adminKey =
+            document.getElementById(
+                "adminKey"
+            ).value;
 
 
-        const result =
-            await response.json();
+        const date =
+            document.getElementById(
+                "date"
+            ).value;
 
 
-        if (result.success) {
+        const type =
+            document.getElementById(
+                "type"
+            ).value;
+
+
+        const text =
+            document.getElementById(
+                "text"
+            ).value;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    WORKER_URL,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            adminKey:
+                                adminKey,
+
+                            date:
+                                date,
+
+                            type:
+                                type,
+
+                            text:
+                                text
+
+                        })
+
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (result.success) {
+
+                message.textContent =
+                    "投稿しました！";
+
+                document.getElementById(
+                    "text"
+                ).value = "";
+
+            } else {
+
+                message.textContent =
+                    result.message ||
+                    "投稿に失敗しました。";
+
+            }
+
+
+        } catch (error) {
 
             message.textContent =
-                "投稿しました！";
-
-            document.getElementById("text").value = "";
-
-        } else {
-
-            message.textContent =
-                result.message ||
-                "投稿に失敗しました。";
+                "通信エラーが発生しました。";
 
         }
 
-
-    } catch (error) {
-
-        message.textContent =
-            "通信エラーが発生しました。";
-
     }
-
-});
+);
 
 </script>
 
 </body>
-
 </html>
