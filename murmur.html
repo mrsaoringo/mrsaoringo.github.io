@@ -1,1 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>murmur | green or blue?</title>
+
+<style>
+
+@charset "UTF-8";
+
+/* Template & Designed by Towako. */
+/* https://ninawas.me */
+
+/* ウェブフォントの読み込み */
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
+
+
+/* ====================================
+   全体に適用する
+==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+
+
+/* ====================================
+   基本設定
+==================================== */
+
+body {
+    background-color: #fff;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    color: #888;
+}
+
+
+/* ====================================
+   リンク
+==================================== */
+
+a {
+    color: #888;
+}
+
+
+/* ====================================
+   ヘッダー
+==================================== */
+
+header {
+    position: relative;
+    min-height: 100vh;
+    background: url('C8C0B6C8-5D7D-4847-8D6E-461FD510E1C1.png') center/cover;
+}
+
+
+/* ====================================
+   見出し
+==================================== */
+
+header h1 {
+    text-indent: 0.5em;
+    text-align: left;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    font-family: 'Unica One', cursive;
+    font-size: 2.8em;
+    color: #fff;
+}
+
+
+/* ====================================
+   ナビゲーション
+==================================== */
+
+header nav {
+    text-align: right;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+header nav ul li a {
+    display: inline-block;
+    padding: 0 0.5em;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+
+/* ====================================
+   ヘッダー下部
+==================================== */
+
+header #footer {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 1em;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ====================================
+   セクション
+==================================== */
+
+section {
+    padding: 3em;
+    text-align: justify;
+    word-break: break-all;
+}
+
+
+/* ====================================
+   セクション見出し
+==================================== */
+
+section h2 {
+    text-align: center;
+    margin-bottom: 2em;
+    font-family: 'Unica One', cursive;
+    letter-spacing: 0.15em;
+    color: #888;
+}
+
+section h3 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-family: 'Unica One', cursive;
+}
+
+
+/* ====================================
+   見出しの下線
+==================================== */
+
+section h3::before {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: -0.5em;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: #888;
+}
+
+
+/* ====================================
+   段落
+==================================== */
+
+section p,
+article p {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+
+
+/* ====================================
+   murmur
+==================================== */
+
+.murmur-list {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 650px;
+}
+
+
+/* ひとつの記事 */
+
+.murmur-item {
+    margin-bottom: 3em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* 日付 */
+
+.murmur-date {
+    margin-bottom: 0.8em;
+    color: #aaa;
+    font-family: 'Unica One', cursive;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+}
+
+
+/* UP / murmur のラベル */
+
+.murmur-type {
+    display: inline-block;
+    margin-right: 0.5em;
+    padding: 0 0.6em;
+    background-color: #999;
+    color: #fff;
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+}
+
+
+/* 本文 */
+
+.murmur-text {
+    text-align: left;
+    line-height: 2;
+}
+
+
+/* リンク */
+
+.murmur-text a {
+    text-decoration: underline;
+}
+
+
+/* ====================================
+   細かいテキスト設定
+==================================== */
+
+.red {
+    color: #c66;
+}
+
+.small {
+    font-size: 0.85em;
+}
+
+
+/* ====================================
+   トップへ戻る
+==================================== */
+
+.back {
+    margin-top: 4em;
+    text-align: center;
+}
+
+.back a {
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    background-color: #999;
+    color: #fff;
+    text-decoration: none;
+    border-bottom-right-radius: 20px;
+}
+
+.back a:hover {
+    opacity: 0.8;
+}
+
+
+/* ====================================
+   横幅768px以上
+==================================== */
+
+@media screen and (min-width: 768px) {
+
+    body {
+        font-size: 14px;
+    }
+
+}
+
+
+/* ====================================
+   横幅1024px以上
+==================================== */
+
+@media screen and (min-width: 1024px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        float: left;
+    }
+
+    main {
+        width: 50%;
+        float: right;
+    }
+
+}
+
+
+/* ====================================
+   スマートフォン用
+==================================== */
+
+@media screen and (max-width: 767px) {
+
+    section {
+        padding: 3em 2em;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ====================================
+     HEADER
+==================================== -->
+
+<header>
+
+<h1>murmur</h1>
+
+<nav>
+    <ul>
+
+        <li>
+            <a href="index.html#about">
+                ABOUT ME
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#info">
+                INFO
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#main">
+                MAIN
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+<div id="footer">
+
+    green or blue?
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<!-- ====================================
+     MURMUR
+==================================== -->
+
+<section id="murmur">
+
+<h2>murmur</h2>
+
+
+<div class="murmur-list">
+
+
+<!-- ====================================
+     ここから投稿
+==================================== -->
+
+
+<article class="murmur-item">
+
+    <div class="murmur-date">
+        2026.09.22
+    </div>
+
+    <div class="murmur-text">
+
+        <span class="murmur-type">murmur</span>
+
+        サイト作成中。<br>
+        ちょこちょこ更新していきます◎
+
+    </div>
+
+</article>
+
+
+<article class="murmur-item">
+
+    <div class="murmur-date">
+        2026.09.20
+    </div>
+
+    <div class="murmur-text">
+
+        <span class="murmur-type">UP</span>
+
+        サイトを開設しました。<br>
+        これから少しずつ作品を増やしていく予定です。
+
+    </div>
+
+</article>
+
+
+<!-- ====================================
+     投稿ここまで
+==================================== -->
+
+
+</div>
+
+
+<!-- トップへ戻る -->
+
+<div class="back">
+
+    <a href="index.html">
+        TOPへ戻る
+    </a>
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+</body>
+</html>
