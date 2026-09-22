@@ -55,67 +55,6 @@ a {
 
 
 /* ====================================
-   ヘッダー
-==================================== */
-
-header {
-    position: relative;
-    min-height: 100vh;
-    background: url('C8C0B6C8-5D7D-4847-8D6E-461FD510E1C1.png') center/cover;
-}
-
-
-/* ====================================
-   見出し
-==================================== */
-
-header h1 {
-    text-indent: 0.5em;
-    text-align: left;
-    letter-spacing: 0.2em;
-    font-weight: bold;
-    font-family: 'Unica One', cursive;
-    font-size: 2.8em;
-    color: #fff;
-}
-
-
-/* ====================================
-   ナビゲーション
-==================================== */
-
-header nav {
-    text-align: right;
-}
-
-header nav ul li {
-    display: inline-block;
-    margin-right: 1em;
-}
-
-header nav ul li a {
-    display: inline-block;
-    padding: 0 0.5em;
-    background-color: #fff;
-    text-decoration: none;
-}
-
-
-/* ====================================
-   ヘッダー下部
-==================================== */
-
-header #footer {
-    position: absolute;
-    bottom: 25%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0 1em;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-
-/* ====================================
    セクション
 ==================================== */
 
@@ -127,7 +66,8 @@ section {
 
 
 /* ====================================
-   セクション見出し
+   タイトル
+   トップページのABOUT MEと同じ設定
 ==================================== */
 
 section h2 {
@@ -136,40 +76,6 @@ section h2 {
     font-family: 'Unica One', cursive;
     letter-spacing: 0.15em;
     color: #888;
-}
-
-section h3 {
-    position: relative;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-family: 'Unica One', cursive;
-}
-
-
-/* ====================================
-   見出しの下線
-==================================== */
-
-section h3::before {
-    position: absolute;
-    display: block;
-    content: '';
-    bottom: -0.5em;
-    left: 0;
-    width: 30px;
-    height: 3px;
-    background-color: #888;
-}
-
-
-/* ====================================
-   段落
-==================================== */
-
-section p,
-article p {
-    margin-bottom: 1em;
-    font-size: 0.9em;
 }
 
 
@@ -184,7 +90,7 @@ article p {
 }
 
 
-/* ひとつの記事 */
+/* 投稿ひとつ分 */
 
 .murmur-item {
     margin-bottom: 3em;
@@ -222,26 +128,29 @@ article p {
 .murmur-text {
     text-align: left;
     line-height: 2;
-}
-
-
-/* リンク */
-
-.murmur-text a {
-    text-decoration: underline;
+    white-space: pre-wrap;
 }
 
 
 /* ====================================
-   細かいテキスト設定
+   画像
 ==================================== */
 
-.red {
-    color: #c66;
+.murmur-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1em auto 0;
 }
 
-.small {
-    font-size: 0.85em;
+
+/* ====================================
+   投稿がないとき
+==================================== */
+
+.no-murmur {
+    text-align: center;
+    padding: 3em 0;
 }
 
 
@@ -291,19 +200,6 @@ article p {
         font-size: 15px;
     }
 
-    header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 50%;
-        float: left;
-    }
-
-    main {
-        width: 50%;
-        float: right;
-    }
-
 }
 
 
@@ -324,66 +220,22 @@ article p {
 
 
 <body>
-<main>
 
 
 <!-- ====================================
      MURMUR
 ==================================== -->
 
-<section id="murmur">
+<section>
 
 <h2>murmur</h2>
 
 
-<div class="murmur-list">
+<div class="murmur-list" id="murmur-list">
 
-
-<!-- ====================================
-     ここから投稿
-==================================== -->
-
-
-<article class="murmur-item">
-
-    <div class="murmur-date">
-        2026.09.22
+    <div class="no-murmur">
+        読み込み中……
     </div>
-
-    <div class="murmur-text">
-
-        <span class="murmur-type">murmur</span>
-
-        サイト作成中。<br>
-        ちょこちょこ更新していきます◎
-
-    </div>
-
-</article>
-
-
-<article class="murmur-item">
-
-    <div class="murmur-date">
-        2026.09.20
-    </div>
-
-    <div class="murmur-text">
-
-        <span class="murmur-type">UP</span>
-
-        サイトを開設しました。<br>
-        これから少しずつ作品を増やしていく予定です。
-
-    </div>
-
-</article>
-
-
-<!-- ====================================
-     投稿ここまで
-==================================== -->
-
 
 </div>
 
@@ -402,7 +254,145 @@ article p {
 </section>
 
 
-</main>
+<!-- ====================================
+     murmur-data.jsonを読み込む
+==================================== -->
+
+<script>
+
+fetch('murmur-data.json')
+    .then(function(response) {
+
+        if (!response.ok) {
+            throw new Error('データを読み込めませんでした');
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(data) {
+
+        const list = document.getElementById('murmur-list');
+
+        list.innerHTML = '';
+
+
+        /* 投稿を新しい順に並べる */
+
+        data.sort(function(a, b) {
+
+            return new Date(b.date) - new Date(a.date);
+
+        });
+
+
+        /* 投稿がない場合 */
+
+        if (data.length === 0) {
+
+            list.innerHTML =
+                '<div class="no-murmur">' +
+                'まだ投稿はありません。' +
+                '</div>';
+
+            return;
+
+        }
+
+
+        /* 投稿を表示 */
+
+        data.forEach(function(item) {
+
+            const article = document.createElement('article');
+
+            article.className = 'murmur-item';
+
+
+            /* 日付 */
+
+            const date = document.createElement('div');
+
+            date.className = 'murmur-date';
+
+            date.textContent = item.date;
+
+
+            /* 本文 */
+
+            const text = document.createElement('div');
+
+            text.className = 'murmur-text';
+
+
+            /* 種類 */
+
+            if (item.type) {
+
+                const type = document.createElement('span');
+
+                type.className = 'murmur-type';
+
+                type.textContent = item.type;
+
+                text.appendChild(type);
+
+            }
+
+
+            /* 本文 */
+
+            const message = document.createElement('span');
+
+            message.textContent = item.text;
+
+            text.appendChild(message);
+
+
+            /* 本文を追加 */
+
+            article.appendChild(date);
+
+            article.appendChild(text);
+
+
+            /* 画像 */
+
+            if (item.image) {
+
+                const image = document.createElement('img');
+
+                image.className = 'murmur-image';
+
+                image.src = item.image;
+
+                image.alt = '';
+
+                article.appendChild(image);
+
+            }
+
+
+            list.appendChild(article);
+
+        });
+
+    })
+
+
+    .catch(function(error) {
+
+        console.error(error);
+
+        document.getElementById('murmur-list').innerHTML =
+            '<div class="no-murmur">' +
+            '投稿を読み込めませんでした。' +
+            '</div>';
+
+    });
+
+</script>
 
 
 </body>
