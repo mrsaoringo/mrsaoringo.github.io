@@ -20,9 +20,7 @@
     </nav>
     <div id="footer">
         Template by
-        <a href="https://ninawas.me" target="_blank">
-            NINA
-        </a>
+        <a href="https://ninawas.me" target="_blank">NINA</a>
     </div>
 </header>
 
@@ -176,11 +174,13 @@
         $('a[href^="#"]').click(function() {
             var speed = 800;
             var href = $(this).attr("href");
-            var target = (
+
+            var target = $(
                 href == "#" || href == ""
                 ? 'html'
                 : href
             );
+
             var position = target.offset().top;
 
             $('body,html').animate({
