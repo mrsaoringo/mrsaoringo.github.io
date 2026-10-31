@@ -1,15 +1,477 @@
+
+@charset "UTF-8";
+
+/* ====================================
+   green or blue?
+   共通デザイン
+==================================== */
+
+/* ウェブフォント */
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
+
+
+/* ====================================
+   全体設定
+==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+
 body {
-  background: #fffafc;
-  color: #55434b;
-  font-family: sans-serif;
-  text-align: center;
-  padding: 30px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    color: #888;
 }
 
-h1 {
-  color: #c47b98;
+a {
+    color: #888;
 }
 
-p {
-  font-size: 16px;
+
+/* ====================================
+   ヘッダー（TOPページ）
+==================================== */
+
+header {
+    position: relative;
+    min-height: 100vh;
+    background: url('C8C0B6C8-5D7D-4847-8D6E-461FD510E1C1.png') center/cover;
+}
+
+header h1 {
+    text-indent: 0.5em;
+    text-align: left;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    font-family: 'Unica One', cursive;
+    font-size: 2.8em;
+    color: #fff;
+}
+
+header nav {
+    text-align: right;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+header nav ul li a {
+    display: inline-block;
+    padding: 0 0.5em;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+header #footer {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 1em;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ====================================
+   メイン・セクション
+==================================== */
+
+section {
+    padding: 3em;
+    text-align: justify;
+    word-break: break-all;
+}
+
+section h2 {
+    text-align: center;
+    font-family: 'Unica One', cursive;
+    font-size: 2em;
+    letter-spacing: 0.15em;
+    color: #888;
+    margin-bottom: 2em;
+}
+
+section h3 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-family: 'Unica One', cursive;
+}
+
+section h3::before {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: -0.5em;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: #888;
+}
+
+section p,
+article p {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+
+
+/* ====================================
+   TOPページ画像
+==================================== */
+
+section img.aboutme {
+    display: block;
+    width: 150px;
+    height: auto;
+    border-bottom-right-radius: 20px;
+}
+
+section img.icon {
+    vertical-align: middle;
+    width: 1.5em;
+    height: auto;
+}
+
+section div.image img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+
+/* ====================================
+   CONTACTフォーム
+==================================== */
+
+.contact-form {
+    margin-top: 1em;
+    text-align: left;
+}
+
+.contact-form label {
+    display: block;
+    margin-top: 0.8em;
+    margin-bottom: 0.2em;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.contact-form input,
+.contact-form textarea {
+    display: block;
+    -webkit-appearance: none;
+    padding: 0.5em 0.7em;
+    background-color: #999;
+    border: none;
+    border-radius: 0;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    outline: none;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"] {
+    width: 210px;
+    height: 40px;
+    margin-bottom: 0.5em;
+}
+
+.contact-form textarea {
+    width: 100%;
+    max-width: 425px;
+    height: 150px;
+    resize: vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+.contact-form button {
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+    background-color: #999;
+    border: none;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    opacity: 0.8;
+}
+
+
+/* ====================================
+   INFORMATION
+==================================== */
+
+.information summary {
+    cursor: pointer;
+    text-align: left;
+    padding: 8px;
+}
+
+
+/* ====================================
+   murmur一覧
+==================================== */
+
+.murmur-list {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 650px;
+}
+
+.murmur-item {
+    margin-bottom: 3em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+}
+
+.murmur-date {
+    margin-bottom: 0.8em;
+    color: #aaa;
+    font-family: 'Unica One', cursive;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+}
+
+.murmur-type {
+    display: inline-block;
+    margin-right: 0.5em;
+    padding: 0 0.6em;
+    background-color: #999;
+    color: #fff;
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+}
+
+.murmur-text {
+    text-align: left;
+    line-height: 2;
+    white-space: pre-wrap;
+}
+
+.murmur-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1em auto 0;
+}
+
+.no-murmur {
+    text-align: center;
+    padding: 3em 0;
+}
+
+
+/* ====================================
+   管理画面
+==================================== */
+
+.admin-form {
+    width: 100%;
+    max-width: 425px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.admin-form label {
+    display: block;
+    margin-top: 0.8em;
+    margin-bottom: 0.2em;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+    padding: 0.5em 0.7em;
+    background-color: #999;
+    border: none;
+    border-radius: 0;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    outline: none;
+}
+
+.admin-form input,
+.admin-form select {
+    height: 40px;
+}
+
+.admin-form input[type="date"] {
+    width: 210px;
+}
+
+.admin-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+.admin-form button {
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+    background-color: #999;
+    border: none;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.admin-form button:hover {
+    opacity: 0.8;
+}
+
+.message {
+    margin-top: 1.5em;
+    text-align: center;
+}
+
+
+/* ====================================
+   戻るボタン
+   角丸なし
+==================================== */
+
+.back {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.back a {
+    display: inline-block;
+    margin-top: 0;
+    padding: 0.5em 1.5em;
+    background-color: #999;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.back a:hover {
+    opacity: 0.8;
+}
+
+
+/* ====================================
+   細かい設定
+==================================== */
+
+.red {
+    color: #c66;
+}
+
+.small {
+    font-size: 0.85em;
+}
+
+.no-underline,
+.no-underline:link,
+.no-underline:visited,
+.no-underline:hover,
+.no-underline:active {
+    text-decoration: none !important;
+}
+
+
+/* ====================================
+   タブレット・PC
+==================================== */
+
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+
+/* ====================================
+   PC
+==================================== */
+
+@media screen and (min-width: 1024px) {
+    body {
+        font-size: 15px;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        float: left;
+    }
+
+    main {
+        width: 50%;
+        float: right;
+    }
+}
+
+
+/* ====================================
+   スマートフォン
+==================================== */
+
+@media screen and (max-width: 767px) {
+    section {
+        padding: 3em 2em;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"] {
+        width: 210px;
+        max-width: 100%;
+    }
+
+    .contact-form textarea {
+        width: 100%;
+    }
+
+    .admin-form input[type="date"] {
+        width: 210px;
+        max-width: 100%;
+    }
 }
