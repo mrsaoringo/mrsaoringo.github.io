@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -7,226 +8,11 @@
 
 <title>murmur | green or blue?</title>
 
-<style>
+<link rel="stylesheet" href="style.css">
 
-@charset "UTF-8";
-
-/* Template & Designed by Towako. */
-/* https://ninawas.me */
-
-/* ウェブフォントの読み込み */
-@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Unica+One&display=swap');
-
-
-/* ====================================
-   全体に適用する
-==================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-weight: normal;
-    font-family: 'Kosugi Maru', sans-serif;
-}
-
-
-/* ====================================
-   基本設定
-==================================== */
-
-body {
-    background-color: #fff;
-    text-align: center;
-    line-height: 1.7;
-    letter-spacing: 0.1em;
-    font-size: 13px;
-    color: #888;
-}
-
-
-/* ====================================
-   リンク
-==================================== */
-
-a {
-    color: #888;
-}
-
-
-/* ====================================
-   セクション
-==================================== */
-
-section {
-    padding: 3em;
-    text-align: justify;
-    word-break: break-all;
-}
-
-
-/* ====================================
-   タイトル
-==================================== */
-
-section h2 {
-    text-align: center;
-    font-family: 'Unica One', cursive;
-    font-size: 2em;
-    letter-spacing: 0.15em;
-    color: #888;
-    margin-bottom: 2em;
-}
-
-
-/* ====================================
-   murmur
-==================================== */
-
-.murmur-list {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 650px;
-}
-
-
-/* 投稿ひとつ分 */
-
-.murmur-item {
-    margin-bottom: 3em;
-    padding-bottom: 2em;
-    border-bottom: 1px solid #ddd;
-}
-
-
-/* 日付 */
-
-.murmur-date {
-    margin-bottom: 0.8em;
-    color: #aaa;
-    font-family: 'Unica One', cursive;
-    font-size: 1em;
-    letter-spacing: 0.1em;
-}
-
-
-/* UP / murmur のラベル */
-
-.murmur-type {
-    display: inline-block;
-    margin-right: 0.5em;
-    padding: 0 0.6em;
-    background-color: #999;
-    color: #fff;
-    font-size: 0.75em;
-    letter-spacing: 0.05em;
-}
-
-
-/* 本文 */
-
-.murmur-text {
-    text-align: left;
-    line-height: 2;
-    white-space: pre-wrap;
-}
-
-
-/* ====================================
-   画像
-==================================== */
-
-.murmur-image {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 1em auto 0;
-}
-
-
-/* ====================================
-   投稿がないとき
-==================================== */
-
-.no-murmur {
-    text-align: center;
-    padding: 3em 0;
-}
-
-
-/* ====================================
-   TOPへ戻る
-   トップページの送信ボタンと統一
-==================================== */
-
-.back {
-    margin-top: 1em;
-    text-align: center;
-}
-
-.back a {
-    display: inline-block;
-    margin-top: 0;
-    padding: 0.5em 1.5em;
-    background-color: #999;
-    border: none;
-    color: #fff;
-    font-family: 'Kosugi Maru', sans-serif;
-    font-size: 0.9em;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.back a:hover {
-    opacity: 0.8;
-}
-
-
-/* ====================================
-   横幅768px以上
-==================================== */
-
-@media screen and (min-width: 768px) {
-
-    body {
-        font-size: 14px;
-    }
-
-}
-
-
-/* ====================================
-   横幅1024px以上
-==================================== */
-
-@media screen and (min-width: 1024px) {
-
-    body {
-        font-size: 15px;
-    }
-
-}
-
-
-/* ====================================
-   スマートフォン用
-==================================== */
-
-@media screen and (max-width: 767px) {
-
-    section {
-        padding: 3em 2em;
-    }
-
-}
-
-</style>
 </head>
 
-
 <body>
-
 
 <!-- ====================================
      MURMUR
@@ -235,7 +21,6 @@ section h2 {
 <section>
 
 <h2>murmur</h2>
-
 
 <div class="murmur-list" id="murmur-list">
 
@@ -255,7 +40,6 @@ section h2 {
     </a>
 
 </div>
-
 
 </section>
 
@@ -347,7 +131,7 @@ fetch('murmur-data.json')
             }
 
 
-            /* 本文 */
+            /* メッセージ */
 
             const message = document.createElement('span');
 
@@ -356,7 +140,7 @@ fetch('murmur-data.json')
             text.appendChild(message);
 
 
-            /* 本文を追加 */
+            /* 投稿内容を追加 */
 
             article.appendChild(date);
 
@@ -387,6 +171,8 @@ fetch('murmur-data.json')
     })
 
 
+    /* 読み込みエラー */
+
     .catch(function(error) {
 
         console.error(error);
@@ -399,7 +185,6 @@ fetch('murmur-data.json')
     });
 
 </script>
-
 
 </body>
 </html>
