@@ -10,13 +10,36 @@
 
 <link rel="stylesheet" href="style.css">
 
+<style>
+
+/* 日付と種類を横並びにする */
+
+.murmur-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    margin-bottom: 0.8em;
+}
+
+/* 日付の余白を調整 */
+
+.murmur-date {
+    margin-bottom: 0;
+}
+
+/* 本文 */
+
+.murmur-text {
+    text-align: left;
+    line-height: 2;
+    white-space: pre-wrap;
+}
+
+</style>
+
 </head>
 
 <body>
-
-<!-- ====================================
-     MURMUR
-==================================== -->
 
 <section>
 
@@ -43,10 +66,6 @@
 
 </section>
 
-
-<!-- ====================================
-     murmur-data.jsonを読み込む
-==================================== -->
 
 <script>
 
@@ -103,6 +122,13 @@ fetch('murmur-data.json?v=' + Date.now(), {
             article.className = 'murmur-item';
 
 
+            /* 日付と種類をまとめる */
+
+            const meta = document.createElement('div');
+
+            meta.className = 'murmur-meta';
+
+
             /* 日付 */
 
             const date = document.createElement('div');
@@ -111,12 +137,7 @@ fetch('murmur-data.json?v=' + Date.now(), {
 
             date.textContent = item.date;
 
-
-            /* 本文 */
-
-            const text = document.createElement('div');
-
-            text.className = 'murmur-text';
+            meta.appendChild(date);
 
 
             /* 種類 */
@@ -129,12 +150,17 @@ fetch('murmur-data.json?v=' + Date.now(), {
 
                 type.textContent = item.type;
 
-                text.appendChild(type);
+                meta.appendChild(type);
 
             }
 
 
-            /* メッセージ */
+            /* 本文 */
+
+            const text = document.createElement('div');
+
+            text.className = 'murmur-text';
+
 
             const message = document.createElement('span');
 
@@ -145,7 +171,7 @@ fetch('murmur-data.json?v=' + Date.now(), {
 
             /* 投稿内容を追加 */
 
-            article.appendChild(date);
+            article.appendChild(meta);
 
             article.appendChild(text);
 
