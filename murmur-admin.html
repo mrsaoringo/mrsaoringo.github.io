@@ -16,17 +16,11 @@
    murmur admin 専用デザイン
 ==================================== */
 
-
-/* タイトル */
-
 section h2 {
     text-align: center;
 }
 
-
-/* ====================================
-   フォーム
-==================================== */
+/* 共通フォーム */
 
 .admin-form {
     width: 100%;
@@ -35,9 +29,6 @@ section h2 {
     text-align: left;
 }
 
-
-/* ラベル */
-
 .admin-form label {
     display: block;
     margin-top: 0.8em;
@@ -45,9 +36,6 @@ section h2 {
     color: #888;
     font-size: 0.9em;
 }
-
-
-/* 入力欄・種類・本文 */
 
 .admin-form input,
 .admin-form select,
@@ -65,33 +53,22 @@ section h2 {
     font-size: 0.9em;
     letter-spacing: 0.1em;
     outline: none;
+    box-sizing: border-box;
 }
-
-
-/* 入力欄 */
 
 .admin-form input,
 .admin-form select {
     height: 40px;
 }
 
-
-/* 日付 */
-
 .admin-form input[type="date"] {
     width: 210px;
 }
-
-
-/* 本文 */
 
 .admin-form textarea {
     height: 150px;
     resize: vertical;
 }
-
-
-/* プレースホルダー */
 
 .admin-form input::placeholder,
 .admin-form textarea::placeholder {
@@ -99,14 +76,14 @@ section h2 {
     opacity: 1;
 }
 
+/* ボタン */
 
-/* ====================================
-   投稿ボタン
-==================================== */
-
-.admin-form button {
+.admin-form button,
+.post-actions button,
+.list-button,
+.cancel-button {
     margin-top: 1em;
-    padding: 0.5em 1.5em;
+    padding: 0.5em 1.2em;
     background-color: #999;
     border: none;
     border-bottom-right-radius: 20px;
@@ -117,34 +94,96 @@ section h2 {
     cursor: pointer;
 }
 
-.admin-form button:hover {
+.admin-form button:hover,
+.post-actions button:hover,
+.list-button:hover,
+.cancel-button:hover {
     opacity: 0.8;
 }
 
+.cancel-button {
+    background-color: #bbb;
+}
 
-/* 投稿結果 */
+/* メッセージ */
 
 .message {
     margin-top: 1.5em;
     text-align: center;
+    line-height: 1.8;
 }
 
+/* 区切り */
 
-/* ====================================
-   スマートフォン用
-==================================== */
+.admin-divider {
+    max-width: 600px;
+    margin: 3em auto;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* 投稿一覧 */
+
+.post-list {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.post-item {
+    padding: 1.2em 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7em;
+    margin-bottom: 0.6em;
+    color: #888;
+    font-size: 0.85em;
+}
+
+.post-type {
+    color: #888;
+}
+
+.post-body {
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.post-actions {
+    display: flex;
+    gap: 0.6em;
+    flex-wrap: wrap;
+}
+
+.post-actions button {
+    margin-top: 0.8em;
+}
+
+.delete-button {
+    background-color: #b77f7f !important;
+}
+
+.empty-message {
+    text-align: center;
+    color: #888;
+    padding: 2em 0;
+}
+
+/* スマートフォン */
 
 @media screen and (max-width: 767px) {
-
     .admin-form input[type="date"] {
         width: 210px;
         max-width: 100%;
     }
-
 }
 
 </style>
-
 </head>
 
 
@@ -155,10 +194,11 @@ section h2 {
 <h2>murmur admin</h2>
 
 
+<!-- ====================================
+     管理キー
+==================================== -->
+
 <form class="admin-form" id="murmurForm">
-
-
-    <!-- 管理キー -->
 
     <label for="adminKey">
         管理キー
@@ -171,8 +211,18 @@ section h2 {
         required
     >
 
+    <button type="button" class="list-button" id="loadButton">
+        投稿一覧を読み込む
+    </button>
 
-    <!-- 日付 -->
+
+    <!-- ====================================
+         投稿フォーム
+    ==================================== -->
+
+    <hr class="admin-divider">
+
+    <h3 id="formTitle">新規投稿</h3>
 
     <label for="date">
         日付
@@ -184,30 +234,14 @@ section h2 {
         required
     >
 
-
-    <!-- 種類 -->
-
     <label for="type">
         種類
     </label>
 
-    <select
-        id="type"
-        required
-    >
-
-        <option value="murmur">
-            murmur
-        </option>
-
-        <option value="UP">
-            UP
-        </option>
-
+    <select id="type" required>
+        <option value="murmur">murmur</option>
+        <option value="UP">UP</option>
     </select>
-
-
-    <!-- 本文 -->
 
     <label for="text">
         本文
@@ -219,31 +253,49 @@ section h2 {
         required
     ></textarea>
 
-
-    <!-- 投稿 -->
-
-    <button type="submit">
+    <button type="submit" id="submitButton">
         投稿する
     </button>
 
+    <button
+        type="button"
+        class="cancel-button"
+        id="cancelButton"
+        hidden
+    >
+        編集をキャンセル
+    </button>
 
-    <div
-        class="message"
-        id="message">
-    </div>
-
+    <div class="message" id="message"></div>
 
 </form>
+
+
+<!-- ====================================
+     投稿一覧
+==================================== -->
+
+<hr class="admin-divider">
+
+<h3 style="text-align: center;">
+    投稿一覧
+</h3>
+
+<div class="post-list" id="postList">
+
+    <p class="empty-message">
+        「投稿一覧を読み込む」を押してください。
+    </p>
+
+</div>
 
 
 <!-- murmurへ戻る -->
 
 <div class="back">
-
     <a href="murmur.html">
         murmurへ戻る
     </a>
-
 </div>
 
 
@@ -259,109 +311,377 @@ const WORKER_URL =
 const form =
     document.getElementById("murmurForm");
 
-
 const message =
     document.getElementById("message");
 
+const postList =
+    document.getElementById("postList");
 
-form.addEventListener(
-    "submit",
-    async function(event) {
+const adminKeyInput =
+    document.getElementById("adminKey");
 
-        event.preventDefault();
+const dateInput =
+    document.getElementById("date");
+
+const typeInput =
+    document.getElementById("type");
+
+const textInput =
+    document.getElementById("text");
+
+const formTitle =
+    document.getElementById("formTitle");
+
+const submitButton =
+    document.getElementById("submitButton");
+
+const cancelButton =
+    document.getElementById("cancelButton");
+
+const loadButton =
+    document.getElementById("loadButton");
+
+
+let editingId = null;
+
+
+// ====================================
+// Workerへ送信
+// ====================================
+
+async function sendRequest(data) {
+
+    const response = await fetch(
+        WORKER_URL,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                adminKey: adminKeyInput.value,
+                ...data
+            })
+        }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+        throw new Error(
+            result.message || "処理に失敗しました。"
+        );
+    }
+
+    return result;
+}
+
+
+// ====================================
+// 投稿一覧を読み込む
+// ====================================
+
+async function loadPosts() {
+
+    const adminKey = adminKeyInput.value;
+
+    if (!adminKey) {
+        message.textContent =
+            "先に管理キーを入力してください。";
+        return;
+    }
+
+    message.textContent =
+        "投稿一覧を読み込み中…";
+
+    postList.textContent = "";
+
+    try {
+
+        const result = await sendRequest({
+            action: "list"
+        });
+
+        renderPosts(result.posts || []);
 
         message.textContent =
-            "投稿中…";
+            "投稿一覧を読み込みました！";
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+        postList.textContent = "";
+
+    }
+}
 
 
-        const adminKey =
-            document.getElementById(
-                "adminKey"
-            ).value;
+// ====================================
+// 投稿一覧を表示
+// ====================================
+
+function renderPosts(posts) {
+
+    postList.textContent = "";
+
+    if (posts.length === 0) {
+
+        const empty = document.createElement("p");
+
+        empty.className = "empty-message";
+        empty.textContent = "投稿はありません。";
+
+        postList.appendChild(empty);
+
+        return;
+    }
+
+    posts.forEach(post => {
+
+        const item = document.createElement("div");
+        item.className = "post-item";
+
+        const meta = document.createElement("div");
+        meta.className = "post-meta";
+
+        const date = document.createElement("span");
+        date.textContent = post.date || "";
+
+        const type = document.createElement("span");
+        type.className = "post-type";
+        type.textContent = post.type || "";
+
+        meta.appendChild(date);
+        meta.appendChild(type);
+
+        const body = document.createElement("div");
+        body.className = "post-body";
+        body.textContent = post.text || "";
+
+        const actions = document.createElement("div");
+        actions.className = "post-actions";
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.textContent = "編集";
+
+        editButton.addEventListener("click", function() {
+            startEdit(post);
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "削除";
+        deleteButton.className = "delete-button";
+
+        deleteButton.addEventListener("click", function() {
+            deletePost(post);
+        });
+
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+
+        item.appendChild(meta);
+        item.appendChild(body);
+        item.appendChild(actions);
+
+        postList.appendChild(item);
+
+    });
+
+}
 
 
-        const date =
-            document.getElementById(
-                "date"
-            ).value;
+// ====================================
+// 編集開始
+// ====================================
+
+function startEdit(post) {
+
+    editingId = post.id;
+
+    dateInput.value = post.date || "";
+    typeInput.value = post.type || "murmur";
+    textInput.value = post.text || "";
+
+    formTitle.textContent = "投稿を編集";
+    submitButton.textContent = "更新する";
+
+    cancelButton.hidden = false;
+
+    message.textContent =
+        "編集内容を入力してください。";
+
+    form.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
 
 
-        const type =
-            document.getElementById(
-                "type"
-            ).value;
+// ====================================
+// 編集キャンセル
+// ====================================
+
+function cancelEdit() {
+
+    editingId = null;
+
+    form.reset();
+
+    formTitle.textContent = "新規投稿";
+    submitButton.textContent = "投稿する";
+
+    cancelButton.hidden = true;
+
+    message.textContent =
+        "編集をキャンセルしました。";
+
+}
 
 
-        const text =
-            document.getElementById(
-                "text"
-            ).value;
+// ====================================
+// 投稿・更新
+// ====================================
 
+form.addEventListener("submit", async function(event) {
 
-        try {
+    event.preventDefault();
 
-            const response =
-                await fetch(
-                    WORKER_URL,
-                    {
+    if (!adminKeyInput.value) {
+        message.textContent =
+            "管理キーを入力してください。";
+        return;
+    }
 
-                        method: "POST",
+    const date = dateInput.value;
+    const type = typeInput.value;
+    const text = textInput.value;
 
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
+    if (!date || !type || !text.trim()) {
+        message.textContent =
+            "日付・種類・本文を入力してください。";
+        return;
+    }
 
-                        body: JSON.stringify({
+    submitButton.disabled = true;
 
-                            adminKey:
-                                adminKey,
+    message.textContent =
+        editingId ? "更新中…" : "投稿中…";
 
-                            date:
-                                date,
+    try {
 
-                            type:
-                                type,
+        let result;
 
-                            text:
-                                text
+        if (editingId) {
 
-                        })
+            result = await sendRequest({
+                action: "update",
+                id: editingId,
+                date: date,
+                type: type,
+                text: text
+            });
 
-                    }
-                );
+        } else {
 
-
-            const result =
-                await response.json();
-
-
-            if (result.success) {
-
-                message.textContent =
-                    "投稿しました！";
-
-                document.getElementById(
-                    "text"
-                ).value = "";
-
-            } else {
-
-                message.textContent =
-                    result.message ||
-                    "投稿に失敗しました。";
-
-            }
-
-
-        } catch (error) {
-
-            message.textContent =
-                "通信エラーが発生しました。";
+            result = await sendRequest({
+                action: "create",
+                date: date,
+                type: type,
+                text: text
+            });
 
         }
 
+        message.textContent = result.message;
+
+        editingId = null;
+
+        form.reset();
+
+        formTitle.textContent = "新規投稿";
+        submitButton.textContent = "投稿する";
+
+        cancelButton.hidden = true;
+
+        await loadPosts();
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+    } finally {
+
+        submitButton.disabled = false;
+
     }
+
+});
+
+
+// ====================================
+// 投稿削除
+// ====================================
+
+async function deletePost(post) {
+
+    const confirmed = confirm(
+        "この投稿を削除しますか？\n\n" +
+        (post.date || "") + " / " +
+        (post.type || "") + "\n\n" +
+        (post.text || "")
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    message.textContent =
+        "削除中…";
+
+    try {
+
+        const result = await sendRequest({
+            action: "delete",
+            id: post.id
+        });
+
+        message.textContent =
+            result.message;
+
+        if (editingId === post.id) {
+            cancelEdit();
+        }
+
+        await loadPosts();
+
+    } catch (error) {
+
+        message.textContent =
+            error.message;
+
+    }
+
+}
+
+
+// ====================================
+// ボタン
+// ====================================
+
+loadButton.addEventListener(
+    "click",
+    loadPosts
+);
+
+cancelButton.addEventListener(
+    "click",
+    cancelEdit
 );
 
 </script>
