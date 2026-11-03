@@ -12,6 +12,10 @@
 
 <style>
 
+/* ====================================
+   投稿デザイン
+==================================== */
+
 /* 日付と種類を横並びにする */
 
 .murmur-meta {
@@ -21,7 +25,7 @@
     margin-bottom: 0.8em;
 }
 
-/* 日付の余白を調整 */
+/* 日付 */
 
 .murmur-date {
     margin-bottom: 0;
@@ -33,6 +37,47 @@
     text-align: left;
     line-height: 2;
     white-space: pre-wrap;
+}
+
+/* ====================================
+   ページ送り
+==================================== */
+
+.murmur-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-top: 2.5em;
+    text-align: center;
+}
+
+.murmur-pagination button {
+    padding: 0.5em 1.2em;
+    background-color: #999;
+    border: none;
+    border-bottom-right-radius: 20px;
+    color: #fff;
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+}
+
+.murmur-pagination button:hover {
+    opacity: 0.8;
+}
+
+.murmur-pagination button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.murmur-page-info {
+    color: #888;
+    font-size: 0.85em;
+    line-height: 1.8;
 }
 
 </style>
@@ -54,6 +99,23 @@
 </div>
 
 
+<!-- ページ送り -->
+
+<div class="murmur-pagination" id="murmur-pagination" hidden>
+
+    <button type="button" id="prev-button">
+        前へ
+    </button>
+
+    <span class="murmur-page-info" id="page-info"></span>
+
+    <button type="button" id="next-button">
+        次へ
+    </button>
+
+</div>
+
+
 <!-- TOPへ戻る -->
 
 <div class="back">
@@ -69,149 +131,332 @@
 
 <script>
 
+/* ====================================
+   設定
+==================================== */
+
+// 1ページに表示する投稿数
+
+const POSTS_PER_PAGE = 10;
+
+
+// 現在のページ
+
+let currentPage = 1;
+
+
+// 投稿データ
+
+let allPosts = [];
+
+
+/* ====================================
+   HTML要素
+==================================== */
+
+const list =
+    document.getElementById('murmur-list');
+
+const pagination =
+    document.getElementById('murmur-pagination');
+
+const pageInfo =
+    document.getElementById('page-info');
+
+const prevButton =
+    document.getElementById('prev-button');
+
+const nextButton =
+    document.getElementById('next-button');
+
+
+/* ====================================
+   投稿を読み込む
+==================================== */
+
 fetch('murmur-data.json?v=' + Date.now(), {
     cache: 'no-store'
 })
 
-    .then(function(response) {
+.then(function(response) {
 
-        if (!response.ok) {
-            throw new Error('データを読み込めませんでした');
-        }
+    if (!response.ok) {
+        throw new Error('データを読み込めませんでした');
+    }
 
-        return response.json();
+    return response.json();
 
-    })
+})
 
-    .then(function(data) {
+.then(function(data) {
 
-        const list = document.getElementById('murmur-list');
+    /* 投稿データを新しい順に並べる */
 
-        list.innerHTML = '';
+    allPosts = data.sort(function(a, b) {
 
-
-        /* 投稿を新しい順に並べる */
-
-        data.sort(function(a, b) {
-
-            return new Date(b.date) - new Date(a.date);
-
-        });
-
-
-        /* 投稿がない場合 */
-
-        if (data.length === 0) {
-
-            list.innerHTML =
-                '<div class="no-murmur">' +
-                'まだ投稿はありません。' +
-                '</div>';
-
-            return;
-
-        }
-
-
-        /* 投稿を表示 */
-
-        data.forEach(function(item) {
-
-            const article = document.createElement('article');
-
-            article.className = 'murmur-item';
-
-
-            /* 日付と種類をまとめる */
-
-            const meta = document.createElement('div');
-
-            meta.className = 'murmur-meta';
-
-
-            /* 日付 */
-
-            const date = document.createElement('div');
-
-            date.className = 'murmur-date';
-
-            date.textContent = item.date;
-
-            meta.appendChild(date);
-
-
-            /* 種類 */
-
-            if (item.type) {
-
-                const type = document.createElement('span');
-
-                type.className = 'murmur-type';
-
-                type.textContent = item.type;
-
-                meta.appendChild(type);
-
-            }
-
-
-            /* 本文 */
-
-            const text = document.createElement('div');
-
-            text.className = 'murmur-text';
-
-
-            const message = document.createElement('span');
-
-            message.textContent = item.text;
-
-            text.appendChild(message);
-
-
-            /* 投稿内容を追加 */
-
-            article.appendChild(meta);
-
-            article.appendChild(text);
-
-
-            /* 画像 */
-
-            if (item.image) {
-
-                const image = document.createElement('img');
-
-                image.className = 'murmur-image';
-
-                image.src = item.image;
-
-                image.alt = '';
-
-                article.appendChild(image);
-
-            }
-
-
-            list.appendChild(article);
-
-        });
-
-    })
-
-
-    /* 読み込みエラー */
-
-    .catch(function(error) {
-
-        console.error(error);
-
-        document.getElementById('murmur-list').innerHTML =
-            '<div class="no-murmur">' +
-            '投稿を読み込めませんでした。' +
-            '</div>';
+        return new Date(b.date) - new Date(a.date);
 
     });
+
+
+    /* 投稿がない場合 */
+
+    if (allPosts.length === 0) {
+
+        list.innerHTML =
+            '<div class="no-murmur">' +
+            'まだ投稿はありません。' +
+            '</div>';
+
+        pagination.hidden = true;
+
+        return;
+
+    }
+
+
+    /* 最初のページを表示 */
+
+    renderPosts();
+
+})
+
+
+/* ====================================
+   投稿を表示する
+==================================== */
+
+function renderPosts() {
+
+    list.innerHTML = '';
+
+
+    /* 表示する投稿の範囲 */
+
+    const startIndex =
+        (currentPage - 1) * POSTS_PER_PAGE;
+
+    const endIndex =
+        Math.min(
+            startIndex + POSTS_PER_PAGE,
+            allPosts.length
+        );
+
+
+    /* 今のページの投稿だけ取り出す */
+
+    const pagePosts =
+        allPosts.slice(startIndex, endIndex);
+
+
+    /* 投稿を表示 */
+
+    pagePosts.forEach(function(item) {
+
+        const article =
+            document.createElement('article');
+
+        article.className = 'murmur-item';
+
+
+        /* 日付と種類 */
+
+        const meta =
+            document.createElement('div');
+
+        meta.className = 'murmur-meta';
+
+
+        /* 日付 */
+
+        const date =
+            document.createElement('div');
+
+        date.className = 'murmur-date';
+
+        date.textContent = item.date;
+
+        meta.appendChild(date);
+
+
+        /* 種類 */
+
+        if (item.type) {
+
+            const type =
+                document.createElement('span');
+
+            type.className = 'murmur-type';
+
+            type.textContent = item.type;
+
+            meta.appendChild(type);
+
+        }
+
+
+        /* 本文 */
+
+        const text =
+            document.createElement('div');
+
+        text.className = 'murmur-text';
+
+
+        const message =
+            document.createElement('span');
+
+        message.textContent = item.text;
+
+        text.appendChild(message);
+
+
+        /* 投稿内容を追加 */
+
+        article.appendChild(meta);
+
+        article.appendChild(text);
+
+
+        /* 画像 */
+
+        if (item.image) {
+
+            const image =
+                document.createElement('img');
+
+            image.className = 'murmur-image';
+
+            image.src = item.image;
+
+            image.alt = '';
+
+            article.appendChild(image);
+
+        }
+
+
+        list.appendChild(article);
+
+    });
+
+
+    /* ページ送りを更新 */
+
+    updatePagination(startIndex, endIndex);
+
+}
+
+
+/* ====================================
+   ページ送りを更新
+==================================== */
+
+function updatePagination(startIndex, endIndex) {
+
+    const totalPages =
+        Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+
+    /* 10件以下ならページ送りを隠す */
+
+    if (totalPages <= 1) {
+
+        pagination.hidden = true;
+
+        return;
+
+    }
+
+
+    pagination.hidden = false;
+
+
+    /* 件数表示 */
+
+    pageInfo.textContent =
+        (startIndex + 1) +
+        '〜' +
+        endIndex +
+        '件 ／ 全' +
+        allPosts.length +
+        '件';
+
+
+    /* ボタンの状態 */
+
+    prevButton.disabled =
+        currentPage === 1;
+
+    nextButton.disabled =
+        currentPage === totalPages;
+
+}
+
+
+/* ====================================
+   前のページ
+==================================== */
+
+prevButton.addEventListener('click', function() {
+
+    if (currentPage > 1) {
+
+        currentPage--;
+
+        renderPosts();
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    }
+
+});
+
+
+/* ====================================
+   次のページ
+==================================== */
+
+nextButton.addEventListener('click', function() {
+
+    const totalPages =
+        Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+    if (currentPage < totalPages) {
+
+        currentPage++;
+
+        renderPosts();
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    }
+
+});
+
+
+/* ====================================
+   読み込みエラー
+==================================== */
+
+.catch(function(error) {
+
+    console.error(error);
+
+    list.innerHTML =
+        '<div class="no-murmur">' +
+        '投稿を読み込めませんでした。' +
+        '</div>';
+
+    pagination.hidden = true;
+
+});
 
 </script>
 
