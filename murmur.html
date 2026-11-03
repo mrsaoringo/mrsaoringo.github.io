@@ -16,7 +16,7 @@
    投稿デザイン
 ==================================== */
 
-/* 日付と種類を横並びにする */
+/* 日付と種類 */
 
 .murmur-meta {
     display: flex;
@@ -24,8 +24,6 @@
     gap: 0.7em;
     margin-bottom: 0.8em;
 }
-
-/* 日付 */
 
 .murmur-date {
     margin-bottom: 0;
@@ -53,11 +51,13 @@
     text-align: center;
 }
 
+/* 前へ・次へボタン */
+
 .murmur-pagination button {
     padding: 0.5em 1.2em;
     background-color: #999;
     border: none;
-    border-bottom-right-radius: 20px;
+    border-radius: 0;
     color: #fff;
     font-family: 'Kosugi Maru', sans-serif;
     font-size: 0.9em;
@@ -73,6 +73,8 @@
     opacity: 0.35;
     cursor: default;
 }
+
+/* 件数表示 */
 
 .murmur-page-info {
     color: #888;
@@ -90,6 +92,9 @@
 
 <h2 style="text-align: center;">murmur</h2>
 
+
+<!-- 投稿一覧 -->
+
 <div class="murmur-list" id="murmur-list">
 
     <div class="no-murmur">
@@ -101,13 +106,20 @@
 
 <!-- ページ送り -->
 
-<div class="murmur-pagination" id="murmur-pagination" hidden>
+<div
+    class="murmur-pagination"
+    id="murmur-pagination"
+    hidden
+>
 
     <button type="button" id="prev-button">
         前へ
     </button>
 
-    <span class="murmur-page-info" id="page-info"></span>
+    <span
+        class="murmur-page-info"
+        id="page-info"
+    ></span>
 
     <button type="button" id="next-button">
         次へ
@@ -171,59 +183,97 @@ const nextButton =
 
 
 /* ====================================
-   投稿を読み込む
+   投稿読み込み
 ==================================== */
 
-fetch('murmur-data.json?v=' + Date.now(), {
-    cache: 'no-store'
-})
+async function loadPosts() {
 
-.then(function(response) {
+    try {
 
-    if (!response.ok) {
-        throw new Error('データを読み込めませんでした');
-    }
+        const response = await fetch(
+            'murmur-data.json?v=' + Date.now(),
+            {
+                cache: 'no-store'
+            }
+        );
 
-    return response.json();
+        if (!response.ok) {
 
-})
+            throw new Error(
+                'データを読み込めませんでした（HTTP ' +
+                response.status + '）'
+            );
 
-.then(function(data) {
+        }
 
-    /* 投稿データを新しい順に並べる */
+        const data = await response.json();
 
-    allPosts = data.sort(function(a, b) {
+        if (!Array.isArray(data)) {
 
-        return new Date(b.date) - new Date(a.date);
+            throw new Error(
+                '投稿データの形式が正しくありません。'
+            );
 
-    });
+        }
 
 
-    /* 投稿がない場合 */
+        /* 新しい順に並べる */
 
-    if (allPosts.length === 0) {
+        allPosts = data.sort(function(a, b) {
 
-        list.innerHTML =
-            '<div class="no-murmur">' +
-            'まだ投稿はありません。' +
-            '</div>';
+            return new Date(b.date) - new Date(a.date);
+
+        });
+
+
+        /* 投稿がない場合 */
+
+        if (allPosts.length === 0) {
+
+            list.innerHTML =
+                '<div class="no-murmur">' +
+                'まだ投稿はありません。' +
+                '</div>';
+
+            pagination.hidden = true;
+
+            return;
+
+        }
+
+
+        /* 最初のページを表示 */
+
+        currentPage = 1;
+
+        renderPosts();
+
+    } catch (error) {
+
+        console.error(error);
+
+        list.innerHTML = '';
+
+        const errorMessage =
+            document.createElement('div');
+
+        errorMessage.className = 'no-murmur';
+
+        errorMessage.textContent =
+            '投稿を読み込めませんでした。' +
+            '（' + error.message + '）';
+
+        list.appendChild(errorMessage);
 
         pagination.hidden = true;
 
-        return;
-
     }
 
-
-    /* 最初のページを表示 */
-
-    renderPosts();
-
-})
+}
 
 
 /* ====================================
-   投稿を表示する
+   投稿表示
 ==================================== */
 
 function renderPosts() {
@@ -243,13 +293,11 @@ function renderPosts() {
         );
 
 
-    /* 今のページの投稿だけ取り出す */
+    /* 今のページの投稿 */
 
     const pagePosts =
         allPosts.slice(startIndex, endIndex);
 
-
-    /* 投稿を表示 */
 
     pagePosts.forEach(function(item) {
 
@@ -274,7 +322,7 @@ function renderPosts() {
 
         date.className = 'murmur-date';
 
-        date.textContent = item.date;
+        date.textContent = item.date || '';
 
         meta.appendChild(date);
 
@@ -306,7 +354,7 @@ function renderPosts() {
         const message =
             document.createElement('span');
 
-        message.textContent = item.text;
+        message.textContent = item.text || '';
 
         text.appendChild(message);
 
@@ -349,7 +397,7 @@ function renderPosts() {
 
 
 /* ====================================
-   ページ送りを更新
+   ページ送り表示
 ==================================== */
 
 function updatePagination(startIndex, endIndex) {
@@ -358,7 +406,7 @@ function updatePagination(startIndex, endIndex) {
         Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
 
-    /* 10件以下ならページ送りを隠す */
+    /* 10件以下なら非表示 */
 
     if (totalPages <= 1) {
 
@@ -442,21 +490,10 @@ nextButton.addEventListener('click', function() {
 
 
 /* ====================================
-   読み込みエラー
+   読み込み開始
 ==================================== */
 
-.catch(function(error) {
-
-    console.error(error);
-
-    list.innerHTML =
-        '<div class="no-murmur">' +
-        '投稿を読み込めませんでした。' +
-        '</div>';
-
-    pagination.hidden = true;
-
-});
+loadPosts();
 
 </script>
 
