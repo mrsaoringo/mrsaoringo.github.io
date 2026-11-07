@@ -19,6 +19,13 @@
       box-sizing:border-box;
     }
     section h2 { text-align:center; }
+    #adminArea > h3 {
+      width:100%;
+      max-width:425px;
+      margin-left:auto;
+      margin-right:auto;
+      text-align:left;
+    }
     .admin-form { width:100%; max-width:425px; margin:0 auto; text-align:left; }
     .admin-form label { display:block; margin-top:.8em; margin-bottom:.2em; color:#888; font-size:.9em; }
     .admin-form input, .admin-form select, .admin-form textarea {
@@ -73,16 +80,6 @@
     <p id="loginMessage" class="message"></p>
   </div>
   <div id="adminArea" class="hidden">
-    <h3>NAME CHANGE</h3>
-    <div class="admin-form">
-      <p>小説内で使用する名前を設定できます。</p>
-      <label for="surnameInput">姓</label><input type="text" id="surnameInput" placeholder="姓を入力">
-      <label for="nameInput">名</label><input type="text" id="nameInput" placeholder="名を入力">
-      <p class="hint">本文中の {surname} と {name} が設定した名前に置き換わります。</p>
-      <div class="submit-area"><button type="button" id="saveNameButton">名前を保存</button></div>
-      <p id="nameMessage" class="message"></p>
-    </div>
-    <hr class="admin-divider">
     <h3 id="seriesFormHeading">新規シリーズ</h3>
     <form id="seriesForm" class="admin-form">
       <label for="seriesTitle">シリーズ名</label><input type="text" id="seriesTitle" placeholder="シリーズ名" required>
@@ -139,7 +136,7 @@
     event.preventDefault(); adminKey = $("adminKey").value.trim();
     try {
       await loadData(); sessionStorage.setItem("novelAdminKey", adminKey);
-      $("loginArea").classList.add("hidden"); $("adminArea").classList.remove("hidden"); loadNameSettings();
+      $("loginArea").classList.add("hidden"); $("adminArea").classList.remove("hidden");
     } catch (error) { adminKey = ""; message("loginMessage", error.message, "error"); }
   });
 
@@ -249,18 +246,13 @@
     catch (error) { message("episodeMessage", error.message, "error"); }
   };
 
-  function loadNameSettings() { $("surnameInput").value = localStorage.getItem("novelSurname") || ""; $("nameInput").value = localStorage.getItem("novelName") || ""; }
-  $("saveNameButton").addEventListener("click", () => {
-    localStorage.setItem("novelSurname", $("surnameInput").value); localStorage.setItem("novelName", $("nameInput").value);
-    message("nameMessage", "名前を保存しました。", "success");
-  });
   $("logoutButton").addEventListener("click", () => {
     sessionStorage.removeItem("novelAdminKey"); adminKey = ""; $("adminArea").classList.add("hidden");
     $("loginArea").classList.remove("hidden"); $("adminKey").value = ""; resetSeriesForm(); resetEpisodeForm();
   });
   (async () => {
     const savedKey = sessionStorage.getItem("novelAdminKey"); if (!savedKey) return; adminKey = savedKey;
-    try { await loadData(); $("loginArea").classList.add("hidden"); $("adminArea").classList.remove("hidden"); loadNameSettings(); }
+    try { await loadData(); $("loginArea").classList.add("hidden"); $("adminArea").classList.remove("hidden"); }
     catch (error) { sessionStorage.removeItem("novelAdminKey"); adminKey = ""; }
   })();
 </script>
