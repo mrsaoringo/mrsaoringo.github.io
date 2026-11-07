@@ -26,7 +26,7 @@
       margin-right:auto;
       color:#888;
       font-family:inherit;
-      font-size:1em;
+      font-size:1.15em;
       font-weight:400;
       letter-spacing:inherit;
       line-height:2;
@@ -79,7 +79,7 @@
   <div id="episodeList" class="story-width episode-list hidden"></div>
 
   <article id="episodeView" class="story-width hidden">
-    <h3 id="episodeTitle" class="episode-page-title"></h3>
+    <div id="episodeTitle" class="episode-page-title" role="heading" aria-level="3"></div>
     <div id="episodeBody" class="episode-body"></div>
     <nav id="episodeNavigation" class="episode-navigation" aria-label="話の移動"></nav>
   </article>
@@ -121,7 +121,7 @@
       return;
     }
 
-    $("pageMessage").textContent = "話を選んでください。";
+    $("pageMessage").textContent = "";
     $("pageMessage").classList.remove("error-message");
     for (let index = 0; index < episodes.length; index++) {
       const episode = episodes[index];
