@@ -44,28 +44,6 @@
     }
     .square-link:hover, .reader-name-form button:hover { opacity:.8; }
     .square-link.disabled { background:#bbb; pointer-events:none; }
-    .reader-name-form { max-width:425px; margin:3em auto 0; text-align:left; }
-    .reader-name-form h3 { margin:0 0 .8em; color:#888; font-size:1em; font-weight:400; }
-    .reader-name-fields { display:flex; gap:1em; flex-wrap:wrap; }
-    .reader-name-fields label { display:block; flex:1 1 140px; color:#888; font-size:.9em; }
-    .reader-name-fields input {
-      display:block;
-      width:100%;
-      height:40px;
-      margin-top:.3em;
-      padding:.5em .7em;
-      border:0;
-      border-radius:0;
-      border-bottom-right-radius:20px;
-      box-sizing:border-box;
-      background:#999;
-      color:#fff;
-      font:inherit;
-      font-size:.9em;
-      letter-spacing:.1em;
-    }
-    .reader-name-form button { margin-top:1em; }
-    .reader-name-message { min-height:1.8em; margin:.7em 0 0; color:#698b75; font-size:.85em; }
     .page-message { max-width:600px; margin:0 auto; padding:2em 0; color:#888; text-align:center; line-height:1.8; }
     .page-message:empty { display:none; }
     .error-message { color:#b66; }
@@ -95,20 +73,6 @@
     <div id="episodeBody" class="episode-body"></div>
     <nav id="episodeNavigation" class="episode-navigation" aria-label="話の移動"></nav>
   </article>
-
-  <form id="readerNameForm" class="reader-name-form hidden">
-    <h3>本文中の名前</h3>
-    <div class="reader-name-fields">
-      <label for="readerSurname">姓
-        <input type="text" id="readerSurname" autocomplete="family-name">
-      </label>
-      <label for="readerName">名
-        <input type="text" id="readerName" autocomplete="given-name">
-      </label>
-    </div>
-    <button type="submit">名前を保存</button>
-    <p id="readerNameMessage" class="reader-name-message" aria-live="polite"></p>
-  </form>
 
   <div class="back"><a href="novel.html">シリーズ一覧へ戻る</a></div>
 </section>
@@ -175,10 +139,6 @@
     $("episodeTitle").textContent = `${index + 1}. ${episode.title || "タイトル未設定"}`;
     $("episodeBody").textContent = personalText(episode.content || "");
     $("episodeView").classList.remove("hidden");
-    $("readerSurname").value = localStorage.getItem("novelSurname") || "";
-    $("readerName").value = localStorage.getItem("novelName") || "";
-    $("readerNameForm").classList.remove("hidden");
-
     const nav = $("episodeNavigation");
     nav.replaceChildren();
     if (index > 0) {
@@ -206,17 +166,6 @@
       nav.appendChild(next);
     }
   }
-
-  $("readerNameForm").addEventListener("submit", event => {
-    event.preventDefault();
-    localStorage.setItem("novelSurname", $("readerSurname").value);
-    localStorage.setItem("novelName", $("readerName").value);
-    const series = window.currentSeries;
-    const episodes = window.currentEpisodes;
-    const index = episodes.findIndex(item => item.id === episodeId);
-    if (index >= 0) $("episodeBody").textContent = personalText(episodes[index].content || "");
-    $("readerNameMessage").textContent = "名前を保存しました。";
-  });
 
   async function loadStory() {
     if (!seriesId) {
