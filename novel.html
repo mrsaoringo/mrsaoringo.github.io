@@ -32,10 +32,13 @@
     .series-item h3 {
       margin:0 0 .6em;
       color:#888;
-      font-size:1.1em;
+      font-family:inherit;
+      font-size:1em;
       font-weight:400;
       line-height:1.8;
+      letter-spacing:inherit;
     }
+    .series-item h3::after { display:none; }
     .series-meta {
       display:flex;
       flex-wrap:wrap;
@@ -82,8 +85,10 @@
     .reader-name-fields input {
       display:block; width:100%; height:40px; margin-top:.3em; padding:.5em .7em;
       border:0; border-radius:0; border-bottom-right-radius:20px; box-sizing:border-box;
-      background:#999; color:#fff; font:inherit; font-size:.9em; letter-spacing:.1em;
+      background:#999; color:#fff !important; -webkit-text-fill-color:#fff; caret-color:#fff;
+      font:inherit; font-size:.9em; letter-spacing:.1em;
     }
+    .reader-name-fields input::placeholder { color:#fff; opacity:1; }
     .reader-name-form button {
       margin-top:1em; padding:.5em 1.2em; border:0; border-radius:0;
       background:#999; color:#fff; font:inherit; font-size:.9em; letter-spacing:.1em; cursor:pointer;
