@@ -7,8 +7,8 @@
   <title>novel story</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* 共通CSSの縦位置を保ち、横方向だけ一覧幅を整える */
     body { width:100%; color:#888; }
+
     body > section {
       display:block;
       width:100%;
@@ -19,7 +19,9 @@
       padding-right:1.5em;
       box-sizing:border-box;
     }
+
     .story-width { width:100%; max-width:600px; margin:0 auto; }
+
     .series-heading {
       width:100%;
       max-width:600px;
@@ -33,14 +35,37 @@
       line-height:2;
       text-align:right;
     }
+
     .episode-list { text-align:left; }
     .episode-link-item { padding:1.2em 0; border-bottom:1px solid #ddd; }
     .episode-link-item a { color:inherit; text-decoration:none; }
     .episode-link-item a:hover { opacity:.75; }
     .episode-number { margin-right:.6em; color:#888; font-size:.85em; }
-    .episode-page-title { margin:0 0 1.5em; color:#888; font-size:1.1em; font-weight:400; line-height:1.8; }
-    .episode-body { line-height:2; white-space:pre-wrap; overflow-wrap:anywhere; text-align:left; }
-    .episode-navigation { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8em; margin-top:2.5em; }
+
+    .episode-page-title {
+      margin:0 0 1.5em;
+      color:#888;
+      font-size:1.1em;
+      font-weight:400;
+      line-height:1.8;
+    }
+
+    .episode-body {
+      line-height:2;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      text-align:left;
+    }
+
+    .episode-navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:.8em;
+      margin-top:2.5em;
+    }
+
     .square-link, .reader-name-form button {
       display:inline-block;
       padding:.5em 1.2em;
@@ -54,12 +79,23 @@
       text-decoration:none;
       cursor:pointer;
     }
+
     .square-link:hover, .reader-name-form button:hover { opacity:.8; }
     .square-link.disabled { background:#bbb; pointer-events:none; }
-    .page-message { max-width:600px; margin:0 auto; padding:2em 0; color:#888; text-align:center; line-height:1.8; }
+
+    .page-message {
+      max-width:600px;
+      margin:0 auto;
+      padding:2em 0;
+      color:#888;
+      text-align:center;
+      line-height:1.8;
+    }
+
     .page-message:empty { display:none; }
     .error-message { color:#b66; }
     .back { margin-top:3em; text-align:center; }
+
     .back a {
       display:inline-block;
       padding:.5em 1.2em;
@@ -69,6 +105,7 @@
       color:#fff;
       text-decoration:none;
     }
+
     .back a:hover { opacity:.8; }
 
 
@@ -153,7 +190,7 @@
     .x-post-logo {
       flex-shrink:0;
       color:#0f1419;
-      font-size:23px;
+      font-size:19px;
       font-weight:bold;
       letter-spacing:-1px;
     }
@@ -161,7 +198,7 @@
     .x-post-text {
       margin:20px 0;
       color:#0f1419;
-      font-size:16px;
+      font-size:14px;
       line-height:1.7;
       white-space:pre-wrap;
       overflow-wrap:anywhere;
@@ -192,12 +229,24 @@
     }
 
     .x-post-stat-icon {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:20px;
+      height:20px;
       font-size:21px;
       line-height:1;
     }
 
-    .x-post:empty {
-      display:none;
+    .x-post-stat-icon svg {
+      display:block;
+      width:19px;
+      height:19px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:1.7;
+      stroke-linecap:round;
+      stroke-linejoin:round;
     }
 
     @media (max-width:480px) {
@@ -211,26 +260,16 @@
         height:42px;
       }
 
-      .x-post-name {
-        font-size:14px;
-      }
-
-      .x-post-id {
-        font-size:12px;
-      }
-
-      .x-post-text {
-        font-size:15px;
-      }
+      .x-post-name { font-size:16px; }
+      .x-post-id { font-size:12px; }
+      .x-post-text { font-size:14px; }
 
       .x-post-engagement {
         gap:10px;
         font-size:12px;
       }
 
-      .x-post-stat-icon {
-        font-size:18px;
-      }
+      .x-post-stat-icon { font-size:18px; }
     }
   </style>
 </head>
@@ -279,19 +318,17 @@
   }
 
 
-  /* =========================
-     X風投稿カードの生成
-  ========================= */
+  /* X風投稿カード */
 
   function createXPost(block) {
     const separator = block.indexOf("\n---");
+
     if (separator === -1) {
       return document.createTextNode("[[XPOST]]" + block + "[[/XPOST]]");
     }
 
     const headerText = block.slice(0, separator);
     const postText = block.slice(separator + 4).replace(/^\n/, "");
-
     const settings = {};
 
     headerText.split("\n").forEach(line => {
@@ -307,11 +344,9 @@
     const card = document.createElement("div");
     card.className = "x-post";
 
-    // ヘッダー
     const header = document.createElement("div");
     header.className = "x-post-header";
 
-    // アイコン
     if (settings.avatar) {
       const avatar = document.createElement("img");
       avatar.className = "x-post-avatar";
@@ -326,7 +361,6 @@
       header.appendChild(avatar);
     }
 
-    // 名前・ID
     const user = document.createElement("div");
     user.className = "x-post-user";
 
@@ -348,28 +382,22 @@
     user.appendChild(name);
     user.appendChild(id);
 
-    // Xロゴ
     const logo = document.createElement("div");
     logo.className = "x-post-logo";
     logo.textContent = "𝕏.com";
 
     header.appendChild(user);
     header.appendChild(logo);
-
     card.appendChild(header);
 
-    // 投稿本文
     const text = document.createElement("div");
     text.className = "x-post-text";
     text.textContent = personalText(postText);
-
     card.appendChild(text);
 
-    // 投稿日時・表示回数
     if (settings.date || settings.views) {
       const date = document.createElement("div");
       date.className = "x-post-date";
-
       date.textContent = [
         settings.date,
         settings.views
@@ -378,12 +406,11 @@
       card.appendChild(date);
     }
 
-    // 反応数
     const stats = [
       ["replies", "○", "返信"],
       ["reposts", "⇄", "リポスト"],
       ["likes", "♡", "いいね"],
-      ["bookmarks", "♧", "ブックマーク"]
+      ["bookmarks", "bookmark", "ブックマーク"]
     ];
 
     const engagement = document.createElement("div");
@@ -402,7 +429,16 @@
 
       const icon = document.createElement("span");
       icon.className = "x-post-stat-icon";
-      icon.textContent = symbol;
+
+      if (symbol === "bookmark") {
+        icon.innerHTML = `
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-4-6 4V4.75Z"/>
+          </svg>
+        `;
+      } else {
+        icon.textContent = symbol;
+      }
 
       const value = document.createElement("span");
       value.textContent = settings[key];
@@ -412,44 +448,35 @@
       engagement.appendChild(item);
     });
 
-    if (hasStats) {
-      card.appendChild(engagement);
-    }
+    if (hasStats) card.appendChild(engagement);
 
     return card;
   }
 
 
-  /* =========================
-     本文の表示・X投稿の変換
-  ========================= */
+  /* 本文の表示・X投稿の変換 */
 
   function renderContent(content) {
     const container = $("episodeBody");
     container.replaceChildren();
 
     const text = personalText(content || "");
-
     const pattern = /\[\[XPOST\]\]\s*\n([\s\S]*?)\n\[\[\/XPOST\]\]/g;
 
     let lastIndex = 0;
     let match;
 
     while ((match = pattern.exec(text)) !== null) {
-      // X投稿より前の通常本文
       const before = text.slice(lastIndex, match.index);
 
       if (before) {
         container.appendChild(document.createTextNode(before));
       }
 
-      // X投稿カード
       container.appendChild(createXPost(match[1]));
-
       lastIndex = pattern.lastIndex;
     }
 
-    // 最後のX投稿より後の通常本文
     const remaining = text.slice(lastIndex);
 
     if (remaining) {
@@ -469,6 +496,8 @@
 
     $("pageMessage").textContent = "";
     $("pageMessage").classList.remove("error-message");
+
+    $("seriesHeading").classList.remove("hidden");
 
     for (let index = 0; index < episodes.length; index++) {
       const episode = episodes[index];
@@ -497,9 +526,11 @@
     $("pageMessage").classList.remove("error-message");
     $("episodeList").classList.add("hidden");
 
+    // 本文ページではシリーズタイトルを非表示
+    $("seriesHeading").classList.add("hidden");
+
     $("episodeTitle").textContent = episode.title || "タイトル未設定";
 
-    // 本文を表示（X投稿タグもここで変換）
     renderContent(episode.content || "");
 
     $("episodeView").classList.remove("hidden");
