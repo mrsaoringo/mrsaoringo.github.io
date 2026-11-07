@@ -29,7 +29,7 @@
       padding:1.2em 0;
       border-bottom:1px solid #ddd;
     }
-    .series-item h3 {
+    .series-title {
       margin:0 0 .6em;
       color:#888;
       font-family:inherit;
@@ -37,17 +37,6 @@
       font-weight:400;
       line-height:1.8;
       letter-spacing:inherit;
-    }
-    .series-item h3,
-    .series-item h3::after {
-      border:0 !important;
-      text-decoration:none !important;
-    }
-    .series-item h3::after {
-      content:none !important;
-      display:none !important;
-      width:0 !important;
-      margin:0 !important;
     }
     .series-meta {
       display:flex;
@@ -189,7 +178,10 @@
       const item = document.createElement("article");
       item.className = "series-item";
 
-      const title = document.createElement("h3");
+      const title = document.createElement("div");
+      title.className = "series-title";
+      title.setAttribute("role", "heading");
+      title.setAttribute("aria-level", "3");
       title.textContent = series.title || "タイトル未設定";
 
       const meta = document.createElement("div");
