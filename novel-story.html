@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>novel story</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* 共通CSSの縦位置を保ち、横方向だけ一覧幅を整える */
+    body { width:100%; color:#888; }
+    body > section {
+      display:block;
+      width:100%;
+      max-width:none;
+      margin-left:auto !important;
+      margin-right:auto !important;
+      padding-left:1.5em;
+      padding-right:1.5em;
+      box-sizing:border-box;
+    }
+    .story-width { width:100%; max-width:600px; margin:0 auto; }
+    .series-heading { text-align:center; }
+    .series-intro { margin:0 auto 2em; line-height:1.9; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .episode-list { text-align:left; }
+    .episode-link-item { padding:1.2em 0; border-bottom:1px solid #ddd; }
+    .episode-link-item a { color:inherit; text-decoration:none; }
+    .episode-link-item a:hover { opacity:.75; }
+    .episode-number { margin-right:.6em; color:#888; font-size:.85em; }
+    .episode-page-title { margin:0 0 1.5em; color:#888; font-size:1.1em; font-weight:400; line-height:1.8; }
+    .episode-body { line-height:2; white-space:pre-wrap; overflow-wrap:anywhere; text-align:left; }
+    .episode-navigation { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8em; margin-top:2.5em; }
+    .square-link, .reader-name-form button {
+      display:inline-block;
+      padding:.5em 1.2em;
+      border:0;
+      border-radius:0;
+      background:#999;
+      color:#fff;
+      font:inherit;
+      font-size:.9em;
+      letter-spacing:.1em;
+      text-decoration:none;
+      cursor:pointer;
+    }
+    .square-link:hover, .reader-name-form button:hover { opacity:.8; }
+    .square-link.disabled { background:#bbb; pointer-events:none; }
+    .reader-name-form { max-width:425px; margin:3em auto 0; text-align:left; }
+    .reader-name-form h3 { margin:0 0 .8em; color:#888; font-size:1em; font-weight:400; }
+    .reader-name-fields { display:flex; gap:1em; flex-wrap:wrap; }
+    .reader-name-fields label { display:block; flex:1 1 140px; color:#888; font-size:.9em; }
+    .reader-name-fields input {
+      display:block;
+      width:100%;
+      height:40px;
+      margin-top:.3em;
+      padding:.5em .7em;
+      border:0;
+      border-radius:0;
+      border-bottom-right-radius:20px;
+      box-sizing:border-box;
+      background:#999;
+      color:#fff;
+      font:inherit;
+      font-size:.9em;
+      letter-spacing:.1em;
+    }
+    .reader-name-form button { margin-top:1em; }
+    .reader-name-message { min-height:1.8em; margin:.7em 0 0; color:#698b75; font-size:.85em; }
+    .page-message { max-width:600px; margin:0 auto; padding:2em 0; color:#888; text-align:center; line-height:1.8; }
+    .page-message:empty { display:none; }
+    .error-message { color:#b66; }
+    .back { margin-top:3em; text-align:center; }
+    .back a {
+      display:inline-block;
+      padding:.5em 1.2em;
+      border:0;
+      border-radius:0;
+      background:#999;
+      color:#fff;
+      text-decoration:none;
+    }
+    .back a:hover { opacity:.8; }
+  </style>
+</head>
+<body>
+<section>
+  <h2 id="seriesHeading" class="series-heading">novel</h2>
+  <p id="pageMessage" class="page-message">小説を読み込み中……</p>
+
+  <div id="seriesIntro" class="story-width series-intro hidden"></div>
+  <div id="episodeList" class="story-width episode-list hidden"></div>
+
+  <article id="episodeView" class="story-width hidden">
+    <h3 id="episodeTitle" class="episode-page-title"></h3>
+    <div id="episodeBody" class="episode-body"></div>
+    <nav id="episodeNavigation" class="episode-navigation" aria-label="話の移動"></nav>
+  </article>
+
+  <form id="readerNameForm" class="reader-name-form hidden">
+    <h3>本文中の名前</h3>
+    <div class="reader-name-fields">
+      <label for="readerSurname">姓
+        <input type="text" id="readerSurname" autocomplete="family-name">
+      </label>
+      <label for="readerName">名
+        <input type="text" id="readerName" autocomplete="given-name">
+      </label>
+    </div>
+    <button type="submit">名前を保存</button>
+    <p id="readerNameMessage" class="reader-name-message" aria-live="polite"></p>
+  </form>
+
+  <div class="back"><a href="novel.html">シリーズ一覧へ戻る</a></div>
+</section>
+
+<script>
+  const DATA_URL = "./novel-data.json";
+  const params = new URLSearchParams(location.search);
+  const seriesId = params.get("seriesId");
+  const episodeId = params.get("episodeId");
+  const $ = id => document.getElementById(id);
+
+  function showError(text) {
+    $("pageMessage").textContent = text;
+    $("pageMessage").classList.add("error-message");
+  }
+
+  function makeEpisodeUrl(id = "") {
+    const query = new URLSearchParams({ seriesId });
+    if (id) query.set("episodeId", id);
+    return `novel-story.html?${query.toString()}`;
+  }
+
+  function personalText(text) {
+    const surname = localStorage.getItem("novelSurname") || "";
+    const name = localStorage.getItem("novelName") || "";
+    return String(text ?? "")
+      .replaceAll("{surname}", surname)
+      .replaceAll("{name}", name);
+  }
+
+  function renderEpisodeList(series, episodes) {
+    $("episodeList").replaceChildren();
+    if (episodes.length === 0) {
+      $("pageMessage").textContent = "このシリーズには、まだ話がありません。";
+      $("pageMessage").classList.remove("error-message");
+      return;
+    }
+
+    $("pageMessage").textContent = "話を選んでください。";
+    $("pageMessage").classList.remove("error-message");
+    for (let index = 0; index < episodes.length; index++) {
+      const episode = episodes[index];
+      const row = document.createElement("div");
+      row.className = "episode-link-item";
+      const link = document.createElement("a");
+      link.href = makeEpisodeUrl(episode.id);
+      const number = document.createElement("span");
+      number.className = "episode-number";
+      number.textContent = `${index + 1}.`;
+      const title = document.createElement("span");
+      title.textContent = episode.title || "タイトル未設定";
+      link.append(number, title);
+      row.appendChild(link);
+      $("episodeList").appendChild(row);
+    }
+    $("episodeList").classList.remove("hidden");
+  }
+
+  function renderEpisode(series, episodes, index) {
+    const episode = episodes[index];
+    $("pageMessage").textContent = "";
+    $("pageMessage").classList.remove("error-message");
+    $("episodeList").classList.add("hidden");
+    $("episodeTitle").textContent = `${index + 1}. ${episode.title || "タイトル未設定"}`;
+    $("episodeBody").textContent = personalText(episode.content || "");
+    $("episodeView").classList.remove("hidden");
+    $("readerSurname").value = localStorage.getItem("novelSurname") || "";
+    $("readerName").value = localStorage.getItem("novelName") || "";
+    $("readerNameForm").classList.remove("hidden");
+
+    const nav = $("episodeNavigation");
+    nav.replaceChildren();
+    if (index > 0) {
+      const previous = document.createElement("a");
+      previous.className = "square-link";
+      previous.href = makeEpisodeUrl(episodes[index - 1].id);
+      previous.textContent = "前の話";
+      nav.appendChild(previous);
+    } else {
+      const spacer = document.createElement("span");
+      nav.appendChild(spacer);
+    }
+
+    const listLink = document.createElement("a");
+    listLink.className = "square-link";
+    listLink.href = makeEpisodeUrl();
+    listLink.textContent = "話一覧";
+    nav.appendChild(listLink);
+
+    if (index < episodes.length - 1) {
+      const next = document.createElement("a");
+      next.className = "square-link";
+      next.href = makeEpisodeUrl(episodes[index + 1].id);
+      next.textContent = "次の話";
+      nav.appendChild(next);
+    }
+  }
+
+  $("readerNameForm").addEventListener("submit", event => {
+    event.preventDefault();
+    localStorage.setItem("novelSurname", $("readerSurname").value);
+    localStorage.setItem("novelName", $("readerName").value);
+    const series = window.currentSeries;
+    const episodes = window.currentEpisodes;
+    const index = episodes.findIndex(item => item.id === episodeId);
+    if (index >= 0) $("episodeBody").textContent = personalText(episodes[index].content || "");
+    $("readerNameMessage").textContent = "名前を保存しました。";
+  });
+
+  async function loadStory() {
+    if (!seriesId) {
+      showError("シリーズが指定されていません。小説一覧からシリーズを選んでください。");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:"no-store" });
+      if (!response.ok) throw new Error(`小説データを読み込めませんでした（HTTP ${response.status}）。`);
+      const data = await response.json();
+      if (!data || !Array.isArray(data.series)) throw new Error("小説データの形式を確認できませんでした。");
+
+      const series = data.series.find(item => String(item.id) === seriesId);
+      if (!series) {
+        showError("シリーズが見つかりません。小説一覧から選び直してください。");
+        return;
+      }
+
+      const episodes = Array.isArray(series.episodes) ? [...series.episodes] : [];
+      episodes.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+      window.currentSeries = series;
+      window.currentEpisodes = episodes;
+      $("seriesHeading").textContent = series.title || "novel";
+      document.title = `${series.title || "novel"} | novel`;
+
+      if (series.synopsis) {
+        $("seriesIntro").textContent = series.synopsis;
+        $("seriesIntro").classList.remove("hidden");
+      }
+
+      $("pageMessage").textContent = "";
+      if (episodeId) {
+        const index = episodes.findIndex(item => String(item.id) === episodeId);
+        if (index < 0) {
+          showError("話が見つかりません。話一覧から選び直してください。");
+          return;
+        }
+        renderEpisode(series, episodes, index);
+      } else {
+        renderEpisodeList(series, episodes);
+      }
+    } catch (error) {
+      showError(error.message || "小説データを読み込めませんでした。");
+    }
+  }
+
+  loadStory();
+</script>
+</body>
+</html>
