@@ -7,6 +7,17 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* murmur admin 専用デザインをnovel adminにも適用 */
+    body { width:100%; }
+    body > section {
+      display:block;
+      width:100%;
+      max-width:none;
+      margin-left:auto !important;
+      margin-right:auto !important;
+      padding-left:1.5em;
+      padding-right:1.5em;
+      box-sizing:border-box;
+    }
     section h2 { text-align:center; }
     .admin-form { width:100%; max-width:425px; margin:0 auto; text-align:left; }
     .admin-form label { display:block; margin-top:.8em; margin-bottom:.2em; color:#888; font-size:.9em; }
@@ -52,7 +63,7 @@
   </style>
 </head>
 <body>
-<main><section>
+<section>
   <h2>novel admin</h2>
   <div id="loginArea">
     <form id="loginForm" class="admin-form">
@@ -101,7 +112,7 @@
   </div>
   <div class="back"><a href="novel.html">BACK TO NOVEL</a></div>
   <div class="back"><a href="index.html">TOPへ戻る</a></div>
-</section></main>
+</section>
 <script>
   const WORKER_URL = "https://novel-post.melodic-ars.workers.dev/";
   let adminKey = "";
