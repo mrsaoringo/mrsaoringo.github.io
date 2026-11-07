@@ -17,7 +17,7 @@
       padding:0 1.5em;
       box-sizing:border-box;
     }
-    section h2 { text-align:center; }
+    /* 見出し位置・指定はmurmur.htmlに合わせる */
     .series-list {
       width:100%;
       max-width:600px;
@@ -55,7 +55,7 @@
       margin-top:.8em;
       padding:.5em 1.2em;
       background-color:#999;
-      border-bottom-right-radius:20px;
+      border-radius:0;
       color:#fff;
       font-family:'Kosugi Maru',sans-serif;
       font-size:.9em;
@@ -79,7 +79,7 @@
       display:inline-block;
       padding:.5em 1.2em;
       background-color:#999;
-      border-bottom-right-radius:20px;
+      border-radius:0;
       color:#fff;
       text-decoration:none;
     }
@@ -88,7 +88,7 @@
 </head>
 <body>
 <section>
-  <h2>main</h2>
+  <h2 style="text-align: center;">main</h2>
 
   <p id="pageMessage" class="page-message">シリーズを読み込み中…</p>
   <div id="seriesList" class="series-list" aria-live="polite"></div>
