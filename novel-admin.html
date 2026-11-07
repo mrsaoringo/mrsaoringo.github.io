@@ -1,0 +1,831 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>novel admin | green or blue?</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .novel-admin {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .novel-admin h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .admin-section {
+      margin: 25px 0;
+      padding: 20px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid #d8e1e2;
+    }
+
+    .admin-section h3 {
+      margin-top: 0;
+      color: #557b80;
+    }
+
+    .novel-admin label {
+      display: block;
+      margin: 15px 0 6px;
+      font-size: 0.9em;
+    }
+
+    .novel-admin input,
+    .novel-admin select,
+    .novel-admin textarea {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cbd8da;
+      background: #fff;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .novel-admin textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .novel-admin textarea#episodeContent {
+      min-height: 450px;
+    }
+
+    .admin-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .novel-admin button {
+      padding: 8px 16px;
+      border: 1px solid #9eb8bc;
+      background: #edf4f4;
+      color: #405e63;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .novel-admin button:hover {
+      background: #dcebea;
+    }
+
+    .novel-admin button.danger {
+      background: #f8eeee;
+      border-color: #d8bcbc;
+      color: #925858;
+    }
+
+    .novel-admin button.secondary {
+      background: #f5f5f5;
+      border-color: #ccc;
+      color: #555;
+    }
+
+    .admin-item {
+      padding: 14px 0;
+      border-bottom: 1px solid #dce5e5;
+    }
+
+    .admin-item:last-child {
+      border-bottom: none;
+    }
+
+    .admin-item-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .admin-item small {
+      color: #777;
+    }
+
+    .admin-message {
+      margin: 15px 0;
+      padding: 12px;
+      background: #edf5f2;
+      color: #456c5e;
+      white-space: pre-wrap;
+    }
+
+    .admin-message.error {
+      background: #f8eeee;
+      color: #925858;
+    }
+
+    .admin-help {
+      font-size: 0.85em;
+      color: #777;
+      line-height: 1.7;
+    }
+
+    .admin-count {
+      text-align: right;
+      font-size: 0.8em;
+      color: #777;
+      margin-top: 5px;
+    }
+
+    .admin-top {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .admin-top a {
+      color: inherit;
+    }
+
+    .episode-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .selected-series {
+      font-weight: bold;
+      color: #557b80;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .novel-admin {
+        padding: 12px;
+        margin: 20px auto;
+      }
+
+      .admin-section {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="novel-admin">
+
+  <div class="admin-top">
+    <a href="index.html">TOPへ戻る</a>
+  </div>
+
+  <h2>novel admin</h2>
+
+  <p class="admin-help">
+    小説のシリーズ・各話を管理するページです。<br>
+    ここで登録した内容はGitHubに保存されます。
+  </p>
+
+  <div id="message"></div>
+
+  <!-- 認証 -->
+  <section class="admin-section">
+    <h3>LOGIN</h3>
+
+    <label for="adminKey">管理用パスワード</label>
+    <input
+      type="password"
+      id="adminKey"
+      placeholder="ADMIN_KEY"
+      autocomplete="current-password"
+    >
+
+    <div class="admin-buttons">
+      <button type="button" id="loginButton">接続する</button>
+      <button type="button" class="secondary" id="logoutButton">ログアウト</button>
+    </div>
+
+    <p class="admin-help">
+      Workerに設定したADMIN_KEYを入力してください。
+    </p>
+  </section>
+
+  <!-- シリーズ作成・編集 -->
+  <section class="admin-section">
+    <h3>SERIES</h3>
+
+    <input type="hidden" id="seriesId">
+
+    <label for="seriesTitle">シリーズタイトル</label>
+    <input
+      type="text"
+      id="seriesTitle"
+      placeholder="作品タイトル"
+    >
+
+    <label for="seriesCategory">カテゴリ</label>
+    <select id="seriesCategory">
+      <option value="長編">長編</option>
+      <option value="中編">中編</option>
+      <option value="短編">短編</option>
+    </select>
+
+    <label for="seriesSynopsis">あらすじ</label>
+    <textarea
+      id="seriesSynopsis"
+      placeholder="作品のあらすじを入力"
+    ></textarea>
+
+    <div class="admin-buttons">
+      <button type="button" id="saveSeriesButton">シリーズを登録</button>
+      <button type="button" class="secondary" id="clearSeriesButton">入力をクリア</button>
+    </div>
+  </section>
+
+  <!-- シリーズ一覧 -->
+  <section class="admin-section">
+    <h3>SERIES LIST</h3>
+    <div id="seriesList">
+      <p class="admin-help">ログインしてください。</p>
+    </div>
+  </section>
+
+  <!-- 各話管理 -->
+  <section class="admin-section">
+    <h3>EPISODE</h3>
+
+    <p class="selected-series" id="selectedSeriesName">
+      シリーズを選択してください
+    </p>
+
+    <input type="hidden" id="episodeId">
+
+    <label for="episodeTitle">話のタイトル</label>
+    <input
+      type="text"
+      id="episodeTitle"
+      placeholder="第1話　タイトル"
+    >
+
+    <label for="episodeContent">本文</label>
+    <textarea
+      id="episodeContent"
+      placeholder="ここに小説本文を入力してください"
+    ></textarea>
+
+    <div class="admin-count" id="characterCount">
+      0文字
+    </div>
+
+    <div class="admin-buttons">
+      <button type="button" id="saveEpisodeButton">話を登録</button>
+      <button type="button" class="secondary" id="clearEpisodeButton">入力をクリア</button>
+    </div>
+
+    <p class="admin-help">
+      本文は1万〜2万文字程度を想定しています。<br>
+      改行も保存されます。
+    </p>
+  </section>
+
+  <!-- 各話一覧 -->
+  <section class="admin-section">
+    <h3>EPISODE LIST</h3>
+    <div id="episodeList">
+      <p class="admin-help">シリーズを選択してください。</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const WORKER_URL = "https://novel-post.あなたのサブドメイン.workers.dev";
+
+let novelData = { series: [] };
+let selectedSeriesId = null;
+let adminKey = sessionStorage.getItem("novelAdminKey") || "";
+
+// 要素取得
+const $ = id => document.getElementById(id);
+
+// メッセージ表示
+function showMessage(message, error = false) {
+  const box = $("message");
+  box.textContent = message;
+  box.className = "admin-message" + (error ? " error" : "");
+
+  if (!message) {
+    box.className = "";
+  }
+}
+
+// Worker通信
+async function api(action, extra = {}) {
+  if (!adminKey) {
+    throw new Error("管理用パスワードを入力してください");
+  }
+
+  const response = await fetch(WORKER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      adminKey,
+      action,
+      ...extra
+    })
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "通信に失敗しました");
+  }
+
+  return result;
+}
+
+// ログイン
+async function login() {
+  adminKey = $("adminKey").value.trim();
+
+  if (!adminKey) {
+    showMessage("管理用パスワードを入力してください", true);
+    return;
+  }
+
+  try {
+    sessionStorage.setItem("novelAdminKey", adminKey);
+    await loadData();
+    showMessage("接続しました！");
+  } catch (error) {
+    sessionStorage.removeItem("novelAdminKey");
+    adminKey = "";
+    showMessage(error.message, true);
+  }
+}
+
+// ログアウト
+function logout() {
+  sessionStorage.removeItem("novelAdminKey");
+  adminKey = "";
+  novelData = { series: [] };
+  selectedSeriesId = null;
+
+  $("adminKey").value = "";
+  $("seriesList").innerHTML = "";
+  $("episodeList").innerHTML = "";
+  $("selectedSeriesName").textContent = "シリーズを選択してください";
+
+  showMessage("ログアウトしました");
+}
+
+// データ読み込み
+async function loadData() {
+  const result = await api("list");
+
+  novelData = result.data || { series: [] };
+
+  if (!Array.isArray(novelData.series)) {
+    novelData.series = [];
+  }
+
+  renderSeries();
+
+  if (selectedSeriesId) {
+    const series = getSelectedSeries();
+
+    if (series) {
+      renderEpisodes();
+    } else {
+      selectedSeriesId = null;
+      $("selectedSeriesName").textContent = "シリーズを選択してください";
+      $("episodeList").innerHTML = "";
+    }
+  }
+}
+
+// 選択中のシリーズ
+function getSelectedSeries() {
+  return novelData.series.find(
+    series => series.id === selectedSeriesId
+  );
+}
+
+// シリーズ一覧表示
+function renderSeries() {
+  const list = $("seriesList");
+
+  if (!novelData.series.length) {
+    list.innerHTML = "<p>まだシリーズがありません。</p>";
+    return;
+  }
+
+  list.innerHTML = "";
+
+  novelData.series.forEach(series => {
+    const item = document.createElement("div");
+    item.className = "admin-item";
+
+    const title = document.createElement("div");
+    title.className = "admin-item-title";
+    title.textContent = series.title;
+
+    const info = document.createElement("small");
+    info.textContent =
+      series.category + " / " +
+      (series.episodes || []).length + "話";
+
+    const buttons = document.createElement("div");
+    buttons.className = "admin-buttons";
+
+    const selectButton = document.createElement("button");
+    selectButton.textContent = "このシリーズを選択";
+    selectButton.onclick = () => selectSeries(series.id);
+
+    const editButton = document.createElement("button");
+    editButton.textContent = "編集";
+    editButton.className = "secondary";
+    editButton.onclick = () => editSeries(series.id);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "削除";
+    deleteButton.className = "danger";
+    deleteButton.onclick = () => deleteSeries(series.id);
+
+    buttons.append(selectButton, editButton, deleteButton);
+    item.append(title, info, buttons);
+    list.appendChild(item);
+  });
+}
+
+// シリーズ選択
+function selectSeries(id) {
+  selectedSeriesId = id;
+
+  const series = getSelectedSeries();
+
+  $("selectedSeriesName").textContent =
+    "選択中：" + series.title;
+
+  clearEpisodeForm();
+  renderEpisodes();
+  showMessage(series.title + " を選択しました");
+}
+
+// シリーズ登録・編集
+async function saveSeries() {
+  const title = $("seriesTitle").value.trim();
+  const category = $("seriesCategory").value;
+  const synopsis = $("seriesSynopsis").value;
+
+  if (!title) {
+    showMessage("シリーズタイトルを入力してください", true);
+    return;
+  }
+
+  try {
+    const id = $("seriesId").value;
+
+    if (id) {
+      await api("updateSeries", {
+        seriesId: id,
+        title,
+        category,
+        synopsis
+      });
+
+      showMessage("シリーズを編集しました！");
+    } else {
+      await api("createSeries", {
+        title,
+        category,
+        synopsis
+      });
+
+      showMessage("シリーズを登録しました！");
+    }
+
+    clearSeriesForm();
+    await loadData();
+
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
+// シリーズ編集フォーム
+function editSeries(id) {
+  const series = novelData.series.find(item => item.id === id);
+
+  if (!series) return;
+
+  $("seriesId").value = series.id;
+  $("seriesTitle").value = series.title;
+  $("seriesCategory").value = series.category;
+  $("seriesSynopsis").value = series.synopsis || "";
+
+  $("saveSeriesButton").textContent = "シリーズを更新";
+
+  window.scrollTo({
+    top: $("seriesTitle").getBoundingClientRect().top + window.scrollY - 100,
+    behavior: "smooth"
+  });
+}
+
+// シリーズ削除
+async function deleteSeries(id) {
+  const series = novelData.series.find(item => item.id === id);
+
+  if (!series) return;
+
+  const confirmed = confirm(
+    "「" + series.title + "」を削除しますか？\n" +
+    "登録されている各話もすべて削除されます。"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    await api("deleteSeries", {
+      seriesId: id
+    });
+
+    if (selectedSeriesId === id) {
+      selectedSeriesId = null;
+      $("selectedSeriesName").textContent =
+        "シリーズを選択してください";
+      $("episodeList").innerHTML = "";
+      clearEpisodeForm();
+    }
+
+    await loadData();
+    showMessage("シリーズを削除しました");
+
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
+// シリーズフォーム初期化
+function clearSeriesForm() {
+  $("seriesId").value = "";
+  $("seriesTitle").value = "";
+  $("seriesCategory").value = "長編";
+  $("seriesSynopsis").value = "";
+  $("saveSeriesButton").textContent = "シリーズを登録";
+}
+
+// 各話登録・編集
+async function saveEpisode() {
+  const series = getSelectedSeries();
+
+  if (!series) {
+    showMessage("先にシリーズを選択してください", true);
+    return;
+  }
+
+  const title = $("episodeTitle").value.trim();
+  const content = $("episodeContent").value;
+  const episodeId = $("episodeId").value;
+
+  if (!title) {
+    showMessage("話のタイトルを入力してください", true);
+    return;
+  }
+
+  if (!content.trim()) {
+    showMessage("本文を入力してください", true);
+    return;
+  }
+
+  try {
+    if (episodeId) {
+      await api("updateEpisode", {
+        seriesId: series.id,
+        episodeId,
+        title,
+        content
+      });
+
+      showMessage("話を編集しました！");
+    } else {
+      await api("createEpisode", {
+        seriesId: series.id,
+        title,
+        content
+      });
+
+      showMessage("話を登録しました！");
+    }
+
+    clearEpisodeForm();
+    await loadData();
+
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
+// 各話一覧表示
+function renderEpisodes() {
+  const series = getSelectedSeries();
+  const list = $("episodeList");
+
+  if (!series) {
+    list.innerHTML = "<p>シリーズを選択してください。</p>";
+    return;
+  }
+
+  const episodes = [...(series.episodes || [])].sort(
+    (a, b) => a.order - b.order
+  );
+
+  if (!episodes.length) {
+    list.innerHTML = "<p>まだ話が登録されていません。</p>";
+    return;
+  }
+
+  list.innerHTML = "";
+
+  episodes.forEach((episode, index) => {
+    const item = document.createElement("div");
+    item.className = "admin-item";
+
+    const title = document.createElement("div");
+    title.className = "admin-item-title";
+    title.textContent =
+      "第" + (index + 1) + "話　" + episode.title;
+
+    const info = document.createElement("small");
+    info.textContent =
+      (episode.content || "").length + "文字";
+
+    const buttons = document.createElement("div");
+    buttons.className = "episode-actions";
+
+    const editButton = document.createElement("button");
+    editButton.textContent = "編集";
+    editButton.onclick = () => editEpisode(episode.id);
+
+    const upButton = document.createElement("button");
+    upButton.textContent = "↑";
+    upButton.disabled = index === 0;
+    upButton.onclick = () => moveEpisode(index, -1);
+
+    const downButton = document.createElement("button");
+    downButton.textContent = "↓";
+    downButton.disabled = index === episodes.length - 1;
+    downButton.onclick = () => moveEpisode(index, 1);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "削除";
+    deleteButton.className = "danger";
+    deleteButton.onclick = () => deleteEpisode(episode.id);
+
+    buttons.append(
+      editButton,
+      upButton,
+      downButton,
+      deleteButton
+    );
+
+    item.append(title, info, buttons);
+    list.appendChild(item);
+  });
+}
+
+// 各話編集フォーム
+function editEpisode(id) {
+  const series = getSelectedSeries();
+  if (!series) return;
+
+  const episode = series.episodes.find(
+    item => item.id === id
+  );
+
+  if (!episode) return;
+
+  $("episodeId").value = episode.id;
+  $("episodeTitle").value = episode.title;
+  $("episodeContent").value = episode.content;
+
+  $("saveEpisodeButton").textContent = "話を更新";
+  updateCharacterCount();
+
+  $("episodeTitle").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+// 各話削除
+async function deleteEpisode(id) {
+  const series = getSelectedSeries();
+  if (!series) return;
+
+  const episode = series.episodes.find(
+    item => item.id === id
+  );
+
+  if (!episode) return;
+
+  if (!confirm("「" + episode.title + "」を削除しますか？")) {
+    return;
+  }
+
+  try {
+    await api("deleteEpisode", {
+      seriesId: series.id,
+      episodeId: id
+    });
+
+    await loadData();
+    showMessage("話を削除しました");
+
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
+// 各話の順番変更
+async function moveEpisode(index, direction) {
+  const series = getSelectedSeries();
+  if (!series) return;
+
+  const episodes = [...series.episodes].sort(
+    (a, b) => a.order - b.order
+  );
+
+  const targetIndex = index + direction;
+
+  if (targetIndex < 0 || targetIndex >= episodes.length) {
+    return;
+  }
+
+  [episodes[index], episodes[targetIndex]] =
+    [episodes[targetIndex], episodes[index]];
+
+  const episodeIds = episodes.map(item => item.id);
+
+  try {
+    await api("reorderEpisodes", {
+      seriesId: series.id,
+      episodeIds
+    });
+
+    await loadData();
+    showMessage("話の順番を変更しました");
+
+  } catch (error) {
+    showMessage(error.message, true);
+  }
+}
+
+// 各話フォーム初期化
+function clearEpisodeForm() {
+  $("episodeId").value = "";
+  $("episodeTitle").value = "";
+  $("episodeContent").value = "";
+  $("saveEpisodeButton").textContent = "話を登録";
+  updateCharacterCount();
+}
+
+// 文字数カウント
+function updateCharacterCount() {
+  const count = $("episodeContent").value.length;
+  $("characterCount").textContent =
+    count.toLocaleString() + "文字";
+}
+
+// ボタン設定
+$("loginButton").addEventListener("click", login);
+$("logoutButton").addEventListener("click", logout);
+
+$("saveSeriesButton").addEventListener("click", saveSeries);
+$("clearSeriesButton").addEventListener("click", clearSeriesForm);
+
+$("saveEpisodeButton").addEventListener("click", saveEpisode);
+$("clearEpisodeButton").addEventListener("click", clearEpisodeForm);
+
+$("episodeContent").addEventListener(
+  "input",
+  updateCharacterCount
+);
+
+// 前回ログイン状態が残っている場合
+if (adminKey) {
+  $("adminKey").value = adminKey;
+  loadData()
+    .then(() => showMessage("接続しました！"))
+    .catch(error => {
+      sessionStorage.removeItem("novelAdminKey");
+      adminKey = "";
+      $("adminKey").value = "";
+      showMessage(error.message, true);
+    });
+}
+</script>
+
+</body>
+</html>
