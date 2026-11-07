@@ -75,7 +75,7 @@
       line-height:1.8;
     }
     .error-message { color:#b66; }
-    .reader-name-form { max-width:425px; margin:0 auto 2em; text-align:left; }
+    .reader-name-form { max-width:425px; margin:0 auto .5em; text-align:left; }
     .reader-name-form h3 { margin:0 0 .8em; color:#888; font-size:1em; font-weight:400; }
     .reader-name-fields { display:flex; gap:1em; flex-wrap:wrap; }
     .reader-name-fields label { display:block; flex:1 1 140px; color:#888; font-size:.9em; }
@@ -89,7 +89,8 @@
       background:#999; color:#fff; font:inherit; font-size:.9em; letter-spacing:.1em; cursor:pointer;
     }
     .reader-name-form button:hover { opacity:.8; }
-    .reader-name-message { min-height:1.8em; margin:.7em 0 0; color:#698b75; font-size:.85em; }
+    .reader-name-message { margin:.3em 0 0; color:#698b75; font-size:.85em; }
+    #readerNameMessage:empty, #pageMessage:empty { display:none; }
     .back { margin-top:3em; text-align:center; }
     .back a {
       display:inline-block;
@@ -107,13 +108,13 @@
   <h2 style="text-align: center;">main</h2>
 
   <form id="readerNameForm" class="reader-name-form">
-    <h3>おなまえ</h3>
+    <h3>名前設定</h3>
     <div class="reader-name-fields">
       <label for="readerSurname">苗字
-        <input type="text" id="readerSurname" autocomplete="family-name">
+        <input type="text" id="readerSurname" autocomplete="family-name" placeholder="苗字を入力">
       </label>
       <label for="readerName">名前
-        <input type="text" id="readerName" autocomplete="given-name">
+        <input type="text" id="readerName" autocomplete="given-name" placeholder="名前を入力">
       </label>
     </div>
     <button type="submit">変更</button>
