@@ -19,8 +19,19 @@
       box-sizing:border-box;
     }
     .story-width { width:100%; max-width:600px; margin:0 auto; }
-    .series-heading { text-align:center; }
-    .series-intro { margin:0 auto 2em; line-height:1.9; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .series-heading {
+      width:100%;
+      max-width:600px;
+      margin-left:auto;
+      margin-right:auto;
+      color:#888;
+      font-family:inherit;
+      font-size:1em;
+      font-weight:400;
+      letter-spacing:inherit;
+      line-height:2;
+      text-align:right;
+    }
     .episode-list { text-align:left; }
     .episode-link-item { padding:1.2em 0; border-bottom:1px solid #ddd; }
     .episode-link-item a { color:inherit; text-decoration:none; }
@@ -65,7 +76,6 @@
   <h2 id="seriesHeading" class="series-heading">novel</h2>
   <p id="pageMessage" class="page-message">小説を読み込み中……</p>
 
-  <div id="seriesIntro" class="story-width series-intro hidden"></div>
   <div id="episodeList" class="story-width episode-list hidden"></div>
 
   <article id="episodeView" class="story-width hidden">
@@ -119,12 +129,9 @@
       row.className = "episode-link-item";
       const link = document.createElement("a");
       link.href = makeEpisodeUrl(episode.id);
-      const number = document.createElement("span");
-      number.className = "episode-number";
-      number.textContent = `${index + 1}.`;
       const title = document.createElement("span");
       title.textContent = episode.title || "タイトル未設定";
-      link.append(number, title);
+      link.appendChild(title);
       row.appendChild(link);
       $("episodeList").appendChild(row);
     }
@@ -136,7 +143,7 @@
     $("pageMessage").textContent = "";
     $("pageMessage").classList.remove("error-message");
     $("episodeList").classList.add("hidden");
-    $("episodeTitle").textContent = `${index + 1}. ${episode.title || "タイトル未設定"}`;
+    $("episodeTitle").textContent = episode.title || "タイトル未設定";
     $("episodeBody").textContent = personalText(episode.content || "");
     $("episodeView").classList.remove("hidden");
     const nav = $("episodeNavigation");
@@ -191,11 +198,6 @@
       window.currentEpisodes = episodes;
       $("seriesHeading").textContent = series.title || "novel";
       document.title = `${series.title || "novel"} | novel`;
-
-      if (series.synopsis) {
-        $("seriesIntro").textContent = series.synopsis;
-        $("seriesIntro").classList.remove("hidden");
-      }
 
       $("pageMessage").textContent = "";
       if (episodeId) {
