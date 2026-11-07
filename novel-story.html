@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -69,8 +70,171 @@
       text-decoration:none;
     }
     .back a:hover { opacity:.8; }
+
+
+    /* =========================
+       X風投稿カード
+    ========================= */
+
+    .x-post {
+      display:block;
+      width:100%;
+      box-sizing:border-box;
+      margin:1.8em 0;
+      padding:16px;
+      border:1px solid #e1e8ed;
+      border-radius:16px;
+      background:#fff;
+      color:#0f1419;
+      font-family:Arial, "Noto Sans JP", sans-serif;
+      line-height:1.5;
+      white-space:normal;
+      overflow-wrap:anywhere;
+    }
+
+    .x-post-header {
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .x-post-avatar {
+      flex-shrink:0;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      object-fit:cover;
+      background:#eee;
+    }
+
+    .x-post-avatar-placeholder {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      color:#888;
+    }
+
+    .x-post-user {
+      min-width:0;
+      flex:1;
+    }
+
+    .x-post-name {
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:5px;
+      font-size:16px;
+      font-weight:700;
+      line-height:1.4;
+    }
+
+    .x-post-verified {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:17px;
+      height:17px;
+      border-radius:50%;
+      background:#1d9bf0;
+      color:#fff;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .x-post-id {
+      color:#657786;
+      font-size:14px;
+      line-height:1.4;
+      overflow-wrap:anywhere;
+    }
+
+    .x-post-logo {
+      flex-shrink:0;
+      color:#0f1419;
+      font-size:23px;
+      font-weight:bold;
+      letter-spacing:-1px;
+    }
+
+    .x-post-text {
+      margin:20px 0;
+      color:#0f1419;
+      font-size:16px;
+      line-height:1.7;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .x-post-date {
+      color:#657786;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .x-post-engagement {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:20px;
+      color:#657786;
+      font-size:14px;
+    }
+
+    .x-post-stat {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      white-space:nowrap;
+    }
+
+    .x-post-stat-icon {
+      font-size:21px;
+      line-height:1;
+    }
+
+    .x-post:empty {
+      display:none;
+    }
+
+    @media (max-width:480px) {
+      .x-post {
+        padding:13px;
+        border-radius:14px;
+      }
+
+      .x-post-avatar {
+        width:42px;
+        height:42px;
+      }
+
+      .x-post-name {
+        font-size:14px;
+      }
+
+      .x-post-id {
+        font-size:12px;
+      }
+
+      .x-post-text {
+        font-size:15px;
+      }
+
+      .x-post-engagement {
+        gap:10px;
+        font-size:12px;
+      }
+
+      .x-post-stat-icon {
+        font-size:18px;
+      }
+    }
   </style>
 </head>
+
 <body>
 <section>
   <h2 id="seriesHeading" class="series-heading">novel</h2>
@@ -108,13 +272,195 @@
   function personalText(text) {
     const surname = localStorage.getItem("novelSurname") || "";
     const name = localStorage.getItem("novelName") || "";
+
     return String(text ?? "")
       .replaceAll("{surname}", surname)
       .replaceAll("{name}", name);
   }
 
+
+  /* =========================
+     X風投稿カードの生成
+  ========================= */
+
+  function createXPost(block) {
+    const separator = block.indexOf("\n---");
+    if (separator === -1) {
+      return document.createTextNode("[[XPOST]]" + block + "[[/XPOST]]");
+    }
+
+    const headerText = block.slice(0, separator);
+    const postText = block.slice(separator + 4).replace(/^\n/, "");
+
+    const settings = {};
+
+    headerText.split("\n").forEach(line => {
+      const equalIndex = line.indexOf("=");
+      if (equalIndex === -1) return;
+
+      const key = line.slice(0, equalIndex).trim();
+      const value = line.slice(equalIndex + 1).trim();
+
+      if (key) settings[key] = value;
+    });
+
+    const card = document.createElement("div");
+    card.className = "x-post";
+
+    // ヘッダー
+    const header = document.createElement("div");
+    header.className = "x-post-header";
+
+    // アイコン
+    if (settings.avatar) {
+      const avatar = document.createElement("img");
+      avatar.className = "x-post-avatar";
+      avatar.src = settings.avatar;
+      avatar.alt = "";
+      avatar.loading = "lazy";
+      header.appendChild(avatar);
+    } else {
+      const avatar = document.createElement("div");
+      avatar.className = "x-post-avatar x-post-avatar-placeholder";
+      avatar.textContent = "○";
+      header.appendChild(avatar);
+    }
+
+    // 名前・ID
+    const user = document.createElement("div");
+    user.className = "x-post-user";
+
+    const name = document.createElement("div");
+    name.className = "x-post-name";
+    name.textContent = personalText(settings.name || "名前未設定");
+
+    if (settings.verified === "true") {
+      const verified = document.createElement("span");
+      verified.className = "x-post-verified";
+      verified.textContent = "✓";
+      name.appendChild(verified);
+    }
+
+    const id = document.createElement("div");
+    id.className = "x-post-id";
+    id.textContent = settings.id || "";
+
+    user.appendChild(name);
+    user.appendChild(id);
+
+    // Xロゴ
+    const logo = document.createElement("div");
+    logo.className = "x-post-logo";
+    logo.textContent = "𝕏.com";
+
+    header.appendChild(user);
+    header.appendChild(logo);
+
+    card.appendChild(header);
+
+    // 投稿本文
+    const text = document.createElement("div");
+    text.className = "x-post-text";
+    text.textContent = personalText(postText);
+
+    card.appendChild(text);
+
+    // 投稿日時・表示回数
+    if (settings.date || settings.views) {
+      const date = document.createElement("div");
+      date.className = "x-post-date";
+
+      date.textContent = [
+        settings.date,
+        settings.views
+      ].filter(Boolean).join(" · ");
+
+      card.appendChild(date);
+    }
+
+    // 反応数
+    const stats = [
+      ["replies", "○", "返信"],
+      ["reposts", "⇄", "リポスト"],
+      ["likes", "♡", "いいね"],
+      ["bookmarks", "♧", "ブックマーク"]
+    ];
+
+    const engagement = document.createElement("div");
+    engagement.className = "x-post-engagement";
+
+    let hasStats = false;
+
+    stats.forEach(([key, symbol, label]) => {
+      if (!settings[key]) return;
+
+      hasStats = true;
+
+      const item = document.createElement("div");
+      item.className = "x-post-stat";
+      item.setAttribute("aria-label", label);
+
+      const icon = document.createElement("span");
+      icon.className = "x-post-stat-icon";
+      icon.textContent = symbol;
+
+      const value = document.createElement("span");
+      value.textContent = settings[key];
+
+      item.appendChild(icon);
+      item.appendChild(value);
+      engagement.appendChild(item);
+    });
+
+    if (hasStats) {
+      card.appendChild(engagement);
+    }
+
+    return card;
+  }
+
+
+  /* =========================
+     本文の表示・X投稿の変換
+  ========================= */
+
+  function renderContent(content) {
+    const container = $("episodeBody");
+    container.replaceChildren();
+
+    const text = personalText(content || "");
+
+    const pattern = /\[\[XPOST\]\]\s*\n([\s\S]*?)\n\[\[\/XPOST\]\]/g;
+
+    let lastIndex = 0;
+    let match;
+
+    while ((match = pattern.exec(text)) !== null) {
+      // X投稿より前の通常本文
+      const before = text.slice(lastIndex, match.index);
+
+      if (before) {
+        container.appendChild(document.createTextNode(before));
+      }
+
+      // X投稿カード
+      container.appendChild(createXPost(match[1]));
+
+      lastIndex = pattern.lastIndex;
+    }
+
+    // 最後のX投稿より後の通常本文
+    const remaining = text.slice(lastIndex);
+
+    if (remaining) {
+      container.appendChild(document.createTextNode(remaining));
+    }
+  }
+
+
   function renderEpisodeList(series, episodes) {
     $("episodeList").replaceChildren();
+
     if (episodes.length === 0) {
       $("pageMessage").textContent = "このシリーズには、まだ話がありません。";
       $("pageMessage").classList.remove("error-message");
@@ -123,31 +469,44 @@
 
     $("pageMessage").textContent = "";
     $("pageMessage").classList.remove("error-message");
+
     for (let index = 0; index < episodes.length; index++) {
       const episode = episodes[index];
       const row = document.createElement("div");
       row.className = "episode-link-item";
+
       const link = document.createElement("a");
       link.href = makeEpisodeUrl(episode.id);
+
       const title = document.createElement("span");
       title.textContent = episode.title || "タイトル未設定";
+
       link.appendChild(title);
       row.appendChild(link);
       $("episodeList").appendChild(row);
     }
+
     $("episodeList").classList.remove("hidden");
   }
 
+
   function renderEpisode(series, episodes, index) {
     const episode = episodes[index];
+
     $("pageMessage").textContent = "";
     $("pageMessage").classList.remove("error-message");
     $("episodeList").classList.add("hidden");
+
     $("episodeTitle").textContent = episode.title || "タイトル未設定";
-    $("episodeBody").textContent = personalText(episode.content || "");
+
+    // 本文を表示（X投稿タグもここで変換）
+    renderContent(episode.content || "");
+
     $("episodeView").classList.remove("hidden");
+
     const nav = $("episodeNavigation");
     nav.replaceChildren();
+
     if (index > 0) {
       const previous = document.createElement("a");
       previous.className = "square-link";
@@ -174,6 +533,7 @@
     }
   }
 
+
   async function loadStory() {
     if (!seriesId) {
       showError("シリーズが指定されていません。小説一覧からシリーズを選んでください。");
@@ -181,35 +541,54 @@
     }
 
     try {
-      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache:"no-store" });
-      if (!response.ok) throw new Error(`小説データを読み込めませんでした（HTTP ${response.status}）。`);
+      const response = await fetch(`${DATA_URL}?v=${Date.now()}`, {
+        cache:"no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error(`小説データを読み込めませんでした（HTTP ${response.status}）。`);
+      }
+
       const data = await response.json();
-      if (!data || !Array.isArray(data.series)) throw new Error("小説データの形式を確認できませんでした。");
+
+      if (!data || !Array.isArray(data.series)) {
+        throw new Error("小説データの形式を確認できませんでした。");
+      }
 
       const series = data.series.find(item => String(item.id) === seriesId);
+
       if (!series) {
         showError("シリーズが見つかりません。小説一覧から選び直してください。");
         return;
       }
 
       const episodes = Array.isArray(series.episodes) ? [...series.episodes] : [];
-      episodes.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
+
+      episodes.sort((a, b) =>
+        (Number(a.order) || 0) - (Number(b.order) || 0)
+      );
+
       window.currentSeries = series;
       window.currentEpisodes = episodes;
+
       $("seriesHeading").textContent = series.title || "novel";
       document.title = `${series.title || "novel"} | novel`;
 
       $("pageMessage").textContent = "";
+
       if (episodeId) {
         const index = episodes.findIndex(item => String(item.id) === episodeId);
+
         if (index < 0) {
           showError("話が見つかりません。話一覧から選び直してください。");
           return;
         }
+
         renderEpisode(series, episodes, index);
       } else {
         renderEpisodeList(series, episodes);
       }
+
     } catch (error) {
       showError(error.message || "小説データを読み込めませんでした。");
     }
