@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#A8CCBA">
+<title>green or blue?</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Megrim&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+/* =========================
+   BASIC
+========================= */
+
+:root {
+  --mint: #A8CCBA;
+  --navy: #203354;
+  --white: #F5F5F0;
+  --line: rgba(32, 51, 84, .45);
+
+  --title-font: 'Megrim', cursive;
+  --body-font: '07LogoTypeGothic', sans-serif;
+}
+
+/* 07ロゴたいぷゴシックのフォントファイルを
+   fontsフォルダに入れたら、下のコメントを外して使用
+
+@font-face {
+  font-family: '07LogoTypeGothic';
+  src: url('fonts/07ロゴたいぷゴシック.ttf') format('truetype');
+  font-display: swap;
+}
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--mint);
+  color: var(--navy);
+  font-family: var(--body-font);
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: .04em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+  width: min(90%, 650px);
+  margin: 0 auto;
+}
+
+section {
+  padding: 55px 0;
+}
+
+.section-title {
+  margin: 0 0 25px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 35px;
+  font-weight: normal;
+  letter-spacing: .08em;
+}
+
+.section-subtitle {
+  margin-top: -20px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 12px;
+  letter-spacing: .15em;
+}
+
+/* =========================
+   HEADER / LOGO
+========================= */
+
+header {
+  padding: 65px 0 35px;
+  text-align: center;
+}
+
+.logo {
+  position: relative;
+  width: min(75vw, 280px);
+  aspect-ratio: 1;
+  margin: 0 auto 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-icon {
+  font-size: clamp(190px, 65vw, 260px);
+  line-height: 1;
+  color: var(--navy);
+}
+
+.logo-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  color: var(--mint);
+  font-family: var(--title-font);
+  font-size: clamp(23px, 7vw, 30px);
+  font-weight: normal;
+  white-space: nowrap;
+  letter-spacing: .02em;
+}
+
+.logo-caption {
+  font-family: var(--title-font);
+  font-size: 11px;
+  letter-spacing: .2em;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.nav-button {
+  display: inline-block;
+  min-width: 95px;
+  padding: 8px 17px;
+  border: 1px solid var(--navy);
+  font-family: var(--title-font);
+  font-size: 15px;
+  text-align: center;
+  transition: .25s;
+}
+
+.nav-button:hover {
+  background: var(--navy);
+  color: var(--mint);
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+/* =========================
+   ABOUT ME
+========================= */
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+.profile-box {
+  border: 1px solid var(--navy);
+  padding: 22px;
+}
+
+.profile-name {
+  margin: 0 0 12px;
+  font-family: var(--title-font);
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.profile-text {
+  font-size: 12px;
+  line-height: 2.2;
+}
+
+.profile-detail {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+}
+
+.profile-detail p {
+  margin: 5px 0;
+}
+
+.contact-link {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid var(--navy);
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 16px;
+  transition: .25s;
+}
+
+.contact-link:hover {
+  background: var(--navy);
+  color: var(--mint);
+}
+
+/* =========================
+   INFORMATION
+========================= */
+
+.info-box {
+  border: 1px solid var(--navy);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.info-heading {
+  margin: 0 0 12px;
+  font-family: var(--title-font);
+  font-size: 20px;
+  font-weight: normal;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 7px;
+}
+
+.info-text {
+  font-size: 12px;
+  line-height: 2.2;
+}
+
+.attention {
+  border: 1px solid var(--navy);
+  margin-top: 15px;
+}
+
+.attention summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 15px;
+  font-family: var(--title-font);
+  font-size: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.attention summary::-webkit-details-marker {
+  display: none;
+}
+
+.attention summary::after {
+  content: '+';
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+.attention[open] summary::after {
+  content: '−';
+}
+
+.attention-content {
+  padding: 10px 18px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 2.2;
+}
+
+.attention-content ul {
+  padding-left: 20px;
+}
+
+.attention-content li {
+  margin-bottom: 8px;
+}
+
+/* =========================
+   MAIN LINK
+========================= */
+
+.main-area {
+  text-align: center;
+}
+
+.main-link {
+  display: block;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 17px;
+  border: 1px solid var(--navy);
+  font-family: var(--title-font);
+  font-size: 25px;
+  letter-spacing: .15em;
+  transition: .25s;
+}
+
+.main-link:hover {
+  background: var(--navy);
+  color: var(--mint);
+}
+
+.main-description {
+  margin-top: 12px;
+  font-size: 11px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  padding: 30px 15px 45px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 11px;
+  letter-spacing: .15em;
+}
+
+footer .copyright {
+  margin-top: 8px;
+  font-family: var(--body-font);
+  font-size: 10px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  header {
+    padding-top: 45px;
+  }
+
+  section {
+    padding: 42px 0;
+  }
+
+  .container {
+    width: 88%;
+  }
+
+  .section-title {
+    font-size: 31px;
+  }
+
+  nav {
+    gap: 7px;
+  }
+
+  .nav-button {
+    min-width: 85px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     TOP / LOGO
+========================= -->
+
+<header id="top">
+
+  <div class="logo">
+    <i class="fa-solid fa-apple-whole logo-icon"></i>
+    <div class="logo-name">green or blue?</div>
+  </div>
+
+  <div class="logo-caption">
+    PERSONAL CREATIVE SITE
+  </div>
+
+  <nav>
+    <a href="#about" class="nav-button">ABOUT</a>
+    <a href="#information" class="nav-button">INFO</a>
+    <a href="main.html" class="nav-button">MAIN</a>
+  </nav>
+
+</header>
+
+<hr class="divider">
+
+<!-- =========================
+     ABOUT ME
+========================= -->
+
+<section id="about">
+
+  <div class="container">
+
+    <h2 class="section-title">ABOUT ME</h2>
+    <div class="section-subtitle">PROFILE / CONTACT</div>
+
+    <div class="about-content">
+
+      <div class="profile-box">
+
+        <h3 class="profile-name">YAMADA</h3>
+
+        <div class="profile-text">
+          ずっとゲームしてる人。<br>
+          Mrs. GREEN APPLEが好き。<br>
+          好きなものを好きなように。
+        </div>
+
+        <div class="profile-detail">
+          <p><strong>NAME</strong>　YAMADA</p>
+          <p><strong>START</strong>　2026.09.20</p>
+          <p><strong>LIKE</strong>　MUSIC / GAME / NOVEL</p>
+        </div>
+
+        <a href="mailto:" class="contact-link">
+          CONTACT
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- =========================
+     INFORMATION
+========================= -->
+
+<section id="information">
+
+  <div class="container">
+
+    <h2 class="section-title">INFORMATION</h2>
+    <div class="section-subtitle">ABOUT THIS SITE</div>
+
+    <div class="info-box">
+
+      <h3 class="info-heading">WELCOME</h3>
+
+      <div class="info-text">
+        当サイトは個人が運営する二次創作・夢小説サイトです。<br>
+        原作者様・関係各社様とは一切関係ありません。<br>
+        作品の閲覧は自己責任でお願いいたします。
+      </div>
+
+    </div>
+
+    <details class="attention">
+
+      <summary>ATTENTION</summary>
+
+      <div class="attention-content">
+
+        <ul>
+          <li>当サイトの作品は二次創作です。</li>
+          <li>実在する人物・団体・企業とは関係ありません。</li>
+          <li>作品の無断転載・複製・転載は禁止です。</li>
+          <li>作品の内容には創作・フィクションが含まれます。</li>
+          <li>閲覧後の苦情等はご遠慮ください。</li>
+        </ul>
+
+      </div>
+
+    </details>
+
+    <div class="info-box" style="margin-top:20px;">
+
+      <h3 class="info-heading">LINK</h3>
+
+      <div class="info-text">
+        当サイトへのリンクについては、管理人までお問い合わせください。
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<section class="main-area">
+
+  <div class="container">
+
+    <h2 class="section-title">MAIN</h2>
+    <div class="section-subtitle">NOVEL / CREATIVE WORKS</div>
+
+    <a href="main.html" class="main-link">
+      ENTER
+    </a>
+
+    <p class="main-description">
+      作品一覧はこちらから
+    </p>
+
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  green or blue?
+
+  <div class="copyright">
+    © 2026 YAMADA
+  </div>
+
+  <div style="margin-top:15px;">
+    <a href="#top">BACK TO TOP ↑</a>
+  </div>
+
+</footer>
+
+</body>
+</html>
