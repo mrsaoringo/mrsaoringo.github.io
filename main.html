@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -77,13 +78,18 @@ input {
   margin: 0 auto;
 }
 
+/* MAIN TITLE */
+
 .header-title {
-  margin: 50px 0 25px;
+  margin: 0;
+  padding-top: 50px;
+  padding-bottom: 25px;
   text-align: center;
   font-family: var(--title-font);
   font-size: 35px;
   font-weight: normal;
   letter-spacing: .08em;
+  line-height: 1.9;
 }
 
 /* NAME CHANGE */
@@ -173,7 +179,7 @@ input {
 
 main {
   width: 100%;
-  padding: 175px 0 40px;
+  padding: 245px 0 40px;
 }
 
 .container {
@@ -315,7 +321,9 @@ footer {
   }
 
   .header-title {
-    font-size: 27px;
+    font-size: 31px;
+    padding-top: 50px;
+    padding-bottom: 25px;
   }
 
   .name-heading {
@@ -339,7 +347,7 @@ footer {
   }
 
   main {
-    padding-top: 160px;
+    padding-top: 245px;
   }
 
   .container {
@@ -351,7 +359,7 @@ footer {
   }
 
   .section-title {
-    font-size: 25px;
+    font-size: 31px;
     margin-bottom: 18px;
   }
 
@@ -645,8 +653,6 @@ function createSeriesItem(series) {
 
 function renderSeries(seriesItems) {
 
-  // 一覧を初期化
-
   Object.values(categorySettings).forEach(settings => {
 
     $(settings.list).replaceChildren();
@@ -672,8 +678,6 @@ function renderSeries(seriesItems) {
   }
 
 
-  // カテゴリー別に振り分け
-
   const grouped = {
     long: [],
     middle: [],
@@ -691,8 +695,6 @@ function renderSeries(seriesItems) {
 
   }
 
-
-  // 各カテゴリーを表示
 
   for (const [category, settings] of Object.entries(categorySettings)) {
 
