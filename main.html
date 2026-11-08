@@ -214,6 +214,50 @@ footer .copyright {
 
   <div class="header-inner">
 
+    <section id="information">
+      
+      <div class="container">
+        
+        <h2 class="section-title">MAIN</h2>
+        <div class="section-subtitle">NAME CHANGE</div>
+
+         <form id="readerNameForm" class="reader-name-form">
+           <div class="reader-name-fields">
+             <label>
+               <input
+                 type="text"
+                 id="readerSurname"
+                 autocomplete="family-name"
+                 placeholder="苗字"
+                 aria-label="苗字"
+                  >
+             </label>
+            
+             <label>
+               <input
+                type="text"
+                id="readerName"
+                autocomplete="given-name"
+                placeholder="名前"
+                aria-label="名前"
+                 >
+             </label>
+             <button type="submit" class="name-submit">
+               変更
+             </button>
+           </div>
+           <p id="readerNameMessage" class="reader-name-message" aria-live="polite"></p>
+         </form>
+      
+      </div>
+    
+    </section>
+  
+  </div>
+
+</header>
+  
+
 <!-- MAIN -->
 
 <section id="information">
@@ -235,13 +279,10 @@ footer .copyright {
 
     </div>
 
-  </div>
+      </div>
 
 </section>
 
-  </div>
-
-</header>
 
 <hr class="divider">
 
