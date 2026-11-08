@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#A8CCBA">
+<title>MAIN | green or blue?</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Megrim&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --mint: #A8CCBA;
+  --navy: #203354;
+  --white: #F5F5F0;
+  --line: rgba(32, 51, 84, .45);
+  --title-font: 'Megrim', cursive;
+  --body-font: '07LogoTypeGothic', sans-serif;
+}
+
+/*
+@font-face {
+  font-family: '07LogoTypeGothic';
+  src: url('fonts/07ロゴたいぷゴシック.ttf') format('truetype');
+  font-display: swap;
+}
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--mint);
+  color: var(--navy);
+  font-family: var(--body-font);
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: .04em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+/* =========================
+   FIXED HEADER
+========================= */
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 10px 15px 13px;
+  background: var(--mint);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  width: min(100%, 650px);
+  margin: 0 auto;
+}
+
+.header-title {
+  margin: 0 0 5px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 30px;
+  font-weight: normal;
+  letter-spacing: .12em;
+  line-height: 1.4;
+}
+
+/* NAME CHANGE */
+
+.reader-name-form {
+  width: 100%;
+  max-width: 425px;
+  margin: 0 auto;
+}
+
+.name-heading {
+  margin: 0 0 5px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 13px;
+  font-weight: normal;
+  letter-spacing: .12em;
+}
+
+.reader-name-fields {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reader-name-fields label {
+  flex: 1;
+  min-width: 0;
+}
+
+.reader-name-fields input {
+  display: block;
+  width: 100%;
+  height: 36px;
+  padding: 5px 10px;
+  border: 1px solid var(--navy);
+  border-radius: 0;
+  background: transparent;
+  color: var(--navy);
+  font-size: 12px;
+  outline: none;
+}
+
+.reader-name-fields input::placeholder {
+  color: var(--navy);
+  opacity: .7;
+}
+
+.reader-name-fields input:focus {
+  background: rgba(245, 245, 240, .35);
+}
+
+.name-submit {
+  flex-shrink: 0;
+  height: 36px;
+  padding: 0 17px;
+  border: 1px solid var(--navy);
+  border-radius: 0;
+  background: var(--navy);
+  color: var(--mint);
+  font-size: 12px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.name-submit:hover {
+  background: transparent;
+  color: var(--navy);
+}
+
+.reader-name-message {
+  min-height: 0;
+  margin: 3px 0 0;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+#readerNameMessage:empty {
+  display: none;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+main {
+  width: 100%;
+  padding: 175px 0 40px;
+}
+
+.container {
+  width: min(88%, 650px);
+  margin: 0 auto;
+}
+
+.story-section {
+  margin-bottom: 55px;
+}
+
+.section-title {
+  margin: 0 0 25px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 27px;
+  font-weight: normal;
+  letter-spacing: .13em;
+}
+
+/* =========================
+   SERIES LIST
+========================= */
+
+.series-list {
+  width: 100%;
+}
+
+.series-item {
+  padding: 20px 5px;
+  border-bottom: 1px solid var(--line);
+}
+
+.series-title {
+  margin: 0 0 7px;
+  color: var(--navy);
+  font-family: var(--body-font);
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.8;
+  letter-spacing: .06em;
+}
+
+.series-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 8px 2px;
+  color: rgba(32, 51, 84, .75);
+  font-size: 11px;
+}
+
+.series-synopsis {
+  margin: 10px 2px 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.read-link {
+  display: inline-block;
+  margin-top: 13px;
+  padding: 5px 18px;
+  border: 1px solid var(--navy);
+  color: var(--navy);
+  font-family: var(--title-font);
+  font-size: 13px;
+  letter-spacing: .08em;
+  transition: .25s;
+}
+
+.read-link:hover {
+  background: var(--navy);
+  color: var(--mint);
+}
+
+.read-link[aria-disabled="true"] {
+  opacity: .45;
+  cursor: default;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.page-message {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.error-message {
+  color: #8b3434;
+}
+
+.empty-message {
+  padding: 15px 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  padding: 25px 15px 45px;
+  text-align: center;
+  font-family: var(--title-font);
+  font-size: 12px;
+  letter-spacing: .15em;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 20px;
+  border: 1px solid var(--navy);
+  font-size: 13px;
+  transition: .25s;
+}
+
+.back-link:hover {
+  background: var(--navy);
+  color: var(--mint);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .fixed-header {
+    padding: 8px 15px 10px;
+  }
+
+  .header-title {
+    font-size: 27px;
+  }
+
+  .name-heading {
+    font-size: 12px;
+  }
+
+  .reader-name-fields {
+    gap: 6px;
+  }
+
+  .reader-name-fields input {
+    height: 35px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .name-submit {
+    height: 35px;
+    padding: 0 13px;
+    font-size: 11px;
+  }
+
+  main {
+    padding-top: 160px;
+  }
+
+  .container {
+    width: 88%;
+  }
+
+  .story-section {
+    margin-bottom: 42px;
+  }
+
+  .section-title {
+    font-size: 25px;
+    margin-bottom: 18px;
+  }
+
+  .series-item {
+    padding: 17px 3px;
+  }
+
+  .series-title {
+    font-size: 14px;
+  }
+
+  footer {
+    padding-bottom: 35px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIXED HEADER -->
+
+<header class="fixed-header">
+
+  <div class="header-inner">
+
+    <h1 class="header-title">MAIN</h1>
+
+    <form id="readerNameForm" class="reader-name-form">
+
+      <h2 class="name-heading">NAME CHANGE</h2>
+
+      <div class="reader-name-fields">
+
+        <label>
+          <input
+            type="text"
+            id="readerSurname"
+            autocomplete="family-name"
+            placeholder="苗字"
+            aria-label="苗字"
+          >
+        </label>
+
+        <label>
+          <input
+            type="text"
+            id="readerName"
+            autocomplete="given-name"
+            placeholder="名前"
+            aria-label="名前"
+          >
+        </label>
+
+        <button type="submit" class="name-submit">
+          変更
+        </button>
+
+      </div>
+
+      <p id="readerNameMessage" class="reader-name-message" aria-live="polite"></p>
+
+    </form>
+
+  </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+
+<main>
+
+  <div class="container">
+
+    <p id="pageMessage" class="page-message">
+      作品を読み込み中…
+    </p>
+
+    <!-- LONG STORY -->
+
+    <section class="story-section" id="longStory">
+
+      <h2 class="section-title">LONG STORY</h2>
+
+      <div class="series-list" id="longList"></div>
+
+    </section>
+
+
+    <!-- MIDDLE STORY -->
+
+    <section class="story-section" id="middleStory">
+
+      <h2 class="section-title">MIDDLE STORY</h2>
+
+      <div class="series-list" id="middleList"></div>
+
+    </section>
+
+
+    <!-- SHORT STORY -->
+
+    <section class="story-section" id="shortStory">
+
+      <h2 class="section-title">SHORT STORY</h2>
+
+      <div class="series-list" id="shortList"></div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  green or blue?
+
+  <div>
+    <a href="index.html" class="back-link">
+      TOPへ戻る
+    </a>
+  </div>
+
+</footer>
+
+
+<script>
+const DATA_URL = "./novel-data.json";
+
+const $ = id => document.getElementById(id);
+
+const pageMessage = $("pageMessage");
+
+const categorySettings = {
+  long: {
+    list: "longList",
+    section: "longStory"
+  },
+  middle: {
+    list: "middleList",
+    section: "middleStory"
+  },
+  short: {
+    list: "shortList",
+    section: "shortStory"
+  }
+};
+
+
+/* =========================
+   NAME CHANGE
+========================= */
+
+// 保存済みの名前を読み込む
+
+$("readerSurname").value =
+  localStorage.getItem("novelSurname") || "";
+
+$("readerName").value =
+  localStorage.getItem("novelName") || "";
+
+
+// 名前を保存
+
+$("readerNameForm").addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  localStorage.setItem(
+    "novelSurname",
+    $("readerSurname").value
+  );
+
+  localStorage.setItem(
+    "novelName",
+    $("readerName").value
+  );
+
+  $("readerNameMessage").textContent =
+    "名前を保存しました。";
+
+});
+
+
+/* =========================
+   ERROR MESSAGE
+========================= */
+
+function showError(message) {
+
+  pageMessage.textContent = message;
+
+  pageMessage.classList.add("error-message");
+
+}
+
+
+/* =========================
+   CREATE SERIES ITEM
+========================= */
+
+function createSeriesItem(series) {
+
+  const item = document.createElement("article");
+
+  item.className = "series-item";
+
+
+  // TITLE
+
+  const title = document.createElement("h3");
+
+  title.className = "series-title";
+
+  title.textContent =
+    series.title || "タイトル未設定";
+
+
+  // META
+
+  const meta = document.createElement("div");
+
+  meta.className = "series-meta";
+
+  const episodes = Array.isArray(series.episodes)
+    ? series.episodes
+    : [];
+
+  const episodeCount = document.createElement("span");
+
+  episodeCount.textContent = `全${episodes.length}話`;
+
+  meta.appendChild(episodeCount);
+
+
+  // SYNOPSIS
+
+  const synopsis = document.createElement("p");
+
+  synopsis.className = "series-synopsis";
+
+  synopsis.textContent = series.synopsis || "";
+
+
+  // READ LINK
+
+  const readLink = document.createElement("a");
+
+  readLink.className = "read-link";
+
+  readLink.textContent =
+    episodes.length > 0
+      ? "READ MORE"
+      : "COMING SOON";
+
+
+  if (episodes.length > 0 && series.id) {
+
+    readLink.href =
+      `novel-story.html?seriesId=${encodeURIComponent(series.id)}`;
+
+  } else {
+
+    readLink.setAttribute("aria-disabled", "true");
+
+    readLink.setAttribute("tabindex", "-1");
+
+  }
+
+
+  item.append(
+    title,
+    meta,
+    synopsis,
+    readLink
+  );
+
+  return item;
+
+}
+
+
+/* =========================
+   RENDER SERIES
+========================= */
+
+function renderSeries(seriesItems) {
+
+  // 一覧を初期化
+
+  Object.values(categorySettings).forEach(settings => {
+
+    $(settings.list).replaceChildren();
+
+    $(settings.section).style.display = "block";
+
+  });
+
+
+  if (seriesItems.length === 0) {
+
+    Object.values(categorySettings).forEach(settings => {
+      $(settings.section).style.display = "none";
+    });
+
+    pageMessage.textContent =
+      "公開中の作品はまだありません。";
+
+    pageMessage.classList.remove("error-message");
+
+    return;
+
+  }
+
+
+  // カテゴリー別に振り分け
+
+  const grouped = {
+    long: [],
+    middle: [],
+    short: []
+  };
+
+
+  for (const series of seriesItems) {
+
+    if (grouped[series.category]) {
+
+      grouped[series.category].push(series);
+
+    }
+
+  }
+
+
+  // 各カテゴリーを表示
+
+  for (const [category, settings] of Object.entries(categorySettings)) {
+
+    const list = $(settings.list);
+
+    const section = $(settings.section);
+
+    const items = grouped[category];
+
+
+    if (items.length === 0) {
+
+      section.style.display = "none";
+
+      continue;
+
+    }
+
+
+    section.style.display = "block";
+
+    for (const series of items) {
+
+      list.appendChild(
+        createSeriesItem(series)
+      );
+
+    }
+
+  }
+
+
+  pageMessage.textContent = "";
+
+  pageMessage.classList.remove("error-message");
+
+}
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+async function loadSeries() {
+
+  try {
+
+    const response = await fetch(DATA_URL, {
+      cache: "no-store"
+    });
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        `作品データを読み込めませんでした（HTTP ${response.status}）。`
+      );
+
+    }
+
+
+    const data = await response.json();
+
+
+    if (!data || !Array.isArray(data.series)) {
+
+      throw new Error(
+        "作品データの形式を確認できませんでした。"
+      );
+
+    }
+
+
+    renderSeries(data.series);
+
+
+  } catch (error) {
+
+    Object.values(categorySettings).forEach(settings => {
+
+      $(settings.list).replaceChildren();
+
+      $(settings.section).style.display = "none";
+
+    });
+
+
+    showError(
+      error.message || "作品データを読み込めませんでした。"
+    );
+
+  }
+
+}
+
+
+loadSeries();
+
+</script>
+
+</body>
+</html>
