@@ -67,8 +67,12 @@ input {
   left: 0;
   z-index: 1000;
   width: 100%;
-  padding: 0px 0px 20px;
+  padding: 0 0 20px;
   background: var(--mint);
+
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .header-inner {
