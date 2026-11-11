@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#d9e4ee">
+<title>PAGE | green or blue?</title>
+
+<style>
+@charset "UTF-8";
+
+/* Template & Designed by Towako. */
+/* https://ninawas.me */
+
+/* ウェブフォントの読み込み */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP&display=swap');
+
+@font-face {
+    font-family: 'XANO明朝';
+    font-display: swap;
+    src: url('https://cdn.leafscape.be/XANO-mincho/XANO-mincho_web.woff2') format("woff2");
+}
+
+/* 全体に適用する */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+    font-family: 'Noto Serif JP', serif;
+}
+
+/* 基本設定 */
+body {
+    text-align: center;
+    background-color: #d9e4ee;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+    color: #000;
+}
+
+/* リンク */
+a {
+    padding: 0.2em;
+    text-decoration: none;
+    background-color: #fff;
+    color: #000;
+}
+
+/* ホバー */
+a:hover {
+    border: none;
+}
+
+/* 訪問済みリンク */
+a:visited {
+    color: #546c94;
+}
+
+/* 背景画像 */
+#bg {
+    position: fixed;
+    top: 0;
+    right: 5%;
+    width: 100px;
+    height: 100vh;
+    z-index: -100;
+    background: url('画像URL') 30%/cover;
+}
+
+/* アーティクル */
+article {
+    margin: 0 auto 3em;
+    width: 90%;
+    max-width: 600px;
+    padding: 3em;
+    background-color: #fff;
+    text-align: justify;
+    word-break: break-all;
+}
+
+/* アーティクル見出し */
+article h1 {
+    margin-bottom: 1em;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+/* アーティクル段落 */
+article p {
+    margin: 1em auto 1.5em;
+    max-width: 600px;
+}
+
+/* 画像 */
+.imagebox {
+    width: 90%;
+    max-width: 600px;
+    height: 80px;
+    margin: 3em auto 0;
+    background: url('画像URL') center/cover;
+}
+
+/* メニュー */
+.menu {
+    margin: 1.5em auto;
+    text-align: center;
+}
+
+.menu ul {
+    list-style-type: none;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 1em;
+}
+
+.menu li a {
+    padding: 0.2em 0.5em;
+    border: thin solid #176cb5;
+    font-size: 0.9em;
+    color: #176cb5;
+}
+
+/* 本文 */
+#episodeContent {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* 読み込みメッセージ */
+.message {
+    margin: 3em auto;
+    text-align: center;
+    font-size: 12px;
+    color: #606060;
+}
+
+/* フッター */
+footer {
+    margin: 1em auto 1.5em;
+    font-size: 11px;
+}
+
+/* 横幅768px以上で読み込む */
+@media screen and (min-width:768px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    #bg {
+        width: 230px;
+    }
+
+}
+
+/* 横幅1024px以上で読み込む */
+@media screen and (min-width:1024px) {
+
+    #bg {
+        width: 330px;
+    }
+
+}
+
+/* 横幅1440px以上で読み込む */
+@media screen and (min-width:1440px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    #bg {
+        width: 430px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg"></div>
+
+<div class="imagebox"></div>
+
+<article>
+
+    <h1 id="episodeTitle">タイトル</h1>
+
+    <p id="episodeContent">本文を読み込み中…</p>
+
+    <div class="menu">
+        <ul>
+            <li><a id="prevLink" href="#">PREV</a></li>
+            <li><a id="indexLink" href="#">INDEX</a></li>
+            <li><a id="nextLink" href="#">NEXT</a></li>
+        </ul>
+    </div>
+
+    <p id="pageMessage" class="message"></p>
+
+</article>
+
+<footer>
+    [Template] <a href="https://ninawas.me" target="_blank" rel="noopener">Nina</a>
+    <br>
+    <a href="index.html">BACK TO TOP</a>
+</footer>
+
+<script>
+const DATA_URL = "./novel-data.json";
+
+const params = new URLSearchParams(location.search);
+const seriesId = params.get("seriesId");
+const episodeIndex = Number(params.get("episodeIndex"));
+
+const $ = id => document.getElementById(id);
+
+const pageUrl = (index) =>
+    `novel-page.html?seriesId=${encodeURIComponent(seriesId)}&episodeIndex=${index}`;
+
+function setLink(id, href, enabled) {
+
+    const link = $(id);
+
+    if (enabled) {
+
+        link.href = href;
+        link.style.opacity = "1";
+
+    } else {
+
+        link.removeAttribute("href");
+        link.style.opacity = ".35";
+        link.style.pointerEvents = "none";
+
+    }
+
+}
+
+async function loadEpisode() {
+
+    const message = $("pageMessage");
+
+    if (
+        !seriesId ||
+        !Number.isInteger(episodeIndex) ||
+        episodeIndex < 0
+    ) {
+        $("episodeContent").textContent = "";
+        message.textContent = "ページが指定されていません。";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(DATA_URL, {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("作品データを読み込めませんでした。");
+        }
+
+        const data = await response.json();
+
+        if (!data || !Array.isArray(data.series)) {
+            throw new Error("作品データの形式を確認できませんでした。");
+        }
+
+        const series = data.series.find(item =>
+            String(item.id) === String(seriesId)
+        );
+
+        if (!series) {
+            throw new Error("作品が見つかりませんでした。");
+        }
+
+        const episodes = Array.isArray(series.episodes)
+            ? series.episodes
+            : [];
+
+        const episode = episodes[episodeIndex];
+
+        if (!episode) {
+            throw new Error("お話が見つかりませんでした。");
+        }
+
+        document.title =
+            `${episode.title || "PAGE"} | green or blue?`;
+
+        $("episodeTitle").textContent =
+            episode.title || `第${episodeIndex + 1}話`;
+
+        $("episodeContent").textContent =
+            episode.content || episode.text || "";
+
+        const indexUrl =
+            `novel-story.html?seriesId=${encodeURIComponent(series.id)}`;
+
+        setLink(
+            "prevLink",
+            pageUrl(episodeIndex - 1),
+            episodeIndex > 0
+        );
+
+        setLink(
+            "indexLink",
+            indexUrl,
+            true
+        );
+
+        setLink(
+            "nextLink",
+            pageUrl(episodeIndex + 1),
+            episodeIndex < episodes.length - 1
+        );
+
+        message.textContent = "";
+
+    } catch (error) {
+
+        $("episodeContent").textContent = "";
+        message.textContent =
+            error.message || "読み込みに失敗しました。";
+
+    }
+
+}
+
+loadEpisode();
+</script>
+
+</body>
+</html>
